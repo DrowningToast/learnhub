@@ -36,7 +36,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        Validator::make(
+        //dd($request->all());
+
+        $validator = Validator::make(
             $request->all(),
             [
                 'role' => ['required', new Enum(RoleEnum::class)],
@@ -58,6 +60,10 @@ class UserController extends Controller
             ]
         );
 
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
         DB::beginTransaction();
 
         try {
@@ -76,12 +82,38 @@ class UserController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
-            throw $e;
+            return back()->with('error_message', 'เกิดข้อผิดพลาดในการสร้างบัญชีผู้ใช้งาน');
         }
 
         auth()->login($user);
 
         return redirect('/')->with('success_message', 'สร้างบัญชีผู้ใช้งานสำหรับ ' . $request->input('username') . ' เสร็จสิ้น');
+    }
+
+    function login(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'username' => ['required'],
+                'password' => ['required', 'min:8'],
+            ],
+            [
+                'username.required' => 'โปรดกรอกชื่อผู้ใช้',
+                'password.required' => 'โปรดกรอกรหัสผ่าน',
+                'password.min' => 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        if (auth()->attempt((['username' => $request->input('username'), 'password' => $request->input('password')]))) {
+            return redirect('/')->with('success_message', 'เข้าสู่ระบบสำเร็จ');
+        }
+
+        return back()->with('error_message', 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
     }
 
     /**
