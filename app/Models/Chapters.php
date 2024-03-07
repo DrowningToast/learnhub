@@ -4,6 +4,7 @@ namespace App\Models;
 
 // Models
 use App\Models\Courses;
+use App\Models\Quizzes;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
