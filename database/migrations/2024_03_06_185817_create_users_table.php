@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -20,7 +19,7 @@ return new class extends Migration
             $table->string("first_name");
             $table->string("last_name");
             $table->integer("points")->nullable();
-            $table->string("role_id");
+            $table->enum("role", ["LEARNER", "LECTURER", "MODERATOR"]);
 
             $table->unsignedBigInteger("credential_id")->unique();
             $table->foreign("credential_id")->references("id")->on("credentials")->onDelete("cascade");
