@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+// Models
+use App\Models\Courses;
+
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Chapters extends Model
 {
@@ -14,4 +17,14 @@ class Chapters extends Model
         'title',
         'description',
     ];
+
+    public function course()
+    {
+        return $this->belongsTo(Courses::class, 'course_id', 'id');
+    }
+
+    public function quizzes()
+    {
+        return $this->hasMany(Quizzes::class, 'chapter_id', 'id');
+    }
 }

@@ -2,8 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+// Models
+use App\Models\Users;
+use App\Models\Courses;
+
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Reviews extends Model
 {
@@ -15,4 +20,14 @@ class Reviews extends Model
         'rating',
         'comment',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(Users::class, 'user_id', 'id');
+    }
+
+    public function course()
+    {
+        return $this->belongsTo(Courses::class, 'course_id', 'id');
+    }
 }

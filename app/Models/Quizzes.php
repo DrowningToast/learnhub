@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+// Models
+use App\Models\Courses;
+
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Quizzes extends Model
 {
@@ -17,4 +20,9 @@ class Quizzes extends Model
         'full_score',
         'expired_at',
     ];
+
+    public function course()
+    {
+        return $this->belongsTo(Courses::class, 'course_id', 'id');
+    }
 }

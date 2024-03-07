@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+// Models
+use App\Models\Banks;
+use App\Models\Users;
+
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Withdrawals extends Model
 {
@@ -16,4 +20,14 @@ class Withdrawals extends Model
         'amount',
         'status_id', // 1: REQUESTED 2: APPROVED 3: DECLINED
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(Users::class, 'user_id', 'id');
+    }
+
+    public function bank()
+    {
+        return $this->belongsTo(Banks::class, 'bank_id', 'id');
+    }
 }

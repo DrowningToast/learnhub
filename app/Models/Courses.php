@@ -2,8 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+// Models
+use App\Models\Users;
+use App\Models\Reviews;
+use App\Models\Chapters;
+use App\Models\Transactions;
+
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Courses extends Model
 {
@@ -19,4 +26,24 @@ class Courses extends Model
         'hidden',
         'lecturer_id',
     ];
+
+    public function lecturer()
+    {
+        return $this->belongsTo(Users::class, 'lecturer_id', 'id');
+    }
+
+    public function chapters()
+    {
+        return $this->hasMany(Chapters::class, 'course_id', 'id');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Reviews::class, 'course_id', 'id');
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transactions::class, 'course_id', 'id');
+    }
 }

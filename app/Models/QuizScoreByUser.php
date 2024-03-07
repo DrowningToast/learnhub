@@ -16,4 +16,14 @@ class QuizScoreByUser extends Model
         'submitted_at',
         'score',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(Users::class, 'user_id', 'id');
+    }
+
+    public function quiz()
+    {
+        return $this->belongsTo(Quizzes::class, 'quiz_id', 'id');
+    }
 }
