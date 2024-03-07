@@ -36,9 +36,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
-
-        $validator = Validator::make(
+        $formFields = $request->validate(
             $request->all(),
             [
                 'role' => ['required', new Enum(RoleEnum::class)],
@@ -60,9 +58,7 @@ class UserController extends Controller
             ]
         );
 
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
+        $formFields['password'] = bcrypt($formFields['password']);
 
         DB::beginTransaction();
 
@@ -70,13 +66,13 @@ class UserController extends Controller
             $academicInfos = AcademicInfos::create();
 
             $credentials = Credentials::create([
-                'username' => $request->input('username'),
-                'password' => bcrypt($request->input('password')),
+                'username' => $formFields['username'],
+                'password' => $formFields['password'],
             ]);
 
             $user = Users::create([
-                'role' => $request->input('role'),
-                'email' => $request->input('email'),
+                'role' => $formFields['role'],
+                'email' => $formFields['email'],
                 'credential_id' => $credentials->id,
                 'academic_id' => $academicInfos->id,
             ]);
@@ -87,12 +83,12 @@ class UserController extends Controller
 
         auth()->login($user);
 
-        return redirect('/')->with('success_message', 'สร้างบัญชีผู้ใช้งานสำหรับ ' . $request->input('username') . ' เสร็จสิ้น');
+        return redirect('/')->with('success_message', "สร้างบัญชีผู้ใช้งานสำหรับ " . $formFields["name"] . " เสร็จสิ้น ท่านสามารถล็อคอินได้ทันที");
     }
 
     public function login(Request $request)
     {
-        $validator = Validator::make(
+        $formFields = $request->validate(
             $request->all(),
             [
                 'username' => ['required'],
@@ -105,11 +101,7 @@ class UserController extends Controller
             ]
         );
 
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-
-        if (auth()->attempt((['username' => $request->input('username'), 'password' => $request->input('password')]))) {
+        if (auth()->attempt((['username' => $formFields['username'], 'password' => $formFields['password']]))) {
             return redirect('/')->with('success_message', 'เข้าสู่ระบบสำเร็จ');
         }
 
