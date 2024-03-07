@@ -90,7 +90,7 @@ class UserController extends Controller
         return redirect('/')->with('success_message', 'สร้างบัญชีผู้ใช้งานสำหรับ ' . $request->input('username') . ' เสร็จสิ้น');
     }
 
-    function login(Request $request)
+    public function login(Request $request)
     {
         $validator = Validator::make(
             $request->all(),
@@ -146,5 +146,15 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function logout(Request $request)
+    {
+        auth()->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/')->with('success_message', 'ออกจากระบบเสร็จสิ้น');
     }
 }
