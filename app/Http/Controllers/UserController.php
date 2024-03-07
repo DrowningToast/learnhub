@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Users;
+use App\Enums\RoleEnum;
 use App\Models\Credentials;
-use App\Models\AcademicInfo;
 use Illuminate\Http\Request;
+use App\Models\AcademicInfos;
 use Illuminate\Validation\Rule;
-use Illuminate\Foundation\Auth\User;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rules\Enum;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -35,7 +39,7 @@ class UserController extends Controller
         Validator::make(
             $request->all(),
             [
-                'role' => ['required', Rule::in(['LEARNER', 'LECTURER'])],
+                'role' => ['required', new Enum(RoleEnum::class)],
                 'email' => ['required', 'email', Rule::unique('users', 'email')],
                 'username' => ['required', Rule::unique('credentials', 'username')],
                 'password' => ['required', 'min:8', 'confirmed'],
@@ -54,19 +58,26 @@ class UserController extends Controller
             ]
         );
 
-        $academicInfo = AcademicInfo::create();
+        DB::beginTransaction();
 
-        $credentials = Credentials::create([
-            'username' => $request->input('username'),
-            'password' => bcrypt($request->input('password')),
-        ]);
+        try {
+            $academicInfos = AcademicInfos::create();
 
-        $user = User::create([
-            'role' => $request->input('role'),
-            'email' => $request->input('email'),
-            'credential_id' => $credentials->id,
-            'academic_id' => $academicInfo->id,
-        ]);
+            $credentials = Credentials::create([
+                'username' => $request->input('username'),
+                'password' => bcrypt($request->input('password')),
+            ]);
+
+            $user = Users::create([
+                'role' => $request->input('role'),
+                'email' => $request->input('email'),
+                'credential_id' => $credentials->id,
+                'academic_id' => $academicInfos->id,
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
 
         auth()->login($user);
 
