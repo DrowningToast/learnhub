@@ -6,7 +6,13 @@ export default {
         "./resources/**/*.vue",
     ],
     theme: {
-        extend: {},
+        extend: {
+            fontFamily: {
+                'beth': ['Beth Ellen', 'cursive'],
+                'noto-thai': ['Noto Sans Thai', 'sans-serif'],
+                'poppins': ['Poppins', 'sans-serif'],
+            }
+        },
     },
     plugins: [],
 };
