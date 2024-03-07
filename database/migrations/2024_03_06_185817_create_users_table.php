@@ -25,7 +25,7 @@ return new class extends Migration {
             $table->foreign("credential_id")->references("id")->on("credentials")->onDelete("cascade");
 
             $table->unsignedBigInteger("academic_id")->unique();
-            $table->foreign("academic_id")->references("id")->on("academic_info")->onDelete("cascade");
+            $table->foreign("academic_id")->references("id")->on("academic_infos")->onDelete("cascade");
 
             $table->dateTime("banned_at")->nullable();
 
