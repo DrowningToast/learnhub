@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Credentials extends Model
+class Banks extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'username',
-        'password',
+        'name',
+        'icon_src',
     ];
 }

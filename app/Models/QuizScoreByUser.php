@@ -5,12 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Credentials extends Model
+class QuizScoreByUser extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'username',
-        'password',
+        'user_id',
+        'quiz_id',
+        'answer_data',
+        'submitted_at',
+        'score',
     ];
 }
