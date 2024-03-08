@@ -18,5 +18,5 @@ Route::get('/', function () {
 });
 
 Route::get('/courses/{id}', function ($id) {
-    return view('course_info');
+    return view('courses.show');
 });
