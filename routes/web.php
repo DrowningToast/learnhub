@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +18,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+// LOGIN / REGISTER / LOGOUT
+Route::get('/login', [UserController::class, 'index'])->middleware('guest');
+Route::post('/login', [UserController::class, 'login'])->middleware('guest');
+
+Route::get('/register', [UserController::class, 'create'])->middleware('guest');
+Route::post('/register', [UserController::class, 'store'])->middleware('guest');
+
+Route::get('/logout', [UserController::class, 'logout'])->middleware('auth');
+
+// COURSES
+
+// WIP
 Route::get('/courses/{id}', function ($id) {
     return view('courses.show');
 });
