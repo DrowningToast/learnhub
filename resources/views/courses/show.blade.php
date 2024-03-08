@@ -207,7 +207,7 @@
                 @endif
                 @if ($selected_tab == "payment")
                 <div class=" text-[#676767] py-6">
-                    placeholdr ofr payment meyhods
+                    [PH] Payment method demo
                 </div>
                 @endif
             </article>
