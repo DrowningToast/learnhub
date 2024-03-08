@@ -11,13 +11,34 @@
 </head>
 
 <body>
-    <nav class="p-6 bg-blue-300 text-black text-lg font-semibold flex items-center justify-between">
-        LearnHub
-    </nav>
+    <div class="p-6 bg-[#4369A2] text-white text-lg font-semibold flex h-screen
+        ">
+                <div class="flex flex-col gap-y-10 justify-start">
+                    <div class="">
+                        <p class="">LearnHub</p>
+                    </div>
 
-    <main class="px-24 mt-12">
+                    <div class="flex flex-col font-sans-thai">
+                        <a href="">Home</a>
+                        <a href="">Setting</a>
+                    </div>
+
+                    <div class="flex flex-col justify-end font-sans-thai">
+                        <a href="">Sign Out</a>
+                    </div>
+                    
+                </div>
+
+                <main class="px-24 mt-12">
         {{ $slot }}
     </main>
+
+                
+        </div>
+
+    
+
+    
 </body>
 
 </html>
