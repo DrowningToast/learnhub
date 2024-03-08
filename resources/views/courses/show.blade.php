@@ -7,7 +7,7 @@
     $owned = false;
     $url = "https://www.youtube.com/embed/_uQrJ0TkZlc?si=R97Wf3dxJEVBTkgx";
 
-    $lectucer = [
+    $lecturer = [
         "name" => "ศุภธัช สุวัฒโน",
         "profile_src" => "https://avatars.githubusercontent.com/u/58824744?v=4",
         "affiliate" => "โรงเรียนวัดลิงขบ",
@@ -71,13 +71,32 @@
             "date" => mktime(0, 0, 0, date("m")  , date("d"), date("Y")),
             "comment" => "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cum assumenda doloribus officiis tempora rem totam fugiat minima autem nisi aperiam soluta et porro nam possimus, natus a culpa? Dolores, voluptas!",
             "rating" => 4.5
-],      [
+        ],      [
             "name" => "Supratouch S.",
             "date" => mktime(0, 0, 0, date("m")  , date("d"), date("Y")),
             "comment" => "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cum assumenda doloribus officiis tempora rem totam fugiat minima autem nisi aperiam soluta et porro nam possimus, natus a culpa? Dolores, voluptas!",
             "rating" => 4.5
-],     
-    ]
+        ],     
+    ];
+
+    $course_suggestions = [
+        [
+            "img_src" => "https://www.interviewbit.com/blog/wp-content/uploads/2023/05/Artboard-1-copy-2.jpg",
+            "title" => "Python Programming ฉบับคนไม่เคยเขียนโปรแกรม",
+            "lecturer" => "ศุภธัช สุวัฒโน",
+            "href" => "#"
+        ], [
+            "img_src" => "https://www.interviewbit.com/blog/wp-content/uploads/2023/05/Artboard-1-copy-2.jpg",
+            "title" => "Python Programming ฉบับคนไม่เคยเขียนโปรแกรม",
+            "lecturer" => "ศุภธัช สุวัฒโน",
+            "href" => "#"
+        ], [
+            "img_src" => "https://www.interviewbit.com/blog/wp-content/uploads/2023/05/Artboard-1-copy-2.jpg",
+            "title" => "Python Programming ฉบับคนไม่เคยเขียนโปรแกรม",
+            "lecturer" => "ศุภธัช สุวัฒโน",
+            "href" => "#"
+        ], 
+    ];
 @endphp
 
 <html class="font-noto-thai">
@@ -194,13 +213,31 @@
             </article>
             <article>
                 <div class="grid grid-cols-3 px-4 py-6 gap-x-4">
-                    <img class="rounded-full" src={{$lectucer['profile_src']}} />
+                    <img class="rounded-full" src={{$lecturer['profile_src']}} />
                     <div class="col-span-2 flex flex-col justify-center gap-y-2">
-                        <span class="text-xl font-semibold text-[#00532A]">{{$lectucer['name']}}</span>
+                        <span class="text-xl font-semibold text-[#00532A]">{{$lecturer['name']}}</span>
                         <div class="flex flex-col">
-                            <span class="text-sm text-[#555555]">{{$lectucer['affiliate']}}</span>
-                            <span class="text-sm text-[#555555]">เจ้าของ {{$lectucer['courses']}} คอร์ส</span>
+                            <span class="text-sm text-[#262323]">{{$lecturer['affiliate']}}</span>
+                            <span class="text-sm text-[#555555]">เจ้าของ {{$lecturer['courses']}} คอร์ส</span>
                         </div>
+                    </div>
+                </div>
+                <div class="mt-12 flex gap-x-8 text-xl font-semibold text-[#A3ACB6] border-b-[1px] border-[#A3ACB6]">
+                    <span class="text-[#2A638A] pb-2">
+                        คอร์สที่เกี่ยวข้อง
+                    </span>
+                </div>
+                <div class="flex flex-col gap-y-4">
+                    @foreach ($course_suggestions as $suggestion)
+                        <a href={{$suggestion['href']}}>
+                            <img src={{$suggestion['img_src']}} alt="course image" class="w-full h-48 object-cover rounded-xl">
+                            <div class="flex flex-col gap-y-2">
+                                <span class="text-lg font-semibold text-[#2A638A]">{{$suggestion['title']}}</span>
+                                <span class="text-sm text-[#676767]">{{$suggestion['lecturer']}}</span>
+                            </div>
+                        </a>
+                    @endforeach
+                    <div>
                     </div>
                 </div>
             </article>
@@ -210,7 +247,7 @@
                         <img src="{{ asset('assets/star-2.png') }}" alt="star" class="w-6 h-6"> 
                         <span class="text-2xl font-bold text-[#2D2F31]">รีวิวจากผู้เรียน ({{ count($reviews) }} รีวิว)</span>
                     </div>
-                    <div class="grid grid-cols-3 gap-x-6">
+                    <div class="grid grid-cols-3 gap-x-10">
                         @foreach ($reviews as $review)
                         <div class="flex flex-col gap-y-4 border-t-[1px] border-[#D1D7DB] py-6">
                                 <div class="flex gap-x-3">
@@ -237,8 +274,8 @@
                                 <div>
                                     <p class="text-sm">{{$review['comment']}}</p>                            
                                 </div>
-                            </div>
-                            @endforeach 
+                        </div>
+                        @endforeach 
                     </div>
                 </article>
             </div>
