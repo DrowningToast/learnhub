@@ -13,8 +13,8 @@
                         <p class="text-lg">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus, hic?</p>
                     </div>
                     <div class="flex items-center gap-x-5 ">
-                        <a href="#" class="bg-[#2A638A] text-white px-9 py-3 rounded-lg">Sign up</a>
-                        <a href="#" class="text-[#060732] px-9 py-3 rounded-xl underline">Sign in</a>
+                        <a href="/register" class="bg-[#2A638A] text-white px-9 py-3 rounded-lg">ลงทะเบียน</a>
+                        <a href="/login" class="text-[#060732] px-9 py-3 rounded-xl underline">เข้าสู่ระบบ</a>
                     </div>
                 </div>
                 <div class="flex justify-center items-center">
@@ -55,6 +55,33 @@
                         containerClass="hover:from-[#52B6B4] hover:to-[#52B6B4]/20"
                         childrenClass="from-[#52B6B4] to-[#52B6B4]/20" />
 
+                </div>
+            </div>
+        </div>
+
+        {{-- section 3 --}}
+        <div class="w-full flex justify-center items-center mt-20 ">
+            <div class="rounded-xl w-11/12 flex flex-col gap-y-7">
+                <div class="flex justify-between">
+                    <h1 class="text-5xl font-extrabold">คอร์สทั้งหมด</h1>
+                    <div class="flex items-center text-xl bg-white rounded-lg px-2 py-1 shadow-[inset_1px_1px_8px_4px_rgba(0,0,0,0.1)]">
+                        <input type="text" class="px-3 py-3 outline-none w-96 bg-transparent" placeholder="ค้นหาคอร์สของคุณ">
+                        <button class="bg-[#D4E3FF] p-3 rounded-lg"><x-bi-search class="text-blue-800 text-2xl" /></button>
+                    </div>
+                </div>
+                <div class="flex justify-center items-center gap-x-8 bg-[#E2EEFB] px-8 py-5 rounded-lg">
+                    <x-CourseButton>วิทยาศาสตร์</x-CourseButton>
+                    <x-CourseButton>คณิตศาสตร์</x-CourseButton>
+                    <x-CourseButton>ภาษาไทย</x-CourseButton>
+                    <x-CourseButton>สังคมศึกษา</x-CourseButton>
+                    <x-CourseButton>ภาษาอังกฤษ</x-CourseButton>
+                    <x-CourseButton>เทคโนโลยีสารสนเทศ</x-CourseButton>
+                </div>
+                <div class="grid grid-cols-3 gap-x-14 gap-y-10">
+                    <x-courseCard />
+                    <x-courseCard />
+                    <x-courseCard />
+                    <x-courseCard />
                 </div>
             </div>
         </div>
