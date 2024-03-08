@@ -26,7 +26,3 @@ Route::get('/register', [UserController::class, 'create'])->middleware('guest');
 Route::post('/register', [UserController::class, 'store'])->middleware('guest');
 
 Route::get('/logout', [UserController::class, 'logout'])->middleware('auth');
-
-Route::get('/test', function () {
-    return view('couse');
-});

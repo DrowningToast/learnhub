@@ -1,21 +1,24 @@
-<div class="bg-[#4369A2] flex  ">
-    <div class="rounded-lg flex flex-col">
-        <div class="rounded-full">
-            <a href=""></a>
-        </div>
-        
-        <div class="flex">
-            <p class="text-xl">Chapter {{$chapter}} :</p>
-            <p class="text-m">{{$title}}</p>
-        </div>
-        <div class="flex">
-            <p class="text-xs">{{$file}} files</p>
-        </div>
-        <div>
-            <button type="button" class="text-[] bg-2A638A hover:bg-white focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Dowload File</button>
-        </div>
-         
-        
+<div class="bg-[#4369A2] flex rounded-2xl   w-full p-6 relative">
 
+    <div class="rounded-l-full absolute w-16 h-32 z-10 top-1/2 right-0 transform -translate-y-1/2 bg-[#8AB7DC]/50">
+    </div>
+    
+    <div class="rounded-l-full absolute w-8 h-16 z-10 top-1/2 right-0 transform -translate-y-1/2 bg-white/20">
+    </div>
+
+    <div class="rounded-2xl flex flex-col gap-y-3 w-full">
+
+        <div class="rounded-full bg-[#8AB7DC] p-5 justify-start w-1/3">
+            <x-bxs-file class="text-white w-full"/>
+        </div>
+
+        <div class="flex flex-col gap-y-2 text-xl min-h-48 pr-10">
+            <p class=" font-bold text-white font-noto-thai">Chapter {{$chapter}} :</p>
+            <p class=" text-white font-noto-thai">{{$title}}</p>
+        </div>
+
+        <div class="h-full flex items-end ">
+            <button type="button" class="bg-[#FFFFFF] text-[#2A638A] rounded-full w-full py-3 font-bold font-noto-thai">Dowload File</button>
+        </div>
     </div>
 </div>

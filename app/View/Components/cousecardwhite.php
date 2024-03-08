@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
 
-class cousecard extends Component
+class cousecardwhite extends Component
 {
     /**
      * Create a new component instance.
@@ -27,6 +27,6 @@ class cousecard extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.cousecard');
+        return view('components.cousecardwhite');
     }
 }
