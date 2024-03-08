@@ -15,7 +15,7 @@
         {{-- RIGHT SIDE --}}
         <div>
             <div class="flex flex-col justify-center min-h-full lg:px-28 2xl:px-36">
-                <form action="/register" method="POST">
+                <form action="/login" method="POST">
                     @csrf
                     <div>
                         <p class=" text-3xl font-bold mb-4">เข้าสู่ระบบ</p>
@@ -43,7 +43,7 @@
                             <label for="username" class="text-[#999999] font-bold">รหัสผ่าน</label>
                             <div class="flex flex-row items-center gap-2 relative">
                                 <img src="{{ asset('images/icons/lock.png') }}" class=" absolute">
-                                <input type="password" id="username"
+                                <input type="password" id="password"
                                     class="w-full p-2 border-b-2 border-b-[#999999]  focus:outline-none focus:border-b-[#000842] pl-8"
                                     placeholder="ใส่รหัสผ่านของคุณ" name="password" value="{{ old('password') }}" />
                             </div>
@@ -57,7 +57,7 @@
                     <div class=" mt-8 flex flex-row justify-between">
                         <div class="flex flex-row items-center gap-2">
                             <input type="checkbox" id="saveSession" name="saveSession" value="saveSession"
-                                class="h-5 w-5" checked="{{ old('saveSession') }}">
+                                class="h-5 w-5">
                             <label for="saveSession" class="text-[#000000]"> จดจำการเข้าสู่ระบบ</label><br>
                         </div>
 

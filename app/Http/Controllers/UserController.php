@@ -81,21 +81,7 @@ class UserController extends Controller
             return back()->with('error_message', 'เกิดข้อผิดพลาดในการสร้างบัญชีผู้ใช้งาน');
         }
 
-        // $academicInfos = AcademicInfos::create();
-
-        // $credentials = Credentials::create([
-        //     'username' => $formFields['username'],
-        //     'password' => $formFields['password'],
-        // ]);
-
-        // $user = Users::create([
-        //     'role' => $formFields['role'],
-        //     'email' => $formFields['email'],
-        //     'credential_id' => $credentials->id,
-        //     'academic_id' => $academicInfos->id,
-        // ]);
-
-        auth()->login($user);
+        auth()->login($user, true);
 
         return redirect('/')->with('success_message', "สร้างบัญชีผู้ใช้งานสำหรับ " . $formFields["username"] . " เสร็จสิ้น ท่านสามารถล็อคอินได้ทันที");
     }
@@ -114,7 +100,9 @@ class UserController extends Controller
             ]
         );
 
-        if (auth()->attempt((['username' => $formFields['username'], 'password' => $formFields['password']]))) {
+        $isUserSaveSession = $request->get('saveSession') !== null ? true : false;
+
+        if (auth()->attempt((['username' => $formFields['username'], 'password' => $formFields['password']]), $isUserSaveSession)) {
             return redirect('/')->with('success_message', 'เข้าสู่ระบบสำเร็จ');
         }
 
