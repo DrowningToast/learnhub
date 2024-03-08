@@ -7,6 +7,13 @@
     $owned = false;
     $url = "https://www.youtube.com/embed/_uQrJ0TkZlc?si=R97Wf3dxJEVBTkgx";
 
+    $lectucer = [
+        "name" => "ศุภธัช สุวัฒโน",
+        "profile_src" => "https://avatars.githubusercontent.com/u/58824744?v=4",
+        "affiliate" => "โรงเรียนวัดลิงขบ",
+        "courses" => 10
+    ];
+
     $selected_tab = $_GET['view'] ?? "description";
 
     $chapters = [
@@ -184,6 +191,18 @@
                     placeholdr ofr payment meyhods
                 </div>
                 @endif
+            </article>
+            <article>
+                <div class="grid grid-cols-3 px-4 py-6 gap-x-4">
+                    <img class="rounded-full" src={{$lectucer['profile_src']}} />
+                    <div class="col-span-2 flex flex-col justify-center gap-y-2">
+                        <span class="text-xl font-semibold text-[#00532A]">{{$lectucer['name']}}</span>
+                        <div class="flex flex-col">
+                            <span class="text-sm text-[#555555]">{{$lectucer['affiliate']}}</span>
+                            <span class="text-sm text-[#555555]">เจ้าของ {{$lectucer['courses']}} คอร์ส</span>
+                        </div>
+                    </div>
+                </div>
             </article>
             <div class="col-span-3 mt-8">
                 <article class="flex flex-col">
