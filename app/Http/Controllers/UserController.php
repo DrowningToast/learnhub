@@ -83,7 +83,13 @@ class UserController extends Controller
 
         auth()->login($user, true);
 
-        return redirect('/')->with('success_message', "สร้างบัญชีผู้ใช้งานสำหรับ " . $formFields["username"] . " เสร็จสิ้น ท่านสามารถล็อคอินได้ทันที");
+        $registerSuccMessage = "สร้างบัญชีผู้ใช้งานสำหรับ " . $formFields["username"] . " เสร็จสิ้น ท่านสามารถล็อคอินได้ทันที";
+
+        if (auth()->user()->role === RoleEnum::Learner) {
+            return redirect('/')->with('success_message', $registerSuccMessage);
+        } else if (auth()->user()->role === RoleEnum::Lecturer) {
+            return redirect('/courses/manage')->with('success_message', $registerSuccMessage);
+        }
     }
 
     public function login(Request $request)
@@ -103,7 +109,11 @@ class UserController extends Controller
         $isUserSaveSession = $request->get('saveSession') !== null ? true : false;
 
         if (auth()->attempt((['username' => $formFields['username'], 'password' => $formFields['password']]), $isUserSaveSession)) {
-            return redirect('/')->with('success_message', 'เข้าสู่ระบบสำเร็จ');
+            if (auth()->user()->role === RoleEnum::Learner) {
+                return redirect('/')->with('success_message', 'เข้าสู่ระบบสำเร็จ');
+            } else if (auth()->user()->role === RoleEnum::Lecturer) {
+                return redirect('/courses/manage')->with('success_message', 'เข้าสู่ระบบสำเร็จ');
+            }
         }
 
         return back()->with('error_message', 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
