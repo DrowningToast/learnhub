@@ -11,7 +11,6 @@ use Illuminate\Validation\Rule;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\Enum;
-use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -37,9 +36,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $formFields = $request->validate(
-            $request->all(),
             [
-                'role' => ['required', new Enum(RoleEnum::class)],
+                'role' => ['required'],
                 'email' => ['required', 'email', Rule::unique('users', 'email')],
                 'username' => ['required', Rule::unique('credentials', 'username')],
                 'password' => ['required', 'min:8', 'confirmed'],
@@ -76,20 +74,21 @@ class UserController extends Controller
                 'credential_id' => $credentials->id,
                 'academic_id' => $academicInfos->id,
             ]);
+
+            DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error_message', 'เกิดข้อผิดพลาดในการสร้างบัญชีผู้ใช้งาน');
         }
 
-        auth()->login($user);
+        auth()->login($user, true);
 
-        return redirect('/')->with('success_message', "สร้างบัญชีผู้ใช้งานสำหรับ " . $formFields["name"] . " เสร็จสิ้น ท่านสามารถล็อคอินได้ทันที");
+        return redirect('/')->with('success_message', "สร้างบัญชีผู้ใช้งานสำหรับ " . $formFields["username"] . " เสร็จสิ้น ท่านสามารถล็อคอินได้ทันที");
     }
 
     public function login(Request $request)
     {
         $formFields = $request->validate(
-            $request->all(),
             [
                 'username' => ['required'],
                 'password' => ['required', 'min:8'],
@@ -101,7 +100,9 @@ class UserController extends Controller
             ]
         );
 
-        if (auth()->attempt((['username' => $formFields['username'], 'password' => $formFields['password']]))) {
+        $isUserSaveSession = $request->get('saveSession') !== null ? true : false;
+
+        if (auth()->attempt((['username' => $formFields['username'], 'password' => $formFields['password']]), $isUserSaveSession)) {
             return redirect('/')->with('success_message', 'เข้าสู่ระบบสำเร็จ');
         }
 
