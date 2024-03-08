@@ -1,59 +1,130 @@
-<x-layout>
-    <div class="mx-auto flex items-center justify-center">
-        <div class=" p-12 border rounded-xl flex flex-col items-start justify-start w-1/3">
-            <h1 class="text-3xl font-bold mb-6">สมัครสมาชิก</h1>
+<!DOCTYPE html>
+<html lang="en">
 
-            <div class="w-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>เข้าสู่ระบบ | LearnHub</title>
+
+    @vite('resources/css/app.css')
+</head>
+
+@php
+    $selectedRole = app('request')->input('role') ?? 'LEARNER';
+@endphp
+
+<body class="p-6 min-h-screen font-noto-thai">
+    <div class="grid grid-cols-2 h-full">
+        {{-- RIGHT SIDE --}}
+        <div>
+            <div class="flex flex-col justify-center min-h-full lg:px-28 2xl:px-36">
                 <form action="/register" method="POST">
                     @csrf
-                    <div class="my-4">
-                        <label for="name" class="block text-sm font-semibold mb-2">ชื่อ นามสกุล</label>
-                        <input type="text" name="name" id="name"
-                            class="w-full border border-gray-300 p-2 rounded" value="{{ old('name') }}">
-
-                        @error('name')
-                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
-                        @enderror
+                    <div>
+                        <p class=" text-3xl font-bold mb-4">สมัครสมาชิก</p>
+                        <p>มีบัญชีผู้ใช้เแล้ว ? <span class="text-[#4C5F7C]"><a href="/login">เข้าสู่ระบบ</a></span>
+                        </p>
                     </div>
 
-                    <div class="my-4">
-                        <label for="email" class="block text-sm font-semibold mb-2">อีเมล</label>
-                        <input type="email" name="email" id="email"
-                            class="w-full border border-gray-300 p-2 rounded" value="{{ old('email') }}">
-
-                        @error('email')
-                            <p class="text-red-500
-                            text-xs mt-2">{{ $message }}</p>
-                        @enderror
+                    <div class="flex flex-row items-center justify-around mt-12 border rounded-xl p-2">
+                        @if ($selectedRole == 'LEARNER')
+                            <input type="text" class="hidden" name="role" value="LEARNER">
+                            <a class="bg-[#2A638A] text-white p-2 px-12 rounded-lg w-1/2 text-center"
+                                href="/register?role=LEARNER">ผู้เรียน</a>
+                            <a class="w-1/2 text-center" href="/register?role=LECTURER">ผู้สอน</a>
+                        @else
+                            <input type="text" class="hidden" name="role" value="LECTURER">
+                            <a class="w-1/2 text-center" href="/register?role=LEARNER">ผู้เรียน</a>
+                            <a class="bg-[#2A638A] text-white p-2 px-12 rounded-lg w-1/2 text-center"
+                                href="/register?role=LEARNER">ผู้สอน</a>
+                        @endif
                     </div>
 
-                    <div class="my-4">
-                        <label for="password" class="block text-sm font-semibold mb-2">รหัสผ่าน</label>
-                        <input type="password" name="password" id="password"
-                            class="w-full border border-gray-300 p-2 rounded" value="{{ old('password') }}">
+                    <div class="mt-12 flex flex-col gap-12">
+                        <div class="flex flex-col gap-2">
+                            <label for="email" class="text-[#999999] font-bold">อีเมล</label>
+                            <div class="flex flex-row items-center gap-2 relative">
+                                <img src="{{ asset('images/icons/message.png') }}" class=" absolute">
+                                <input type="text" id="email"
+                                    class="w-full p-2 border-b-2 border-b-[#999999]  focus:outline-none focus:border-b-[#000842] pl-8"
+                                    placeholder="ใส่ชื่ออีเมลของคุณ" name="email" value="{{ old('email') }}" />
+                            </div>
 
-                        @error('password')
-                            <p class="text-red-500
-                        text-xs mt-2">{{ $message }}</p>
-                        @enderror
+                            @error('email')
+                                <span class="text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="flex flex-col gap-2">
+                            <label for="username" class="text-[#999999] font-bold">ชื่อผู้ใช้</label>
+                            <div class="flex flex-row items-center gap-2 relative">
+                                <img src="{{ asset('images/icons/message.png') }}" class=" absolute">
+                                <input type="text" id="username"
+                                    class="w-full p-2 border-b-2 border-b-[#999999]  focus:outline-none focus:border-b-[#000842] pl-8"
+                                    placeholder="ใส่ชื่อผู้ใช้ของคุณ" name="username" value="{{ old('username') }}" />
+                            </div>
+
+                            @error('username')
+                                <span class="text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="flex flex-col gap-2">
+                            <label for="username" class="text-[#999999] font-bold">รหัสผ่าน</label>
+                            <div class="flex flex-row items-center gap-2 relative">
+                                <img src="{{ asset('images/icons/lock.png') }}" class=" absolute">
+                                <input type="password" id="password"
+                                    class="w-full p-2 border-b-2 border-b-[#999999]  focus:outline-none focus:border-b-[#000842] pl-8"
+                                    placeholder="ใส่รหัสผ่านของคุณ" name="password" value="{{ old('password') }}" />
+                            </div>
+
+                            @error('password')
+                                <span class="text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="flex flex-col gap-2">
+                            <label for="username" class="text-[#999999] font-bold">ยืนยันรหัสผ่าน</label>
+                            <div class="flex flex-row items-center gap-2 relative">
+                                <img src="{{ asset('images/icons/lock.png') }}" class=" absolute">
+                                <input type="password" id="password_confirmation"
+                                    class="w-full p-2 border-b-2 border-b-[#999999]  focus:outline-none focus:border-b-[#000842] pl-8"
+                                    placeholder="ยืนยันรหัสผ่านของคุณ" name="password_confirmation"
+                                    value="{{ old('password_confirmation') }}" />
+                            </div>
+
+                            @error('password_confirmation')
+                                <span class="text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
                     </div>
 
-                    <div class="my-4">
-                        <label for="password_confirmation"
-                            class="block text-sm font-semibold mb-2">ยืนยันรหัสผ่าน</label>
-                        <input type="password" name="password_confirmation" id="password_confirmation"
-                            class="w-full border border-gray-300 p-2 rounded"
-                            value="{{ old('password_confirmation') }}">
-
-                        @error('password_confirmation')
-                            <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
-                        @enderror
+                    <div class="mt-16">
+                        <button type="submit"
+                            class="w-full bg-[#2A638A] text-white rounded-3xl font-bold focus:outline-none py-5 text-lg">สมัครสมาชิก</button>
                     </div>
-
-                    <button type="submit" class="w-full text-black p-2 rounded mt-6 bg-blue-300">สมัครสมาชิก</button>
-                    <a href="/login" class="text-center mt-6 w-full flex justify-center underline">เข้าสู่ระบบ</a>
                 </form>
             </div>
         </div>
+
+        {{-- LEFT SIDE --}}
+        <div class="min-w-full min-h-full bg-gradient-to-b from-[#D4E3FF] to-[#B4C8E9] rounded-xl">
+            <div class="flex flex-col items-start justify-start">
+                <div class="flex items-center justify-center">
+                    <img src="{{ asset('images/vector/Saly-10.png') }}" class="w-[80%]" />
+                </div>
+
+
+                <div class="p-24 pt-18">
+                    <p class=" font-noto-thai text-4xl text-white">สมัครสมาชิก
+                        <span class="font-beth text-[#2560B4]">LearnHub</span>
+                    </p>
+                    <p class="font-poppins mt-3 text-lg text-white">Lorem Ipsum is simply</p>
+                </div>
+            </div>
+        </div>
     </div>
-</x-layout>
+</body>
+
+</html>

@@ -11,7 +11,6 @@ use Illuminate\Validation\Rule;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\Enum;
-use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -37,9 +36,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $formFields = $request->validate(
-            $request->all(),
             [
-                'role' => ['required', new Enum(RoleEnum::class)],
+                'role' => ['required'],
                 'email' => ['required', 'email', Rule::unique('users', 'email')],
                 'username' => ['required', Rule::unique('credentials', 'username')],
                 'password' => ['required', 'min:8', 'confirmed'],
@@ -76,20 +74,35 @@ class UserController extends Controller
                 'credential_id' => $credentials->id,
                 'academic_id' => $academicInfos->id,
             ]);
+
+            DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error_message', 'เกิดข้อผิดพลาดในการสร้างบัญชีผู้ใช้งาน');
         }
 
+        // $academicInfos = AcademicInfos::create();
+
+        // $credentials = Credentials::create([
+        //     'username' => $formFields['username'],
+        //     'password' => $formFields['password'],
+        // ]);
+
+        // $user = Users::create([
+        //     'role' => $formFields['role'],
+        //     'email' => $formFields['email'],
+        //     'credential_id' => $credentials->id,
+        //     'academic_id' => $academicInfos->id,
+        // ]);
+
         auth()->login($user);
 
-        return redirect('/')->with('success_message', "สร้างบัญชีผู้ใช้งานสำหรับ " . $formFields["name"] . " เสร็จสิ้น ท่านสามารถล็อคอินได้ทันที");
+        return redirect('/')->with('success_message', "สร้างบัญชีผู้ใช้งานสำหรับ " . $formFields["username"] . " เสร็จสิ้น ท่านสามารถล็อคอินได้ทันที");
     }
 
     public function login(Request $request)
     {
         $formFields = $request->validate(
-            $request->all(),
             [
                 'username' => ['required'],
                 'password' => ['required', 'min:8'],
