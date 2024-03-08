@@ -3,12 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\RoleEnum;
 use App\Models\Courses;
 use App\Models\Reviews;
 use App\Models\Credentials;
-use App\Models\AcademicInfo;
-
-// Models
+use App\Models\AcademicInfos;
 use App\Models\CourseByUser;
 use App\Models\Transactions;
 use App\Models\QuizScoreByUser;
@@ -33,7 +32,10 @@ class Users extends Authenticatable
         'phone_number',
         'first_name',
         'last_name',
-        'points'
+        'points',
+        'role',
+        'credential_id',
+        'academic_id',
     ];
 
     /**
@@ -54,6 +56,7 @@ class Users extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'role' => RoleEnum::class,
     ];
 
     public function spendingTransactions()
@@ -83,7 +86,7 @@ class Users extends Authenticatable
 
     public function academicInfo()
     {
-        return $this->belongsTo(AcademicInfo::class, 'academic_id', 'id');
+        return $this->belongsTo(AcademicInfos::class, 'academic_id', 'id');
     }
 
     public function credentials()

@@ -9,6 +9,7 @@
         "blade-ui-kit/blade-icons": "^1.6",
         "codeat3/blade-fontisto-icons": "^1.4",
         "guzzlehttp/guzzle": "^7.2",
+        "kongulov/interact-with-enum": "^1.0",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8"
