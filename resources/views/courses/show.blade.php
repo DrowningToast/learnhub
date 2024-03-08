@@ -97,6 +97,8 @@
             "href" => "#"
         ], 
     ];
+
+    $already_owned = true;
 @endphp
 
 <html class="font-noto-thai">
@@ -125,11 +127,22 @@
                 </span>
             </div>
             <div class="mt-6">
-                <a href="#">
-                    <button class="bg-white rounded-2xl text-[#2A638A] font-bold px-24 py-3 text-xl">
-                        ซื้อเลย
-                    </button>
-                </a>
+                    @if ($already_owned)
+                        <div class="flex flex-col gap-y-2">
+                            <span class="text-white/60">คุณเป็นเจ้าของคอร์สนี้แล้ว</span>
+                            <a href="#">
+                                <button class="bg-white rounded-2xl text-[#2A638A] font-bold px-24 py-3 text-xl">
+                                    เข้าสู่คลาสเรียน
+                                </button>
+                            </a>
+                        </div>
+                    @else
+                        <a href="#">
+                            <button class="bg-white rounded-2xl text-[#2A638A] font-bold px-24 py-3 text-xl">
+                                ซื้อเลย
+                            </button>
+                        </a>
+                    @endif
             </div>
         </div>
         <div class="grid place-items-center"><iframe title="course preview" class="w-full h-full rounded-xl" src="{{$url}}" allowfullscreen></iframe></div>
