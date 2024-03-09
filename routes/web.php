@@ -18,6 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 // LOGIN / REGISTER / LOGOUT
 Route::get('/login', [UserController::class, 'index'])->middleware('guest')->name('login');
 Route::post('/login', [UserController::class, 'login'])->middleware('guest');
@@ -31,3 +32,7 @@ Route::get('/learn', function () {
     return view('courses.index');
 });
 // ->middleware('auth');
+
+Route::get('/courses/{id}', function ($id) {
+    return view('courses.show');
+});
