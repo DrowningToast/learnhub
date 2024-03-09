@@ -30,3 +30,4 @@ Route::get('/logout', [UserController::class, 'logout'])->middleware('auth');
 
 // Create Course / Show Course / Edit Course.
 Route::get('/courses/create', [CourseController::class, 'create'])->middleware('auth');
+Route::post('/courses', [CourseController::class, 'store'])->middleware('auth');

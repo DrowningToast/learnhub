@@ -12,7 +12,8 @@
         "kongulov/interact-with-enum": "^1.0",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
-        "laravel/tinker": "^2.8"
+        "laravel/tinker": "^2.8",
+        "league/flysystem-sftp-v3": "^3.23"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
