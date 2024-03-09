@@ -36,6 +36,8 @@ class Users extends Authenticatable
         'role',
         'credential_id',
         'academic_id',
+        'bankName',
+        'accountNumber',
     ];
 
     /**
