@@ -52,7 +52,13 @@
             "author" => "John Doe",
         ]
 
-    ]
+    ];
+
+    $avg_progress = array_reduce($courses, function($carry, $item){
+        return $carry + $item['progress'];
+    }) / count($courses);
+
+    $profile_src = "https://avatars.githubusercontent.com/u/58824744?v=4";
 ?>
 
 @vite('resources/css/app.css')
@@ -64,7 +70,7 @@
         </h1>
         <form class="space-y-4">
             <div class="w-auto h-auto relative overflow-hidden rounded-2xl">
-                <input class="w-full rounded-2xl px-4 py-6 border-2 border-gray-200" type="text" placeholder="ค้นหา...">
+                <input class="w-full rounded-2xl px-4 py-3 border-2 border-gray-200" type="text" placeholder="ค้นหา...">
                 <buton>
                     <img src={{asset('images/icons/magnify.png')}} class="absolute top-1/2 right-4 transform -translate-y-1/2 w-6 h-6 z-10" alt="">
                 </buton>
@@ -88,7 +94,7 @@
                 </select>
              </div>
         </form>
-         <div class="flex flex-col gap-y-8">
+         <div class="flex flex-col gap-y-4">
             @foreach ($courses as $course)
                 <x-CourseCard 
                     title="{{$course['title']}}"
@@ -101,16 +107,17 @@
             @endforeach
          </div>
     </div>
-    <div class="rounded-xl shadow-lg px-8 py-16 font-noto-thai">
-        <div class="flex items-baseline">
-            <h2 class="text-xl font-bold text-[#4369A2] ">
-                คอร์สน่าสนใจ
-            </h2>
-            <a class="ml-auto text-sm text-[#9CD0FD] font-semibold" href="#">
-                ดูทั้งหมด
-            </a>
-        </div>
-           <ul class="list-group flex flex-col gap-y-3 mt-6">
+    <div class="font-noto-thai relative max-h-screen">
+        <div class="fixed max-w-full h-full shadow-lg py-16 border-l-2 rounded-xl">
+            <div class="flex items-baseline px-8">
+                <h2 class="text-xl font-bold text-[#4369A2] ">
+                    คอร์สน่าสนใจ
+                </h2>
+                <a class="ml-auto text-sm text-[#9CD0FD] font-semibold" href="#">
+                    ดูทั้งหมด
+                </a>
+            </div>
+            <ul class="list-group flex flex-col gap-y-3 mt-6 pb-10 border-b-2 px-8">
                 @foreach ($suggested as $key=>$course)
                     <li class="flex gap-x-2 text-sm font-semibold text-[#6F7881]">
                         <div class="text-sm font-semibold text-[#6F7881]">
@@ -124,6 +131,34 @@
                         </div>
                     </li>
                 @endforeach
-           </ul>
+            </ul>
+            <div class="px-8 py-6 space-y-6">
+                <div class="flex flex-col items-center gap-y-1">
+                    <h3 class="font-semibold text-[#2A638A]">
+                        Profile
+                    </h3>
+                    <div class="w-28 h-28 rounded-full overflow-hidden"><img class="object-fill" src="{{$profile_src}}" alt="profile portriat" ></div>
+                    <h3 class="font-semibold text-[#2A638A] mt-2">
+                        Supratouch Suwatno
+                    </h3>
+                    <span class="text-[#B8C8D9] text-xs">
+                        โรงเรียนอนุบาลหมีน้อย
+                    </span>
+                </div>
+                <div class="w-full">
+                    <span class="text-[#B8C8D9] text-xs">
+                        ความคืบหน้า
+                    </span>
+                    <div class="flex items-center gap-x-4">
+                        <div class="flex w-4/5 h-3 bg-[#C7D3EB] rounded-full overflow-hidden" role="progressbar" aria-valuenow="{{$avg_progress * 100}}" aria-valuemin="0" aria-valuemax="100">
+                            <div class="flex flex-col justify-center rounded-full overflow-hidden bg-[#47B2FF] text-xs text-white text-center whitespace-nowrap transition duration-500" style="width: {{$avg_progress * 100}}%"></div>
+                        </div>
+                        <span class="text-[#A8ACAC]">
+                            {{$avg_progress * 100}}%
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
