@@ -38,3 +38,6 @@ Route::get('/learn', function () {
 Route::get('/courses/{id}', function ($id) {
     return view('courses.show');
 });
+
+// Edit Profile
+Route::get('/profile', [UserController::class, 'edit'])->middleware('auth');

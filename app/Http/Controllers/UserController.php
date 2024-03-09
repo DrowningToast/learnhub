@@ -120,9 +120,16 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id = NULL)
     {
-        //
+
+        if ($id === NULL) {
+            $id = auth()->user()->id;
+        }
+
+
+        $user = $this->getCurrentUser();
+        return view('profile.edit', compact('user'));
     }
 
     /**
@@ -131,6 +138,13 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $request->validate([
+            'first_name' => ['string'],
+            'last_name' => ['string'],
+            'email' => ['required', 'email'],
+            'phone' => ['required'],
+            'profile_image' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+        ]);
     }
 
     /**
@@ -149,5 +163,13 @@ class UserController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/')->with('success_message', 'ออกจากระบบเสร็จสิ้น');
+    }
+
+    public function getCurrentUser() {
+        $user = Users::find(auth()->user()->id);
+
+        $user->profile_image_src = $user->profile_image_src ?? asset('images/icons/DefaultPortrait.jpg');
+
+        return $user;
     }
 }
