@@ -54,6 +54,9 @@
 
     ];
 
+    $username = "Supratouch Suwatno";
+    $affiliation = "โรงเรียนอนุบาลหมีน้อย";
+
     $avg_progress = array_reduce($courses, function($carry, $item){
         return $carry + $item['progress'];
     }) / count($courses);
@@ -139,10 +142,10 @@
                     </h3>
                     <div class="w-28 h-28 rounded-full overflow-hidden"><img class="object-fill" src="{{$profile_src}}" alt="profile portriat" ></div>
                     <h3 class="font-semibold text-[#2A638A] mt-2">
-                        Supratouch Suwatno
+                        {{$username}}
                     </h3>
                     <span class="text-[#B8C8D9] text-xs">
-                        โรงเรียนอนุบาลหมีน้อย
+                        {{$affiliation}}
                     </span>
                 </div>
                 <div class="w-full">
