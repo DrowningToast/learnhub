@@ -24,8 +24,7 @@
             @enderror
         </div>
 
-        <div class="mt-6">
-
+        <div class="mt-8">
             <div class="flex flex-row justify-between">
                 <div class="flex flex-col gap-2">
                     <label for="description" class="text-[#1C1C1C] font-semibold">รูปภาพประกอบคอร์สเรียน</label>
@@ -35,19 +34,51 @@
                     </div>
                 </div>
 
-                <img id="previewImage" class="w-[65%] rounded-xl">
+                <img id="previewImage" class="w-[65%] rounded-xl hidden">
             </div>
 
             @error('courseImage')
                 <span class="text-red-500">{{ $message }}</span>
             @enderror
         </div>
+
+        <div class="flex flex-row items-center justify-between gap-12 mt-8">
+            <div class="flex flex-col gap-2 w-full">
+                <label for="price" class="text-[#1C1C1C] font-semibold">ราคา</label>
+                <input type="number" id="price"
+                    class="w-full p-3 mt-1 border border-[#E0E3E8] rounded-xl focus:outline-none focus:border-[#000842]"
+                    placeholder="ใส่ชื่อคอร์สเรียน" name="price" value="{{ old('price') }}" />
+
+                @error('price')
+                    <span class="text-red-500">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="flex flex-col gap-2 w-full">
+                <label for="discountPct" class="text-[#1C1C1C] font-semibold">ส่วนลด</label>
+                <input type="text" id="discountPct"
+                    class="w-full p-3 mt-1 border border-[#E0E3E8] rounded-xl focus:outline-none focus:border-[#000842]"
+                    placeholder="ใส่ชื่อคอร์สเรียน" name="discountPct" value="{{ old('discountPct') }}" />
+
+                @error('discountPct')
+                    <span class="text-red-500">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+
+        <div class="flex flex-row items-center justify-end gap-6">
+            <button type="submit"
+                class="w-[15%] bg-[#E9F2FC] text-[#2A638A] rounded-3xl font-bold focus:outline-none py-3 text-lg mt-12">ยกเลิก</button>
+
+            <button type="submit"
+                class="w-[15%] bg-[#2A638A] text-white rounded-3xl font-bold focus:outline-none py-3 text-lg mt-12">สร้างคอร์สเรียน</button>
+        </div>
     </form>
 
     <script>
         function handleImageChange(event) {
             var image = document.getElementById('previewImage');
-            console.log(image, URL.createObjectURL(event.target.files[0]))
+            image.classList.remove("hidden");
             image.src = URL.createObjectURL(event.target.files[0]);
         }
     </script>
