@@ -1,7 +1,7 @@
 <a href="/learn/{{$href}}">
     <div class="grid grid-cols-10 gap-x-8 rounded-2xl bg-[#E2EEFB] p-8">
         <div class="col-span-4">
-            <img src={{$src}} alt={{$title . "preview video"}}>
+            <img class="rounded-md" src={{$src}} alt={{$title . "preview video"}}>
         </div>
         <div class="col-span-6 flex flex-col justify-between">
             <h1 class="font-bold text-xl">
@@ -13,7 +13,15 @@
             <span class="font-bold text-sm text-[#A8ACAC]">
                 Created by {{$author}}
             </span>
-            <progress class="w-full rounded-lg" step="0.01" name="points" min="0" max="1" value={{$progress}}>
+            <div class="flex items-center gap-x-4">
+                <div class="flex w-4/5 h-3 bg-[#C7D3EB] rounded-full overflow-hidden" role="progressbar" aria-valuenow="{{$progress * 100}}" aria-valuemin="0" aria-valuemax="100">
+                    <div class="flex flex-col justify-center rounded-full overflow-hidden bg-[#47B2FF] text-xs text-white text-center whitespace-nowrap transition duration-500" style="width: {{$progress * 100}}%"></div>
+                </div>
+                <span class="text-[#A8ACAC]">
+                    {{$progress * 100}}%
+                </span>
+            </div>
+            {{--<progress class="w-full rounded-lg progress-bar" step="0.01" name="points" min="0" max="1" value={{$progress}}> --}}
         </div>
     </div>
 </a>
