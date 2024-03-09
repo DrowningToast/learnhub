@@ -10,6 +10,7 @@ use App\Models\AcademicInfos;
 use Illuminate\Validation\Rule;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Enum;
 
 class UserController extends Controller
@@ -83,30 +84,45 @@ class UserController extends Controller
 
         auth()->login($user, true);
 
-        return redirect('/')->with('success_message', "สร้างบัญชีผู้ใช้งานสำหรับ " . $formFields["username"] . " เสร็จสิ้น ท่านสามารถล็อคอินได้ทันที");
+        $registerSuccMessage = "สร้างบัญชีผู้ใช้งานสำหรับ " . $formFields["username"] . " เสร็จสิ้น ท่านสามารถล็อคอินได้ทันที";
+
+        if (auth()->user()->role === RoleEnum::Learner) {
+            return redirect('/learn')->with('success_message', $registerSuccMessage);
+        } else if (auth()->user()->role === RoleEnum::Lecturer) {
+            return redirect('/courses/manage')->with('success_message', $registerSuccMessage);
+        }
     }
 
     public function login(Request $request)
     {
         $formFields = $request->validate(
             [
-                'username' => ['required'],
+                'username' => ['required', Rule::exists('credentials', 'username')],
                 'password' => ['required', 'min:8'],
             ],
             [
                 'username.required' => 'โปรดกรอกชื่อผู้ใช้',
                 'password.required' => 'โปรดกรอกรหัสผ่าน',
                 'password.min' => 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร',
+                'username.exists' => 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง',
             ]
         );
 
         $isUserSaveSession = $request->get('saveSession') !== null ? true : false;
 
-        if (auth()->attempt((['username' => $formFields['username'], 'password' => $formFields['password']]), $isUserSaveSession)) {
-            return redirect('/')->with('success_message', 'เข้าสู่ระบบสำเร็จ');
+        $credentials = Credentials::where('username', $formFields['username'])->first();
+        if (!$credentials || !Hash::check($formFields['password'], $credentials->password)) {
+            return back()->with('error_message', 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
         }
 
-        return back()->with('error_message', 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+        $user = Users::where('credential_id', $credentials->id)->first();
+        auth()->login($user, $isUserSaveSession);
+
+        if (auth()->user()->role === RoleEnum::Lecturer) {
+            return redirect('/courses/manage')->with('success_message', 'เข้าสู่ระบบสำเร็จ');
+        } else {
+            return redirect('/learn')->with('success_message', 'เข้าสู่ระบบสำเร็จ');
+        }
     }
 
     /**
