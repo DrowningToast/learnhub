@@ -86,14 +86,14 @@
                 <span class="text-xl font-semibold text-[#6F7979]">filter by</span>
                 <select class="rounded-full bg-[#E2EEFB] text-[#7F92B1] px-4 py-2 border-r-8 border-transparent" name="genere">
                     <option value="all">All</option>
-                    <option value="programming">Programming</option>
-                    <option value="design">Design</option>
-                    <option value="marketing">Marketing</option>
-                    <option value="business">Business</option>
+                    <option value="fundamental">วิชาพื้นฐาน</option>
+                    <option value="design">ดีไซน์</option>
+                    <option value="programming">โปรงแกรมมิ่ง</option>
+                    <option value="applied">ประยุกต์</option>
                 </select>
                 <select class="rounded-full bg-[#E2EEFB] text-[#7F92B1] px-4 py-2 border-r-8 border-transparent" name="time">
-                    <option value="latest">Latest</option>
-                    <option value="oldest">Oldest</option>
+                    <option value="latest">ใหม่สุด</option>
+                    <option value="oldest">เก่าสุด</option>
                 </select>
              </div>
         </form>
@@ -138,7 +138,7 @@
             <div class="px-8 py-6 space-y-6">
                 <div class="flex flex-col items-center gap-y-1">
                     <h3 class="font-semibold text-[#2A638A]">
-                        Profile
+                        โปรไฟล์
                     </h3>
                     <div class="w-28 h-28 rounded-full overflow-hidden"><img class="object-fill" src="{{$profile_src}}" alt="profile portriat" ></div>
                     <h3 class="font-semibold text-[#2A638A] mt-2">
