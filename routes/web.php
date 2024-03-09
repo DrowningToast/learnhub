@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\UserController;
-use App\Http\Middleware\EnsureCanAccessBackOffice;
+use App\Http\Middleware\LecturerRouteGuard;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,10 +35,10 @@ Route::get('/courses/create', [CourseController::class, 'create'])->middleware('
 Route::post('/courses', [CourseController::class, 'store'])->middleware('auth');
 
 // Show Course / Update Course
-Route::get('/courses/manage', [CourseController::class, 'manage'])->middleware(['auth', EnsureCanAccessBackOffice::class]);
+Route::get('/courses/manage', [CourseController::class, 'manage'])->middleware(['auth', LecturerRouteGuard::class]);
 Route::get('/courses/{course}', [CourseController::class, 'show']);
-Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->middleware(['auth', EnsureCanAccessBackOffice::class]);
-Route::put('/courses/{course}', [CourseController::class, 'update'])->middleware(['auth', EnsureCanAccessBackOffice::class]);
+Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->middleware(['auth', LecturerRouteGuard::class]);
+Route::put('/courses/{course}', [CourseController::class, 'update'])->middleware(['auth', LecturerRouteGuard::class]);
 
 Route::get('/learn', function () {
     return view('courses.index');
