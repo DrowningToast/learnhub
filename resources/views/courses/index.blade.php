@@ -86,7 +86,7 @@ $profile_src = 'https://avatars.githubusercontent.com/u/58824744?v=4';
 <x-left_side_layout>
     <section class="grid grid-cols-12 gap-12 rounded-xl bg-white relative">
         <div class="col-span-9 flex flex-col gap-y-6">
-            <h1 class="text-5xl font-bold text-[#4369A2] font-noto-thai">
+            <h1 class="text-4xl font-bold text-[#4369A2] font-noto-thai">
                 คอร์สของฉัน
             </h1>
             <form class="space-y-4">
