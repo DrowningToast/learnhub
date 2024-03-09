@@ -5,14 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Users;
 use App\Enums\RoleEnum;
 use App\Models\Credentials;
+use FileUpload;
 use Illuminate\Http\Request;
 use App\Models\AcademicInfos;
 use Illuminate\Validation\Rule;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Enum;
-use Storage;
 
 class UserController extends Controller
 {

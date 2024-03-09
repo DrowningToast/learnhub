@@ -1,11 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
 use Storage;
 
-class FileUpload extends Controller
+class FileUpload
 {
     private $file;
 
