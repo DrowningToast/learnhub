@@ -48,6 +48,22 @@
                     <span class="text-red-500">{{ $message }}</span>
                 @enderror
         </div>
+        @if ($user->role == \App\Enums\RoleEnum::Lecturer)
+            <div class="flex flex-col gap-y-1">
+                <label class="font-semibold text-2xl text-[#1C1C1C]"for="bankName">ธนาคาร</label>
+                <input class="rounded-2xl border-2 p-3" type="text" name="bankName" value={{old('bankName') ?? $user->bankName}}>
+                @error('bankName')
+                    <span class="text-red-500">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="flex flex-col gap-y-1">
+                <label class="font-semibold text-2xl text-[#1C1C1C]"for="accountNumber">หมายเลขบัญชีธนาคาร</label>
+                <input class="rounded-2xl border-2 p-3" type="text" name="accountNumber" value={{old('accountNumber') ?? $user->accountNumber}} >
+                @error('accountNumber')
+                    <span class="text-red-500">{{ $message }}</span>
+                @enderror
+            </div>
+        @endif
         <div class="flex flex-col gap-y-1">
                 <label class="font-semibold text-2xl text-[#1C1C1C]"for="year">ชั้นปี/ระดับการศึกษา</label>
                 <input class="rounded-2xl border-2 p-3" type="number" name="year" placeholder="ชั้นปีที่ 1" value={{old('year') ?? $user->academicInfo->year}}>
@@ -55,20 +71,20 @@
                     <span class="text-red-500">{{ $message }}</span>
                 @enderror
         </div>
-            <div class="flex flex-col gap-y-1">
-                <label class="font-semibold text-2xl text-[#1C1C1C]"for="institute">สถาบัน/มหาวิทยาลัย</label>
-                <input class="rounded-2xl border-2 p-3" type="text" name="institute" value="{{old('institute') ?? $user->academicInfo->institute}}">
-                @error('institute')
-                    <span class="text-red-500">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="flex flex-col gap-y-1">
-                <label class="font-semibold text-2xl text-[#1C1C1C]"for="campus">วิทยาเขต</label>
-                <input class="rounded-2xl border-2 p-3" type="text" name="campus" value={{old('campus') ?? $user->academicInfo->campus}}>
-                @error('campus')
-                    <span class="text-red-500">{{ $message }}</span>
-                @enderror
-            </div>
+        <div class="flex flex-col gap-y-1">
+            <label class="font-semibold text-2xl text-[#1C1C1C]"for="institute">สถาบัน/มหาวิทยาลัย</label>
+            <input class="rounded-2xl border-2 p-3" type="text" name="institute" value="{{old('institute') ?? $user->academicInfo->institute}}">
+            @error('institute')
+                <span class="text-red-500">{{ $message }}</span>
+            @enderror
+        </div>
+        <div class="flex flex-col gap-y-1">
+            <label class="font-semibold text-2xl text-[#1C1C1C]"for="campus">วิทยาเขต</label>
+            <input class="rounded-2xl border-2 p-3" type="text" name="campus" value={{old('campus') ?? $user->academicInfo->campus}}>
+            @error('campus')
+                <span class="text-red-500">{{ $message }}</span>
+            @enderror
+        </div>
         <div class="flex flex-col gap-y-1">
                 <label class="font-semibold text-2xl text-[#1C1C1C]"for="school">สถานศึกษา</label>
                 <input class="rounded-2xl border-2 p-3" type="text" name="school" value={{old('school') ?? $user->academicInfo->school}}>

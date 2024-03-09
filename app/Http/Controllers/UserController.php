@@ -143,7 +143,7 @@ class UserController extends Controller
         }
 
         $user = Users::find($id);
-
+    
         return view('profile.edit', [
             'user' => $user
         ]);
@@ -172,6 +172,8 @@ class UserController extends Controller
             'school' => ['string', "nullable"],
             'institute' => ['string', "nullable"],
             'campus' => ['string', "nullable"],
+            "bankName" => ["string", "nullable"],
+            "accountNumber" => ["string", "nullable"],
         ], [
             'email.required' => 'โปรดกรอกอีเมล',
             'email.email' => 'โปรดกรอกอีเมลที่ถูกต้อง',
@@ -207,23 +209,33 @@ class UserController extends Controller
         // Validate the role
         if (auth()->user()->role === RoleEnum::Moderator) {
             $targetID = $request->get('id') ?? $id;
-        } else {
-            if ($id != auth()->user()->id) {
-                return back()->with('error_message', 'คุณไม่มีสิทธิ์แก้ไขข้อมูลของผู้ใช้อื่น');
-            }
+        } else if ($id != auth()->user()->id) {
+            return back()->with('error_message', 'คุณไม่มีสิทธิ์แก้ไขข้อมูลของผู้ใช้อื่น');
         }
 
         // update the information
         $target = Users::find($targetID);
+
+        // dd($target->academicInfo);
         // update the academic information
-        $academicInfoResult = $target->academicInfo->updateOrCreate($academicInfo);
+        if ($target->academicInfo->exists()) {
+            $target->academicInfo->update($academicInfo);
+        } else {
+            $academicInfoResult = $target->academicInfo()->create($academicInfo);
+            $profileInfo['academic_id'] = $academicInfoResult->id;
+        }
         // update the profile image src
         if ($request->profile_image_src) {
             $fileUpload = new FileUpload($request->profile_image_src);
             $fileUpload->upload('portrait', $target->id . "-portrait");
         }
+        // If the user is a lecturer, update the banking information
+        if (auth()->user()->role === RoleEnum::Lecturer) {
+            $profileInfo['bankName'] = $fields['bankName'];
+            $profileInfo['accountNumber'] = $fields['accountNumber'];
+            // dd($profileInfo);
+        }
 
-        $profileInfo['academic_id'] = $academicInfoResult->id;
         $target->update($profileInfo);
 
         if (auth()->user()->role === RoleEnum::Moderator) {
