@@ -19,6 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 // LOGIN / REGISTER / LOGOUT
 Route::get('/login', [UserController::class, 'index'])->middleware('guest')->name('login');
 Route::post('/login', [UserController::class, 'login'])->middleware('guest');
@@ -28,6 +29,8 @@ Route::post('/register', [UserController::class, 'store'])->middleware('guest');
 
 Route::get('/logout', [UserController::class, 'logout'])->middleware('auth');
 
+
+
 // Create Course
 Route::get('/courses/create', [CourseController::class, 'create'])->middleware('auth');
 Route::post('/courses', [CourseController::class, 'store'])->middleware('auth');
@@ -36,3 +39,7 @@ Route::post('/courses', [CourseController::class, 'store'])->middleware('auth');
 Route::get('/courses/{course}', [CourseController::class, 'show']);
 Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->middleware('auth');
 Route::put('/courses/{course}', [CourseController::class, 'update'])->middleware('auth');
+
+Route::get('/learn', function () {
+    return view('courses.index');
+})->middleware('auth');
