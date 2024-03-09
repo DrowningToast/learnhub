@@ -12,6 +12,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Enum;
+use Storage;
 
 class UserController extends Controller
 {
@@ -203,44 +204,32 @@ class UserController extends Controller
             'campus' => $fields['campus'],
         ];
 
-        // Check permission level
+        $targetID = $id;
+        // Validate the role
         if (auth()->user()->role === RoleEnum::Moderator) {
-
-            $target = Users::find($id);
-            $academicInfoId = $target->academicInfo->updateOrCreate($profileInfo);
-            $fields['academic_id'] = $academicInfoId;
-
-            $result = Users::find($id);
-            $result->update($profileInfo);
-
-            if (!$result) {
-                return back()->with('error_message', 'เกิดข้อผิดพลาดในการอัพเดทข้อมูล');
-            }
-
-            $user = $fields;
-
-            return redirect('/users/' . $fields)->with('success_message', 'อัพเดทข้อมูลสำเร็จ');
+            $targetID = $request->get('id') ?? $id;
         } else {
-            // Validate authentication
-            if ($id !== auth()->user()->id) {
+            if ($id != auth()->user()->id) {
                 return back()->with('error_message', 'คุณไม่มีสิทธิ์แก้ไขข้อมูลของผู้ใช้อื่น');
             }
+        }
 
-            $academicInfoResult = auth()->user()->academicInfo->updateOrCreate($academicInfo);
-            $profileInfo['academic_id'] = $academicInfoResult->id;
+        // update the information
+        $target = Users::find($targetID);
+        // update the academic information
+        $academicInfoResult = $target->academicInfo->updateOrCreate($academicInfo);
+        // update the profile image src
+        if ($request->profile_image_src) {
+            $target['profile_image_src'] = Storage::disk('sftp')->putFileAs('portrait', $request->profile_image_src, $target->id . "-portrait");
+            $target['profile_image_src'] = 'https://' . env('SFTP_HOST') . '/' . Storage::disk('sftp')->url($target['profile_image_src']);    
+        }
 
-            $userResult = auth()->user()->update($profileInfo);
+        $profileInfo['academic_id'] = $academicInfoResult->id;
+        $target->update($profileInfo);
 
-            // $result = Users::find($id)->update($profileInfo);
-            // $result = auth()->user()->update($profileInfo);
-
-            $user = Users::find(auth()->user()->id);
-            $user->update($profileInfo);
-
-            if (!$user) {
-                return back()->with('error_message', 'เกิดข้อผิดพลาดในการอัพเดทข้อมูล');
-            }
-
+        if (auth()->user()->role === RoleEnum::Moderator) {
+            return redirect('/users/' . $fields)->with('success_message', 'อัพเดทข้อมูลสำเร็จ');
+        } else {
             return $this->edit($id)->with('success_message', 'อัพเดทข้อมูลสำเร็จ');
         }
     }

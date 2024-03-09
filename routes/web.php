@@ -50,3 +50,8 @@ Route::put('/courses/{course}', [CourseController::class, 'update'])->middleware
 Route::get('/learn', function () {
     return view('courses.index');
 })->middleware('auth');
+
+// Edit (self) profile
+Route::get('/profile', [UserController::class, 'edit'])->middleware('auth');
+Route::put('/profile', [UserController::class, 'update'])->middleware('auth');
+
