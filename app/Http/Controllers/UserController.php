@@ -122,29 +122,111 @@ class UserController extends Controller
      */
     public function edit(string $id = NULL)
     {
-
         if ($id === NULL) {
             $id = auth()->user()->id;
         }
 
+        $user = Users::find($id);
 
-        $user = $this->getCurrentUser();
-        return view('profile.edit', compact('user'));
+        return view('profile.edit', [
+            'user' => $user
+        ]);
+    }
+
+    public function test(Request $request)
+    {
+        dd($request->all());
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
-        $request->validate([
-            'first_name' => ['string'],
-            'last_name' => ['string'],
-            'email' => ['required', 'email'],
-            'phone' => ['required'],
-            'profile_image' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+        $id = auth()->user()->id;
+
+        // Validate the information
+        $fields = $request->validate([
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($id)],
+            'first_name' => ['string', "max:255", "nullable"],
+            'last_name' => ['string', "max:255", "nullable"],
+            'phone' => ['string', "digits_between:10,10", "nullable"],
+            'profile_image' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048', "nullable"],
+            'year' => ['integer', 'min:1', 'max:8', "nullable"],
+            'school' => ['string', "nullable"],
+            'institute' => ['string', "nullable"],
+            'campus' => ['string', "nullable"],
+        ], [
+            'email.required' => 'โปรดกรอกอีเมล',
+            'email.email' => 'โปรดกรอกอีเมลที่ถูกต้อง',
+            'email.unique' => 'อีเมลนี้ถูกใช้ไปแล้ว',
+            'first_name.string' => 'ชื่อต้องเป็นตัวอักษร',
+            'last_name.string' => 'นามสกุลต้องเป็นตัวอักษร',
+            'phone.string' => 'โปรดกรอกเบอร์โทรศัพท์ที่ถูกต้อง',
+            'phone.digits_between' => 'โปรดกรอกเบอร์โทรศัพท์ที่ถูกต้อง',
+            'profile_image.image' => 'โปรดอัพโหลดไฟล์รูปภาพ',
+            'profile_image.mimes' => 'โปรดอัพโหลดไฟล์รูปภาพที่ถูกต้อง',
+            'profile_image.max' => 'ไฟล์รูปภาพต้องมีขนาดไม่เกิน 2MB',
+            'year.integer' => 'โปรดกรอกระดับชั้นปีที่ถูกต้อง',
+            'school.string' => 'โปรดกรอกชื่อโรงเรียนที่ถูกต้อง',
+            'institute.string' => 'โปรดกรอกชื่อสถาบันที่ถูกต้อง',
+            'campus.string' => 'โปรดกรอกชื่อวิทยาเขตที่ถูกต้อง',
         ]);
+
+        $profileInfo = [
+            'email' => $fields['email'],
+            'first_name' => $fields['first_name'],
+            'last_name' => $fields['last_name'],
+            'phone' => $fields['phone'],
+        ];
+
+        $academicInfo = [
+            'year' => $fields['year'],
+            'school' => $fields['school'],
+            'institute' => $fields['institute'],
+            'campus' => $fields['campus'],
+        ];
+
+        // Check permission level
+        if (auth()->user()->role === RoleEnum::Moderator) {
+
+            $target = Users::find($id);
+            $academicInfoId = $target->academicInfo->updateOrCreate($profileInfo);
+            $fields['academic_id'] = $academicInfoId;
+
+            $result = Users::find($id);
+            $result->update($profileInfo);
+
+            if (!$result) {
+                return back()->with('error_message', 'เกิดข้อผิดพลาดในการอัพเดทข้อมูล');
+            }
+
+            $user = $fields;
+
+            return redirect('/users/' . $fields)->with('success_message', 'อัพเดทข้อมูลสำเร็จ');
+        } else {
+            // Validate authentication
+            if ($id !== auth()->user()->id) {
+                return back()->with('error_message', 'คุณไม่มีสิทธิ์แก้ไขข้อมูลของผู้ใช้อื่น');
+            }
+
+            $academicInfoResult = auth()->user()->academicInfo->updateOrCreate($academicInfo);
+            $profileInfo['academic_id'] = $academicInfoResult->id;
+
+            $userResult = auth()->user()->update($profileInfo);
+
+            // $result = Users::find($id)->update($profileInfo);
+            // $result = auth()->user()->update($profileInfo);
+
+            $user = Users::find(auth()->user()->id);
+            $user->update($profileInfo);
+
+            if (!$user) {
+                return back()->with('error_message', 'เกิดข้อผิดพลาดในการอัพเดทข้อมูล');
+            }
+
+            return $this->edit($id)->with('success_message', 'อัพเดทข้อมูลสำเร็จ');
+        }
     }
 
     /**
@@ -165,11 +247,14 @@ class UserController extends Controller
         return redirect('/')->with('success_message', 'ออกจากระบบเสร็จสิ้น');
     }
 
-    public function getCurrentUser() {
-        $user = Users::find(auth()->user()->id);
-
-        $user->profile_image_src = $user->profile_image_src ?? asset('images/icons/DefaultPortrait.jpg');
-
-        return $user;
+    public function getCurrentUser($academic = false) {
+        if ($academic) {
+            $user = Users::find(auth()->user()->id)->with('academicInfo')->get();
+            return $user;
+        } else {
+            $user = Users::find(auth()->user()->id);
+            return $user;
+        }
     }
+    
 }

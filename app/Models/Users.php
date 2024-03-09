@@ -29,7 +29,7 @@ class Users extends Authenticatable
         'name',
         'profile_image_src',
         'email',
-        'phone_number',
+        'phone',
         'first_name',
         'last_name',
         'points',
@@ -97,5 +97,11 @@ class Users extends Authenticatable
     public function reviews()
     {
         return $this->hasMany(Reviews::class, 'user_id', 'id');
+    }
+
+    // Handle profile_image_src to the default image if it's null
+    public function withDefaultPortrait() {
+        $this->profile_image_src = $this->profile_image_src ? $this->profile_image_src : asset('images/icons/DefaultPortrait.jpg');
+        return $this;
     }
 }

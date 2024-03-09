@@ -41,3 +41,4 @@ Route::get('/courses/{id}', function ($id) {
 
 // Edit Profile
 Route::get('/profile', [UserController::class, 'edit'])->middleware('auth');
+Route::put('/profile', [UserController::class, 'update'])->middleware('auth');
