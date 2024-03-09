@@ -1,8 +1,8 @@
 @vite('resources/css/app.css')
 
 <section class="grid grid-cols-4 gap-x-8 rounded-xl bg-white p-24">
-    <div class="col-span-3 flex flex-col gap-y-8">
-        <h1 class="text-5xl font-bold text-[#4369A2]">
+    <div class="col-span-3 flex flex-col gap-y-6">
+        <h1 class="text-5xl font-bold text-[#4369A2] font-noto-thai">
             คอร์สของฉัน
         </h1>
         <form class="space-y-4">
@@ -16,16 +16,16 @@
                 <div class="w-20 from-[#3D6EB3] to-[#B4C8E9] bg-gradient-to-t absolute -inset-y-24 -right-5 transform rotate-45 opacity-60">
                 </div>
             </div>
-            <div class="flex gap-x-4">
-                <span>filter by</span>
-                <select name="genere">
+            <div class="flex items-center gap-x-4">
+                <span class="text-xl font-semibold text-[#6F7979]">filter by</span>
+                <select class="rounded-full bg-[#E2EEFB] text-[#7F92B1] px-4 py-2 border-r-8 border-transparent" name="genere">
                     <option value="all">All</option>
                     <option value="programming">Programming</option>
                     <option value="design">Design</option>
                     <option value="marketing">Marketing</option>
                     <option value="business">Business</option>
                 </select>
-                <select name="time">
+                <select class="rounded-full bg-[#E2EEFB] text-[#7F92B1] px-4 py-2 border-r-8 border-transparent" name="time">
                     <option value="latest">Latest</option>
                     <option value="oldest">Oldest</option>
                 </select>
