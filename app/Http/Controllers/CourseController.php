@@ -25,6 +25,14 @@ class CourseController extends Controller
         return view('courses.create');
     }
 
+    public function manage()
+    {
+        return view('courses.manage', [
+            'courses' => Courses::where('lecturer_id', auth()->id())->get()
+
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -95,10 +103,6 @@ class CourseController extends Controller
         if (!$request->discount_percent) {
             $request['discount_percent'] = 0.0;
         }
-
-
-
-        // dd($request->all());
 
         $formFields = $request->validate([
             'title' => ['required'],

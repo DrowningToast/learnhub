@@ -9,7 +9,9 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="bg-gradient-to-b from-[#4369A2] to-[#00476C] h-screen p-4 pl-0 font-noto-thai">
+<body class="bg-gradient-to-b from-[#4369A2] to-[#00476C] h-screen p-4 pl-0 font-noto-thai relative">
+    <x-toast />
+
     <div class="grid grid-cols-6 h-full relative">
         <div class="col-span-1 flex flex-col">
             <p class="text-3xl 2xl:text-4xl font-beth text-white text-center mt-8"><a href="/">LearnHub</a></p>
