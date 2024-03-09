@@ -16,7 +16,7 @@ class CourseCard extends Component
         public string $description,
         public string $src,
         public string $href,
-        public string $owner = '',
+        public string $author = '',
         // 0.0 -> 1.0
         public float $progress
     )
