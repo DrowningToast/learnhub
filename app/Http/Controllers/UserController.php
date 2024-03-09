@@ -220,8 +220,8 @@ class UserController extends Controller
         $academicInfoResult = $target->academicInfo->updateOrCreate($academicInfo);
         // update the profile image src
         if ($request->profile_image_src) {
-            $target['profile_image_src'] = Storage::disk('sftp')->putFileAs('portrait', $request->profile_image_src, $target->id . "-portrait");
-            $target['profile_image_src'] = 'https://' . env('SFTP_HOST') . '/' . Storage::disk('sftp')->url($target['profile_image_src']);    
+            $fileUpload = new FileUpload($request->profile_image_src);
+            $fileUpload->upload('portrait', $target->id . "-portrait");
         }
 
         $profileInfo['academic_id'] = $academicInfoResult->id;
