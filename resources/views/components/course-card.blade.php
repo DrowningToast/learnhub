@@ -1,5 +1,5 @@
 <a href="/learn/{{$href}}">
-    <div class="grid grid-cols-10 gap-x-8 rounded-2xl bg-[#E2EEFB] p-8">
+    <div class="grid grid-cols-10 gap-x-8 rounded-2xl bg-[#E2EEFB] hover:bg-[#F2E6FF] p-8">
         <div class="col-span-4">
             <img class="rounded-md" src={{$src}} alt={{$title . "preview video"}}>
         </div>
@@ -21,7 +21,6 @@
                     {{$progress * 100}}%
                 </span>
             </div>
-            {{--<progress class="w-full rounded-lg progress-bar" step="0.01" name="points" min="0" max="1" value={{$progress}}> --}}
         </div>
     </div>
 </a>

@@ -33,6 +33,26 @@
             'href' => '1'
         ]
     ];
+
+    $suggested = [
+        [
+            "title" => "Python Programming ฉบับคนไม่เคยเขียนโปรแกรม",
+            "author" => "John Doe",
+        ],[
+            "title" => "Python Programming ฉบับคนไม่เคยเขียนโปรแกรม",
+            "author" => "John Doe",
+        ],[
+            "title" => "Python Programming ฉบับคนไม่เคยเขียนโปรแกรม",
+            "author" => "John Doe",
+        ],[
+            "title" => "Python Programming ฉบับคนไม่เคยเขียนโปรแกรม",
+            "author" => "John Doe",
+        ],[
+            "title" => "Python Programming ฉบับคนไม่เคยเขียนโปรแกรม",
+            "author" => "John Doe",
+        ]
+
+    ]
 ?>
 
 @vite('resources/css/app.css')
@@ -79,17 +99,31 @@
                     href="{{$course['href']}}"
                 />
             @endforeach
-            {{-- <x-CourseCard 
-            title="Python Programming ฉบับคนไม่เคยเขียนโปรแกรม"
-            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, deleniti."
-            author="John Doe"
-            src="https://www.udacity.com/blog/wp-content/uploads/2020/12/Python-Tutorial_Blog-scaled.jpeg" 
-            progress={{0.3}} 
-            href="1"         
-            /> --}}
          </div>
     </div>
-    <div class="rounded-xl shadow-lg">
-
+    <div class="rounded-xl shadow-lg px-8 py-16 font-noto-thai">
+        <div class="flex items-baseline">
+            <h2 class="text-xl font-bold text-[#4369A2] ">
+                คอร์สน่าสนใจ
+            </h2>
+            <a class="ml-auto text-sm text-[#9CD0FD] font-semibold" href="#">
+                ดูทั้งหมด
+            </a>
+        </div>
+           <ul class="list-group flex flex-col gap-y-3 mt-6">
+                @foreach ($suggested as $key=>$course)
+                    <li class="flex gap-x-2 text-sm font-semibold text-[#6F7881]">
+                        <div class="text-sm font-semibold text-[#6F7881]">
+                            {{$key+1}}.
+                        </div>
+                        <div class="flex flex-col">
+                            <h5>{{$course['title']}} </h5>
+                            <span class="text-sm font-medium text-[#C1C7CE]">
+                                สอนโดย {{$course['author']}}
+                            </span>
+                        </div>
+                    </li>
+                @endforeach
+           </ul>
     </div>
 </section>
