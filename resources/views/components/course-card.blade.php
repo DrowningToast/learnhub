@@ -3,7 +3,7 @@
         <div class="col-span-4">
             <img class="rounded-md" src={{$src}} alt={{$title . "preview video"}}>
         </div>
-        <div class="col-span-6 flex flex-col justify-between">
+        <div class="col-span-6 flex flex-col justify-between gap-y-4">
             <h1 class="font-bold text-xl">
                 {{$title}}
             </h1>

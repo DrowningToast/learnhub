@@ -1,7 +1,44 @@
+<?php
+    $courses = [
+        [
+            'title' => 'Python Programming ฉบับคนไม่เคยเขียนโปรแกรม',
+            'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, deleniti.',
+            'author' => 'John Doe',
+            'src' => 'https://www.udacity.com/blog/wp-content/uploads/2020/12/Python-Tutorial_Blog-scaled.jpeg',
+            'progress' => 0.5,
+            'href' => '1'
+        ],
+        [
+            'title' => 'Python Programming ฉบับคนไม่เคยเขียนโปรแกรม',
+            'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, deleniti.',
+            'author' => 'John Doe',
+            'src' => 'https://www.udacity.com/blog/wp-content/uploads/2020/12/Python-Tutorial_Blog-scaled.jpeg',
+            'progress' => 0.5,
+            'href' => '1'
+        ],
+        [
+            'title' => 'Python Programming ฉบับคนไม่เคยเขียนโปรแกรม',
+            'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, deleniti.',
+            'author' => 'John Doe',
+            'src' => 'https://www.udacity.com/blog/wp-content/uploads/2020/12/Python-Tutorial_Blog-scaled.jpeg',
+            'progress' => 0.5,
+            'href' => '1'
+        ],
+        [
+            'title' => 'Python Programming ฉบับคนไม่เคยเขียนโปรแกรม',
+            'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, deleniti.',
+            'author' => 'John Doe',
+            'src' => 'https://www.udacity.com/blog/wp-content/uploads/2020/12/Python-Tutorial_Blog-scaled.jpeg',
+            'progress' => 0.5,
+            'href' => '1'
+        ]
+    ];
+?>
+
 @vite('resources/css/app.css')
 
-<section class="grid grid-cols-4 gap-x-8 rounded-xl bg-white p-24">
-    <div class="col-span-3 flex flex-col gap-y-6">
+<section class="grid grid-cols-4 rounded-xl bg-white">
+    <div class="col-span-3 flex flex-col gap-y-6 px-12 py-16">
         <h1 class="text-5xl font-bold text-[#4369A2] font-noto-thai">
             คอร์สของฉัน
         </h1>
@@ -32,11 +69,24 @@
              </div>
         </form>
          <div class="flex flex-col gap-y-8">
-            <x-CourseCard title="Python Programming ฉบับคนไม่เคยเขียนโปรแกรม"
+            @foreach ($courses as $course)
+                <x-CourseCard 
+                    title="{{$course['title']}}"
+                    description="{{$course['description']}}"
+                    author="{{$course['author']}}"
+                    src="{{$course['src']}}"
+                    progress="{{$course['progress']}}"
+                    href="{{$course['href']}}"
+                />
+            @endforeach
+            {{-- <x-CourseCard 
+            title="Python Programming ฉบับคนไม่เคยเขียนโปรแกรม"
             description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, deleniti."
-            author="John Doe" src="https://www.udacity.com/blog/wp-content/uploads/2020/12/Python-Tutorial_Blog-scaled.jpeg" progress="0.5" 
+            author="John Doe"
+            src="https://www.udacity.com/blog/wp-content/uploads/2020/12/Python-Tutorial_Blog-scaled.jpeg" 
+            progress={{0.3}} 
             href="1"         
-            />
+            /> --}}
          </div>
     </div>
     <div class="rounded-xl shadow-lg">
