@@ -26,3 +26,11 @@ Route::get('/register', [UserController::class, 'create'])->middleware('guest');
 Route::post('/register', [UserController::class, 'store'])->middleware('guest');
 
 Route::get('/logout', [UserController::class, 'logout'])->middleware('auth');
+
+Route::get('/video', function(){
+    return view('coursevideo');
+});
+
+route::get('/test', function(){
+    return view('chapter');
+});
