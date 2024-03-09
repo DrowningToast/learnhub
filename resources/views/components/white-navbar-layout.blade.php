@@ -8,7 +8,13 @@
 
     @vite('resources/css/app.css')
 </head>
-<body class="w-full min-h-screen font-noto-thai text-[#171A1F]">
-    {{ $slot }}
+
+<body class="w-full min-h-screen font-noto-thai">
+    <x-toast />
+
+    <main>
+        {{ $slot }}
+    </main>
 </body>
+
 </html>

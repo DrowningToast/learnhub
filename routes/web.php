@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\LecturerRouteGuard;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,11 +30,16 @@ Route::post('/register', [UserController::class, 'store'])->middleware('guest');
 
 Route::get('/logout', [UserController::class, 'logout'])->middleware('auth');
 
+// Create Course
+Route::get('/courses/create', [CourseController::class, 'create'])->middleware('auth');
+Route::post('/courses', [CourseController::class, 'store'])->middleware('auth');
+
+// Show Course / Update Course
+Route::get('/courses/manage', [CourseController::class, 'manage'])->middleware(['auth', LecturerRouteGuard::class]);
+Route::get('/courses/{course}', [CourseController::class, 'show']);
+Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->middleware(['auth', LecturerRouteGuard::class]);
+Route::put('/courses/{course}', [CourseController::class, 'update'])->middleware(['auth', LecturerRouteGuard::class]);
+
 Route::get('/learn', function () {
     return view('courses.index');
-});
-// ->middleware('auth');
-
-Route::get('/courses/{id}', function ($id) {
-    return view('courses.show');
-});
+})->middleware('auth');
