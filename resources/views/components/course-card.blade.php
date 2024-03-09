@@ -11,7 +11,7 @@
                 {{$description}}
             </p>
             <span class="font-bold text-sm text-[#A8ACAC]">
-                Created by {{$author}}
+                สอนโดย {{$author}}
             </span>
             <div class="flex items-center gap-x-4">
                 <div class="flex w-4/5 h-3 bg-[#C7D3EB] rounded-full overflow-hidden" role="progressbar" aria-valuenow="{{$progress * 100}}" aria-valuemin="0" aria-valuemax="100">
