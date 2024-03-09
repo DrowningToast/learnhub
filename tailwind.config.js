@@ -11,8 +11,15 @@ export default {
                 'beth': ['Beth Ellen', 'cursive'],
                 'noto-thai': ['Noto Sans Thai', 'sans-serif'],
                 'poppins': ['Poppins', 'sans-serif'],
-            }
+            },
+            backgroundColor: {
+                'radial-gradient': 'radial-gradient(#e66465, #9198e5)',
+            },
         },
     },
-    plugins: [],
+    plugins: [
+        require('tailwindcss'),
+        require('autoprefixer'),
+        require("daisyui")
+    ],
 };
