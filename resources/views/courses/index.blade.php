@@ -38,18 +38,23 @@
         [
             "title" => "Python Programming ฉบับคนไม่เคยเขียนโปรแกรม",
             "author" => "John Doe",
+            "href" => "1"
         ],[
             "title" => "Python Programming ฉบับคนไม่เคยเขียนโปรแกรม",
             "author" => "John Doe",
+            "href" => "1"
         ],[
             "title" => "Python Programming ฉบับคนไม่เคยเขียนโปรแกรม",
             "author" => "John Doe",
+            "href" => "1"
         ],[
             "title" => "Python Programming ฉบับคนไม่เคยเขียนโปรแกรม",
             "author" => "John Doe",
+            "href" => "1"
         ],[
             "title" => "Python Programming ฉบับคนไม่เคยเขียนโปรแกรม",
             "author" => "John Doe",
+            "href" => "1"
         ]
 
     ];
@@ -126,12 +131,14 @@
                         <div class="text-sm font-semibold text-[#6F7881]">
                             {{$key+1}}.
                         </div>
-                        <div class="flex flex-col">
-                            <h5>{{$course['title']}} </h5>
-                            <span class="text-sm font-medium text-[#C1C7CE]">
-                                สอนโดย {{$course['author']}}
-                            </span>
-                        </div>
+                        <a href="/learn/{{$course['href']}}">
+                            <div class="flex flex-col">
+                                <h5>{{$course['title']}} </h5>
+                                <span class="text-sm font-medium text-[#C1C7CE]">
+                                    สอนโดย {{$course['author']}}
+                                </span>
+                            </div>
+                        </a>
                     </li>
                 @endforeach
             </ul>
