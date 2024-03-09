@@ -20,6 +20,9 @@ return new class extends Migration {
             $table->string("first_name")->nullable()->default("");
             $table->string("last_name")->nullable()->default("");
             $table->integer("points")->nullable();
+            $table->string("bankName")->nullable()->default("");
+            $table->string("accountNumber")->nullable()->default("");
+
             $table->enum("role", RoleEnum::values())->default(RoleEnum::Learner);
 
             $table->unsignedBigInteger("credential_id")->unique();

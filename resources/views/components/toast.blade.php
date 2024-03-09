@@ -17,7 +17,6 @@
             <div class=" font-semibold text-sm flex flex-row items-center gap-4 rounded-full">
                 <img src="{{ asset('images/icons/error.png') }}" alt="" class="w-8 h-8">
                 {{ session('error_message') }}
-
                 <div onclick="handleClose()" class="font-semibold text-[#555] cursor-pointer">x</div>
             </div>
         </div>
