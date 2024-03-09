@@ -28,6 +28,11 @@ Route::post('/register', [UserController::class, 'store'])->middleware('guest');
 
 Route::get('/logout', [UserController::class, 'logout'])->middleware('auth');
 
-// Create Course / Show Course / Edit Course.
+// Create Course
 Route::get('/courses/create', [CourseController::class, 'create'])->middleware('auth');
 Route::post('/courses', [CourseController::class, 'store'])->middleware('auth');
+
+// Show Course / Update Course
+Route::get('/courses/{course}', [CourseController::class, 'show']);
+Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->middleware('auth');
+Route::put('/courses/{course}', [CourseController::class, 'update'])->middleware('auth');

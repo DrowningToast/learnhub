@@ -30,22 +30,21 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-
-        $request['buy_price'] = $request->buy_price ? number_format($request->buy_price, 2) : null;
-        $request['discount_percent'] = $request->discount_percent ? number_format($request->discount_percent, 2) : null;
+        $request['buy_price'] = $request->buy_price ? number_format($request->buy_price, 2) : 0;
+        $request['discount_percent'] = $request->discount_percent ? number_format($request->discount_percent, 2) : 0;
 
         $formFields = $request->validate([
             'title' => ['required'],
-            'buy_price' => ['decimal:2', 'nullable'],
-            'discount_percent' => ['decimal:2', 'nullable'],
+            'buy_price' => ['required'],
+            'discount_percent' => ['required'],
             'cover_image_src' => ['mimes:jpeg,png,jpg,webp', 'required']
         ], [
             'title.required' => 'โปรดใส่ชื่อคอร์ส',
-            'buy_price.decimal' => 'ราคาคอร์สเรียนต้องเป็นตัวเลข หรือทศนิยม',
-            'discount_percent.numeric' => 'เปอร์เซนต์ส่วนลดต้องเป็นตัวเลข หรือทศนิยม',
             'cover_image_src.image' => 'โปรดใส่ไฟล์รูปภาพเท่านั้น',
             'cover_image_src.mimes' => 'ไฟล์รูปภาพต้องเป็นรูปภาพชนิด jpeg, png, jpg, webp เท่านั้น',
-            'cover_image_src.required' => 'โปรดใส่ไฟล์รูปภาพ'
+            'cover_image_src.required' => 'โปรดใส่ไฟล์รูปภาพ',
+            'buy_price.required' => 'โปรดใส่ราคาคอร์สเรียน',
+            'discount_percent.required' => 'โปรดใส่เปอร์เซนต์ส่วนลด'
         ]);
 
         $formFields['lecturer_id'] = auth()->id();
@@ -54,10 +53,6 @@ class CourseController extends Controller
         $formFields['cover_image_src'] = 'https://' . env('SFTP_HOST') . '/' . Storage::disk('sftp')->url($formFields['cover_image_src']);
 
         $formFields['buy_price'] = number_format($formFields['buy_price'], 2);
-
-        if (!$formFields['discount_percent']) {
-            $formFields['discount_percent'] = 0;
-        }
 
         $course = Courses::create($formFields);
 
@@ -69,7 +64,9 @@ class CourseController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('courses.show', [
+            'course' => Courses::find($id)
+        ]);
     }
 
     /**
@@ -77,15 +74,59 @@ class CourseController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('courses.edit', [
+            'course' => Courses::find($id)
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Courses $course)
     {
-        //
+        if ($course->lecturer_id !== auth()->id()) {
+            return back()->with('error_message', 'คุณไม่มีสิทธิ์แก้ไขคอร์สเรียนนี้');
+        }
+
+        if (!$request->buy_price) {
+            $request['buy_price'] = 0.0;
+        }
+
+        if (!$request->discount_percent) {
+            $request['discount_percent'] = 0.0;
+        }
+
+
+
+        // dd($request->all());
+
+        $formFields = $request->validate([
+            'title' => ['required'],
+            'buy_price' => ['required'],
+            'discount_percent' => ['required'],
+        ], [
+            'title.required' => 'โปรดใส่ชื่อคอร์ส',
+            'buy_price.decimal' => 'ราคาคอร์สเรียนต้องเป็นตัวเลข หรือทศนิยม',
+            'discount_percent.decimal' => 'เปอร์เซนต์ส่วนลดต้องเป็นตัวเลข หรือทศนิยม',
+            'buy_price.required' => 'โปรดใส่ราคาคอร์สเรียน',
+            'discount_percent.required' => 'โปรดใส่เปอร์เซนต์ส่วนลด'
+        ]);
+
+        if ($request->has('cover_image_src')) {
+            $request->validate([
+                'cover_image_src' => ['mimes:jpeg,png,jpg,webp']
+            ], [
+                'cover_image_src.mimes' => 'ไฟล์รูปภาพต้องเป็นรูปภาพชนิด jpeg, png, jpg, webp เท่านั้น',
+                'cover_image_src.required' => 'โปรดใส่ไฟล์รูปภาพ'
+            ]);
+
+            $formFields['cover_image_src'] = Storage::disk('sftp')->put('courses', $request->cover_image_src);
+            $formFields['cover_image_src'] = 'https://' . env('SFTP_HOST') . '/' . Storage::disk('sftp')->url($formFields['cover_image_src']);
+        }
+
+        $course->update($formFields);
+
+        return redirect("/courses/" . $course->id)->with('success_message', 'อัพเดทคอร์สเรียนสำเร็จ!');
     }
 
     /**
