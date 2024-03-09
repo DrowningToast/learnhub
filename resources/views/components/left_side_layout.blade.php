@@ -23,6 +23,15 @@
                     <p class="text-white font-semibold">หน้าเเรก</p>
                 </a>
 
+                <a href="/lecturer/transaction"
+                    class="flex flex-row items-center gap-4 text-lg text-white opacity-50 hover:opacity-100"
+                    style="text-decoration: none !important; color: black;">
+                    <img src="{{ asset('images/icons/lecturer/transaction/dollar.png') }}" alt="Settings"
+                        class="w-8">
+                    <p class="text-white font-semibold">ธุรกรรม</p>
+                </a>
+
+
                 <a href="/courses/manage"
                     class="flex flex-row items-center gap-4 text-lg text-white opacity-50 hover:opacity-100"
                     style="text-decoration: none !important; color: black;">
