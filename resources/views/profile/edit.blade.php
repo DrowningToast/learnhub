@@ -59,8 +59,20 @@
             @if ($user->role == \App\Enums\RoleEnum::Lecturer)
                 <div class="flex flex-col gap-y-1">
                     <label class="font-semibold text-2xl text-[#1C1C1C]"for="bankName">ธนาคาร</label>
-                    <input class="rounded-2xl border-2 p-3" type="text" name="bankName"
-                        value={{ old('bankName') ?? $user->bankName }}>
+                    <select class="rounded-2xl border-2 p-3" name="bankName">
+                        <option value="" selected>เลือกธนาคาร</option>
+                        <option value="SCB" {{ $user->bankName == 'SCB' ? 'selected' : '' }}>ธนาคารไทยพาณิชย์
+                        </option>
+                        <option value="KBANK" {{ $user->bankName == 'KBANK' ? 'selected' : '' }}>ธนาคารกสิกรไทย
+                        </option>
+                        <option value="KTB" {{ $user->bankName == 'KTB' ? 'selected' : '' }}>ธนาคารกรุงไทย</option>
+                        <option value="BBL" {{ $user->bankName == 'BBL' ? 'selected' : '' }}>ธนาคารกรุงเทพ</option>
+                        <option value="PROMPTPAY" {{ $user->bankName == 'PROMPTPAY' ? 'selected' : '' }}>พร้อมเพย์
+                        </option>
+                    </select>
+
+                    {{-- <input class="rounded-2xl border-2 p-3" type="text" name="bankName"
+                        value={{ old('bankName') ?? $user->bankName }}> --}}
                     @error('bankName')
                         <span class="text-red-500">{{ $message }}</span>
                     @enderror
