@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class CourseByUser extends Model
 {
+    protected $table = 'course_by_user';
+
     use HasFactory;
 
     protected $fillable = [
