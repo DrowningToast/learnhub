@@ -52,11 +52,16 @@ Route::get('/courses/{course}', [CourseController::class, 'show']);
 Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->middleware(['auth', LecturerRouteGuard::class]);
 Route::put('/courses/{course}', [CourseController::class, 'update'])->middleware(['auth', LecturerRouteGuard::class]);
 
+// For moderator
 Route::get('/moderator', [ModeratorController::class, 'index'])->middleware(['auth', ModeratorRouteGuard::class]);
 Route::get('/moderator/course', [ModeratorController::class, 'course'])->middleware(['auth', ModeratorRouteGuard::class]);
 Route::get('/moderator/lecturer', [ModeratorController::class, 'lecturer'])->middleware(['auth', ModeratorRouteGuard::class]);
 Route::get('/moderator/learner', [ModeratorController::class, 'learner'])->middleware(['auth', ModeratorRouteGuard::class]);
 Route::get('/moderator/withdraw', [ModeratorController::class, 'transaction'])->middleware(['auth', ModeratorRouteGuard::class]);
+
+// edit (any) profile
+Route::get('/moderator/learner/edit/{id}', [UserController::class, 'edit'])->middleware(['auth', ModeratorRouteGuard::class]);
+
 // Transactions
 Route::get('lecturer/transaction', [TransactionController::class, 'index'])->middleware(['auth', LecturerRouteGuard::class]);
 
@@ -73,4 +78,3 @@ Route::get('/learn', function () {
 // Edit (self) profile
 Route::get('/profile', [UserController::class, 'edit'])->middleware('auth');
 Route::put('/profile', [UserController::class, 'update'])->middleware('auth');
-

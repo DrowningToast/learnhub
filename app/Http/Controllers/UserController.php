@@ -235,7 +235,7 @@ class UserController extends Controller
         $target->update($profileInfo);
 
         if (auth()->user()->role === RoleEnum::Moderator) {
-            return redirect('/users/' . $fields)->with('success_message', 'อัพเดทข้อมูลสำเร็จ');
+            return redirect('/moderator/learner/edit/' . $targetID)->with('success_message', 'อัพเดทข้อมูลสำเร็จ');
         } else {
             return $this->edit($id)->with('success_message', 'อัพเดทข้อมูลสำเร็จ');
         }

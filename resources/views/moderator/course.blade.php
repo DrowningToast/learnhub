@@ -48,11 +48,11 @@ $courses = [
     <section class=" gap-12 rounded-xl bg-white relative w-full">
         <div class="col-span-9 flex flex-col gap-y-6 w-full">
             <h1 class="text-5xl font-bold text-[#4369A2] font-noto-thai">
-                คอร์สของฉัน
+                จัดการคอร์สเรียน
             </h1>
             <form class="space-y-4 w-full">
                 <div class=" h-auto relative overflow-hidden rounded-2xl w-full">
-                    <input class="w-full rounded-2xl px-4 py-3 border-2 border-gray-200" type="text"
+                    <input class="w-full rounded-2xl px-4 py-3 border-2 border-gray-200 h-16 outline-none text-lg" type="text"
                         placeholder="ค้นหา...">
                     <buton>
                         <img src={{ asset('images/icons/magnify.png') }}
@@ -87,7 +87,7 @@ $courses = [
                 @foreach ($courses as $course)
                     <x-MenuCard title="{{ $course['title'] }}" description="{{ $course['description'] }}"
                         author="{{ $course['author'] }}" imgSrc="{{ $course['src'] }}"
-                        href="{{ $course['href'] }}" bgColor="{{ $colors[$loop->index % 3] }}"
+                        href="/moderator/course/{{ $course['href'] }}" bgColor="{{ $colors[$loop->index % 3] }}"
                         btnColor="{{ $primaryColor[$loop->index % 3] }}"
                         shColor="{{ $shadowColor[$loop->index % 3] }}" />
                 @endforeach

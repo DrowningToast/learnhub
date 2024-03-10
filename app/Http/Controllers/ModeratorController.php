@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Workbench\App\Models\User;
+use App\Models\Users;
 class ModeratorController extends Controller
 {
     /**
@@ -61,10 +62,6 @@ class ModeratorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.

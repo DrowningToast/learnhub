@@ -1,8 +1,9 @@
 <x-left_side_layout>
-    <main class="font-noto-thai  ">
+    <main class="font-noto-thai">
         <form action="/profile" class="grid grid-cols-2 gap-x-12 gap-y-6" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
+            <input type="hidden" name="id" value="{{ $user->id }}">
             <div class="flex col-span-2">
                 <h1 class="text-4xl font-bold text-[#4369A2] font-noto-thai">
                     แก้ไขโปรไฟล์
@@ -111,9 +112,13 @@
                 <input class="rounded-2xl border-2 p-3" type="password" name="password">
         </div> --}}
             <div class="mt-6 space-x-2 w-full">
+                @if (auth()->user()->role->value == "MODERATOR")
+                <button class="text-[#FFFFFF] bg-[#DE3730] font-semibold rounded-2xl px-10 py-3"
+                type="submit">ระงับใช้งาน</button>
+                @endif
                 <a href="{{ url()->previous() }}"><button type="button"
-                        class="text-[#2A638] bg-[#E9F2FC] font-semibold rounded-2xl px-10 py-2">ยกเลิก</button></a>
-                <button class="text-[#FFFFFF] bg-[#2A638A] font-semibold rounded-2xl px-10 py-2"
+                        class="text-[#2A638] bg-[#E9F2FC] font-semibold rounded-2xl px-10 py-3">ยกเลิก</button></a>
+                <button class="text-[#FFFFFF] bg-[#2A638A] font-semibold rounded-2xl px-10 py-3"
                     type="submit">บันทึก</button>
             </div>
         </form>
