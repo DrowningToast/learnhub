@@ -23,7 +23,7 @@
                     @csrf
                     <div>
                         <p class=" text-3xl font-bold mb-4">สมัครสมาชิก</p>
-                        <p>มีบัญชีผู้ใช้เแล้ว ? <span class="text-[#4C5F7C]"><a href="/login">เข้าสู่ระบบ</a></span>
+                        <p>มีบัญชีผู้ใช้เแล้ว ? <a class="text-[#4C5F7C] underline" href="/login">เข้าสู่ระบบ</a>
                         </p>
                     </div>
 

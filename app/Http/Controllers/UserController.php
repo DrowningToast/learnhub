@@ -203,10 +203,11 @@ class UserController extends Controller
         $targetID = $id;
         // Validate the role
         if (auth()->user()->role === RoleEnum::Moderator) {
-            $targetID = $request->get('id') ?? $id;
+            $targetID = (int) $request->get('id');
         } else if ($id != auth()->user()->id) {
             return back()->with('error_message', 'คุณไม่มีสิทธิ์แก้ไขข้อมูลของผู้ใช้อื่น');
         }
+
 
         // update the information
         $target = Users::find($targetID);
@@ -219,17 +220,18 @@ class UserController extends Controller
             $academicInfoResult = $target->academicInfo()->create($academicInfo);
             $profileInfo['academic_id'] = $academicInfoResult->id;
         }
+
         // update the profile image src
         if ($request->profile_image_src) {
             $fileUpload = new FileController($request->profile_image_src);
             $URL = $fileUpload->upload('portrait', $target->id . "-portrait");
             $profileInfo['profile_image_src'] = $URL;
         }
+
         // If the user is a lecturer, update the banking information
         if (auth()->user()->role === RoleEnum::Lecturer) {
             $profileInfo['bankName'] = $fields['bankName'];
             $profileInfo['accountNumber'] = $fields['accountNumber'];
-            // dd($profileInfo);
         }
 
         $target->update($profileInfo);

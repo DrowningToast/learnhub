@@ -37,7 +37,7 @@
                 <label class="font-semibold text-2xl text-[#1C1C1C]" for="first_name">ชื่อจริง</label>
                 <input class="rounded-2xl border-2 p-3" type="text" name="first_name" placeholder="สมชาย"
                     value="{{ old('first_name') ?? $user->first_name }}">
-                @error('email')
+                @error('first_name')
                     <span class="text-red-500">{{ $message }}</span>
                 @enderror
             </div>
