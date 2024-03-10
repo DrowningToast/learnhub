@@ -86,7 +86,7 @@ $profile_src = 'https://avatars.githubusercontent.com/u/58824744?v=4';
 <x-left_side_layout>
     <section class="grid grid-cols-12 gap-12 rounded-xl bg-white relative">
         <div class="col-span-9 flex flex-col gap-y-6">
-            <h1 class="text-5xl font-bold text-[#4369A2] font-noto-thai">
+            <h1 class="text-4xl font-bold text-[#4369A2] font-noto-thai">
                 คอร์สของฉัน
             </h1>
             <form class="space-y-4">
@@ -161,19 +161,21 @@ $profile_src = 'https://avatars.githubusercontent.com/u/58824744?v=4';
                         @endforeach
                     </ul>
                     <div class="px-8 py-6 space-y-6">
-                        <div class="flex flex-col items-center gap-y-1">
-                            <h3 class="font-semibold text-[#2A638A]">
-                                โปรไฟล์
-                            </h3>
-                            <div class="w-28 h-28 rounded-full overflow-hidden"><img class="object-fill"
-                                    src="{{ $profile_src }}" alt="profile portriat"></div>
-                            <h3 class="font-semibold text-[#2A638A] mt-2">
-                                {{ $username }}
-                            </h3>
-                            <span class="text-[#B8C8D9] text-xs">
-                                {{ $affiliation }}
-                            </span>
-                        </div>
+                       <a href="/profile">
+                            <div class="flex flex-col items-center gap-y-1">
+                                <h3 class="font-semibold text-[#2A638A]">
+                                    โปรไฟล์
+                                </h3>
+                                <div class="w-28 h-28 rounded-full overflow-hidden"><img class="object-fill"
+                                        src="{{ $profile_src }}" alt="profile portriat"></div>
+                                <h3 class="font-semibold text-[#2A638A] mt-2">
+                                    {{ $username }}
+                                </h3>
+                                <span class="text-[#B8C8D9] text-xs">
+                                    {{ $affiliation }}
+                                </span>
+                            </div>
+                       </a>
                         <div class="w-full">
                             <span class="text-[#B8C8D9] text-xs">
                                 ความคืบหน้า
