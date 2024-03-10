@@ -31,6 +31,7 @@ Route::get('/video', function(){
     return view('coursevideo');
 });
 
-route::get('/test', function(){
-    return view('chapter');
+
+    route::get('/test2', function(){
+        return view('test2');
 });
