@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Enums\RoleEnum;
+use App\Models\Chapters;
+use App\Models\Courses;
 use App\Models\Credentials;
 use App\Models\Users;
 use Database\Factories\UsersFactory;
@@ -26,35 +28,38 @@ class DatabaseSeeder extends Seeder
             "role" => RoleEnum::Learner,
         ]);
 
-        $bots = Users::factory(10)->create();
-
+        
         $lecturerCred = Credentials::factory()->create([
             "username" => "lecturerA",
             "password" => bcrypt("password"),
         ]);
-
+        
         $lecturer = Users::factory()->create([
             "credential_id" => $lecturerCred->id,
             "role" => RoleEnum::Lecturer,
         ]);
-
+        
         $moderatorCred = Credentials::factory()->create([
             "username" => "moderatora",
             "password" => bcrypt("password"),
         ]);
-
+        
         $admin = Users::factory()->create([
             "credential_id" => $moderatorCred->id,
             "role" => RoleEnum::Moderator,
         ]);
 
-        // \App\Models\User::factory(10)->create();
+        $learnerBots = Users::factory(10)->create();
+        $lecturerBots = Users::factory(5)->withRole(RoleEnum::Lecturer)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        foreach ($lecturerBots as $bot) {
+            // Generate 4 courses for each lecturer
+            $courses = Courses::factory(4)->withLecturer($bot->id)->create();
+            foreach ($courses as $course) {
+                // Generate 5 chapters for each course
+                Chapters::factory(5)->withCourse($course->id)->create();
+            }
+        }
 
-        // User::create
     }
 }

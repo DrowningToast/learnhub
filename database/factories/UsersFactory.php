@@ -19,6 +19,17 @@ class UsersFactory extends Factory
      */
     protected static ?string $password;
 
+    private RoleEnum $role = RoleEnum::Learner;
+
+    /**
+     * Set the role for the user
+     */
+    public function withRole(RoleEnum $role): self
+    {
+        $this->role = $role;
+        return $this;
+    }
+
     /**
      * Define the model's default state.
      *
@@ -41,7 +52,7 @@ class UsersFactory extends Factory
             "phone" => $this->faker->phoneNumber(),
             "profile_image_src" => $this->faker->imageUrl(),
             "points" => $this->faker->numberBetween(0, 1000),
-            "role" => RoleEnum::Learner,
+            "role" => $this->role,
 
             "credential_id" => $cred->id,
             "academic_id" => $academic->id,
