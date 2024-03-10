@@ -55,6 +55,7 @@ Route::put('/courses/{course}', [CourseController::class, 'update'])->middleware
 Route::get('lecturer/transaction', [TransactionController::class, 'index'])->middleware(['auth', LecturerRouteGuard::class]);
 
 Route::get('/learn', [LearnController::class, 'index'])->middleware(['auth', CheckIsProfileComplete::class]);
+Route::get('/learn/{course}', [LearnController::class, 'show'])->middleware(['auth', CheckIsProfileComplete::class]);
 
 // Edit (self) profile
 Route::get('/profile', [UserController::class, 'edit'])->middleware('auth');
