@@ -14,7 +14,7 @@
     $selectedRole = app('request')->input('role') ?? 'LEARNER';
 @endphp
 
-<body class="p-6 min-h-screen font-noto-thai">
+<body class="bg-white p-6 min-h-screen font-noto-thai">
     <div class="grid grid-cols-2 h-full">
         {{-- RIGHT SIDE --}}
         <div>

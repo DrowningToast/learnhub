@@ -71,3 +71,8 @@ Route::get('/learn', function () {
         'managedCourses' => Courses::where('lecturer_id', auth()->id())->latest()->get()
     ]);
 })->middleware('auth');
+
+// Edit (self) profile
+Route::get('/profile', [UserController::class, 'edit'])->middleware('auth');
+Route::put('/profile', [UserController::class, 'update'])->middleware('auth');
+
