@@ -2,7 +2,7 @@
     <div>
         @if ($type == 'RECEIVE')
             <div class="flex flex-row items-center gap-4 text-lg">
-                <img src="{{ asset('images/icons/lecturer/transaction/withdraw_type.png') }}" alt="withdraw type icon">
+                <img src="{{ asset('images/icons/lecturer/transaction/receive_type.png') }}" alt="withdraw type icon">
                 <div class="opacity-80">
                     มีเงินเข้าบัญชีจำนวน <span class="text-[#2A638A] font-bold">{{ number_format($amount, 2) }}</span>
                     บาท
