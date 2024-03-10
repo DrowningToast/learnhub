@@ -152,11 +152,9 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-        $id = auth()->user()->id;
-
         // Validate the information
         $fields = $request->validate([
-            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($id)],
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($request->id)],
             'first_name' => ['string', "max:255", "nullable"],
             'last_name' => ['string', "max:255", "nullable"],
             'phone' => ['string', "digits_between:10,10", "nullable"],
@@ -198,17 +196,17 @@ class UserController extends Controller
             'campus' => $fields['campus'],
         ];
 
-        $targetID = $id;
+        // Find target of edit using email
+        $target = Users::where('email', $fields['email'])->first();
         // Validate the role
         if (auth()->user()->role === RoleEnum::Moderator) {
-            $targetID = (int) $request->get('id');
-        } else if ($id != auth()->user()->id) {
+
+        } else if ($target->id != auth()->user()->id) {
             return back()->with('error_message', 'คุณไม่มีสิทธิ์แก้ไขข้อมูลของผู้ใช้อื่น');
         }
 
 
-        // update the information
-        $target = Users::find($targetID);
+
 
         // dd($target->academicInfo);
         // update the academic information
@@ -234,10 +232,10 @@ class UserController extends Controller
 
         $target->update($profileInfo);
 
-        if (auth()->user()->role === RoleEnum::Moderator) {
-            return redirect('/moderator/learner/edit/' . $targetID)->with('success_message', 'อัพเดทข้อมูลสำเร็จ');
+        if ($target->id != auth()->user()->id) {
+            return redirect('/moderator/learner/edit/' . $target->id)->with('success_message', 'อัพเดทข้อมูลสำเร็จ');
         } else {
-            return $this->edit($id)->with('success_message', 'อัพเดทข้อมูลสำเร็จ');
+            return $this->edit($target->id)->with('success_message', 'อัพเดทข้อมูลสำเร็จ');
         }
     }
 
