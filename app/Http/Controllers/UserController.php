@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Users;
 use App\Enums\RoleEnum;
 use App\Models\Credentials;
+use FileUploadController;
 use Illuminate\Http\Request;
 use App\Models\AcademicInfos;
 use Illuminate\Validation\Rule;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Enum;
 
 class UserController extends Controller
 {
@@ -89,7 +89,7 @@ class UserController extends Controller
         if (auth()->user()->role === RoleEnum::Learner) {
             return redirect('/learn')->with('success_message', $registerSuccMessage);
         } else if (auth()->user()->role === RoleEnum::Lecturer) {
-            return redirect('/courses/manage')->with('success_message', $registerSuccMessage);
+            return redirect('/learn')->with('success_message', $registerSuccMessage);
         }
     }
 
@@ -136,17 +136,109 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id = NULL)
     {
-        //
+        if ($id === NULL) {
+            $id = auth()->user()->id;
+        }
+
+        $user = Users::find($id);
+
+        return view('profile.edit', [
+            'user' => $user
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $id = auth()->user()->id;
+
+        // Validate the information
+        $fields = $request->validate([
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($id)],
+            'first_name' => ['string', "max:255", "nullable"],
+            'last_name' => ['string', "max:255", "nullable"],
+            'phone' => ['string', "digits_between:10,10", "nullable"],
+            'profile_image' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048', "nullable"],
+            'year' => ['integer', 'min:1', 'max:8', "nullable"],
+            'school' => ['string', "nullable"],
+            'institute' => ['string', "nullable"],
+            'campus' => ['string', "nullable"],
+            "bankName" => ["string", "nullable"],
+            "accountNumber" => ["string", "nullable"],
+        ], [
+            'email.required' => 'โปรดกรอกอีเมล',
+            'email.email' => 'โปรดกรอกอีเมลที่ถูกต้อง',
+            'email.unique' => 'อีเมลนี้ถูกใช้ไปแล้ว',
+            'first_name.string' => 'ชื่อต้องเป็นตัวอักษร',
+            'last_name.string' => 'นามสกุลต้องเป็นตัวอักษร',
+            'phone.string' => 'โปรดกรอกเบอร์โทรศัพท์ที่ถูกต้อง',
+            'phone.digits_between' => 'โปรดกรอกเบอร์โทรศัพท์ที่ถูกต้อง',
+            'profile_image.image' => 'โปรดอัพโหลดไฟล์รูปภาพ',
+            'profile_image.mimes' => 'โปรดอัพโหลดไฟล์รูปภาพที่ถูกต้อง',
+            'profile_image.max' => 'ไฟล์รูปภาพต้องมีขนาดไม่เกิน 2MB',
+            'year.integer' => 'โปรดกรอกระดับชั้นปีที่ถูกต้อง',
+            'school.string' => 'โปรดกรอกชื่อโรงเรียนที่ถูกต้อง',
+            'institute.string' => 'โปรดกรอกชื่อสถาบันที่ถูกต้อง',
+            'campus.string' => 'โปรดกรอกชื่อวิทยาเขตที่ถูกต้อง',
+        ]);
+
+        $profileInfo = [
+            'email' => $fields['email'],
+            'first_name' => $fields['first_name'],
+            'last_name' => $fields['last_name'],
+            'phone' => $fields['phone'],
+        ];
+
+        $academicInfo = [
+            'year' => $fields['year'],
+            'school' => $fields['school'],
+            'institute' => $fields['institute'],
+            'campus' => $fields['campus'],
+        ];
+
+        $targetID = $id;
+        // Validate the role
+        if (auth()->user()->role === RoleEnum::Moderator) {
+            $targetID = $request->get('id') ?? $id;
+        } else if ($id != auth()->user()->id) {
+            return back()->with('error_message', 'คุณไม่มีสิทธิ์แก้ไขข้อมูลของผู้ใช้อื่น');
+        }
+
+        // update the information
+        $target = Users::find($targetID);
+
+        // dd($target->academicInfo);
+        // update the academic information
+        if ($target->academicInfo->exists()) {
+            $target->academicInfo->update($academicInfo);
+        } else {
+            $academicInfoResult = $target->academicInfo()->create($academicInfo);
+            $profileInfo['academic_id'] = $academicInfoResult->id;
+        }
+        // update the profile image src
+        if ($request->profile_image_src) {
+            $fileUpload = new FileController($request->profile_image_src);
+            $URL = $fileUpload->upload('portrait', $target->id . "-portrait");
+            $profileInfo['profile_image_src'] = $URL;
+        }
+        // If the user is a lecturer, update the banking information
+        if (auth()->user()->role === RoleEnum::Lecturer) {
+            $profileInfo['bankName'] = $fields['bankName'];
+            $profileInfo['accountNumber'] = $fields['accountNumber'];
+            // dd($profileInfo);
+        }
+
+        $target->update($profileInfo);
+
+        if (auth()->user()->role === RoleEnum::Moderator) {
+            return redirect('/users/' . $fields)->with('success_message', 'อัพเดทข้อมูลสำเร็จ');
+        } else {
+            return $this->edit($id)->with('success_message', 'อัพเดทข้อมูลสำเร็จ');
+        }
     }
 
     /**
@@ -166,4 +258,16 @@ class UserController extends Controller
 
         return redirect('/')->with('success_message', 'ออกจากระบบเสร็จสิ้น');
     }
+
+    public function getCurrentUser($academic = false)
+    {
+        if ($academic) {
+            $user = Users::find(auth()->user()->id)->with('academicInfo')->get();
+            return $user;
+        } else {
+            $user = Users::find(auth()->user()->id);
+            return $user;
+        }
+    }
+
 }

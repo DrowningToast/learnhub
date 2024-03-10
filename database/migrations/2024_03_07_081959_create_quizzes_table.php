@@ -14,13 +14,12 @@ return new class extends Migration
         Schema::create('quizzes', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger("course_id")->unique();
-            $table->foreign("course_id")->references("id")->on("courses")->onDelete("cascade");
+            $table->unsignedBigInteger("chapter_id")->unique();
+            $table->foreign("chapter_id")->references("id")->on("chapters")->onDelete("cascade");
             $table->string("title");
-            $table->string("description")->nullable();
-            $table->string("quiz_data");
-            $table->float("full_score");
-            $table->dateTime("expired_at");
+            $table->longText("description")->nullable();
+            $table->json("quiz_data");
+            $table->dateTime("expired_at")->nullable();
 
             $table->timestamps();
         });

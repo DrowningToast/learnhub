@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('quiz_score_by_user', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger("quiz_id")->unique();
+            $table->unsignedBigInteger("quiz_id");
             $table->foreign("quiz_id")->references("id")->on("quizzes")->onDelete("cascade");
 
-            $table->unsignedBigInteger("user_id")->unique();
+            $table->unsignedBigInteger("user_id");
             $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade");
 
             $table->string("answer_data");
@@ -25,6 +25,8 @@ return new class extends Migration
             $table->float('score');
 
             $table->timestamps();
+
+            $table->unique(["quiz_id", "user_id"]);
         });
     }
 

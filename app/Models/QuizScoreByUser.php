@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class QuizScoreByUser extends Model
 {
+    protected $table = "quiz_score_by_user";
+
     use HasFactory;
 
     protected $fillable = [

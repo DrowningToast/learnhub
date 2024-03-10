@@ -9,26 +9,30 @@
     @vite('resources/css/app.css')
 </head>
 
+@php
+    $isLecturer = auth()->user()->role->value === 'LECTURER';
+    $isModerator = auth()->user()->role->value === 'MODERATOR';
+@endphp
+
 <body class="bg-gradient-to-b from-[#4369A2] to-[#00476C] h-screen p-4 pl-0 font-noto-thai relative">
     <x-toast />
-
     <div class="grid grid-cols-6 h-full relative">
         <div class="col-span-1 flex flex-col">
             <p class="text-3xl 2xl:text-4xl font-beth text-white text-center mt-8"><a href="/">LearnHub</a></p>
 
             <div class="flex flex-col gap-8 p-10 pl-12 mt-20">
-                <a href="/courses/manage" class="flex flex-row items-center gap-4 text-lg "
-                    style="text-decoration: none !important; color: black;">
-                    <img src="{{ asset('images/icons/menu.png') }}" alt="Home" class="w-8">
-                    <p class="text-white font-semibold">หน้าเเรก</p>
-                </a>
 
-                <a href="/courses/manage"
-                    class="flex flex-row items-center gap-4 text-lg text-white opacity-50 hover:opacity-100"
-                    style="text-decoration: none !important; color: black;">
-                    <img src="{{ asset('images/icons/settings.png') }}" alt="Settings" class="w-8">
-                    <p class="text-white font-semibold">ตั้งค่า</p>
-                </a>
+                <x-menu-item title="หน้าเเรก" url="/learn" iconSrc="images/icons/menu.png"
+                    isSelected="{{ Request::is('courses/manage') || Request::is('learn') }}" />
+
+                @if ($isLecturer || $isModerator)
+                    <x-menu-item title="ถอนเงิน" url="/lecturer/transaction"
+                        iconSrc="images/icons/lecturer/transaction/dollar.png"
+                        isSelected="{{ Request::is('lecturer/transaction') }}" />
+                @endif
+
+                <x-menu-item title="ตั้งค่า" url="/profile" iconSrc="images/icons/settings.png"
+                    isSelected="{{ Request::is('profile') }}" />
 
                 <div class=" absolute bottom-6">
                     <a href="/logout"

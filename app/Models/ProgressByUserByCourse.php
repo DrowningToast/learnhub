@@ -12,6 +12,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ProgressByUserByCourse extends Model
 {
+
+    protected $table = "progress_by_user_by_course";
+
     use HasFactory;
 
     protected $fillable = [
