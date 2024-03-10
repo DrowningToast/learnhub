@@ -40,7 +40,17 @@ Route::get('/video', function () {
     return view('coursevideo');
 });
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+    route::get('/test2', function(){
+        return view('test2');
+});
+=======
+route::get('/test', function(){
+=======
 route::get('/test', function () {
+>>>>>>> b1b9e5b3b9f8bd03bc8f62e57652c6402f9ff763
     return view('chapter');
 });
 // Create Course
@@ -61,6 +71,11 @@ Route::get('/moderator/withdraw', [ModeratorController::class, 'transaction'])->
 Route::get('lecturer/transaction', [TransactionController::class, 'index'])->middleware(['auth', LecturerRouteGuard::class]);
 
 Route::get('/learn', function () {
+<<<<<<< HEAD
+    return view('courses.index');
+})->middleware('auth');
+>>>>>>> 31aa3c1ec6bf23f1641a0965187a9c24d00f525d
+=======
     return view('courses.index', [
         'user' => auth()->user(),
         'enrolledCourses' => auth()->user()->enrolledCourses(),
@@ -74,3 +89,4 @@ Route::get('/learn', function () {
 Route::get('/profile', [UserController::class, 'edit'])->middleware('auth');
 Route::put('/profile', [UserController::class, 'update'])->middleware('auth');
 
+>>>>>>> b1b9e5b3b9f8bd03bc8f62e57652c6402f9ff763

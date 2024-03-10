@@ -11,8 +11,12 @@
         "php": "^8.1",
         "blade-ui-kit/blade-heroicons": "^2.3",
         "blade-ui-kit/blade-icons": "^1.6",
+<<<<<<< HEAD
+        "blade-ui-kit/blade-zondicons": "^1.5",
+=======
         "codeat3/blade-carbon-icons": "^2.22",
         "codeat3/blade-clarity-icons": "^1.9",
+>>>>>>> 31aa3c1ec6bf23f1641a0965187a9c24d00f525d
         "codeat3/blade-fontisto-icons": "^1.4",
         "codeat3/blade-microns": "^1.5",
         "codeat3/blade-uiw-icons": "^1.5",
