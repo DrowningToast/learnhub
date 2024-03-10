@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger("course_id");
             $table->foreign("course_id")->references("id")->on("courses")->onDelete("cascade");
 
-            $table->float("float");
+            $table->float("amount");
             $table->string("stripe_ref_id")->unique();
 
             $table->timestamps();
