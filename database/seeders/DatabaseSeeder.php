@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Enums\RoleEnum;
 use App\Models\Chapters;
+use App\Models\CourseByUser;
 use App\Models\Courses;
 use App\Models\Credentials;
 use App\Models\Reviews;
@@ -35,6 +36,8 @@ class DatabaseSeeder extends Seeder
                     $price = $course->buy_price * (1 - $course->discount_percent / 100);
                     // Generate transaction (buying)
                     Transactions::factory()->fromUser($learnerBots[(25 * $k) + $j]->id)->withCourse($course->id)->withPrice($price)->create();
+                    // Generate Ownership
+                    CourseByUser::factory()->fromUser($learnerBots[(25 * $k) + $j]->id)->withCourse($course->id)->create();
                     // Generate review
                     Reviews::factory()->fromUser($learnerBots[(25 * $k) + $j]->id)->inCourse($course->id)->create();
                 }

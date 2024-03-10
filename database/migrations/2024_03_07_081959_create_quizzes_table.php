@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreign("course_id")->references("id")->on("courses")->onDelete("cascade");
             $table->string("title");
             $table->longText("description")->nullable();
-            $table->string("quiz_data");
+            $table->json("quiz_data");
             $table->float("full_score");
             $table->dateTime("expired_at");
 
