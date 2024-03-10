@@ -28,8 +28,6 @@ class CourseController extends Controller
 
     public function manage()
     {
-        dd(Courses::where('lecturer_id', auth()->id())->get());
-
         return view('courses.manage', [
             'courses' => Courses::where('lecturer_id', auth()->id())->get(),
             'user' => auth()->user()
