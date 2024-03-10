@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use FileUpload;
 use App\Models\Users;
 use App\Enums\RoleEnum;
 use App\Models\Credentials;
+use FileUploadController;
 use Illuminate\Http\Request;
 use App\Models\AcademicInfos;
 use Illuminate\Validation\Rule;
@@ -221,8 +221,9 @@ class UserController extends Controller
         }
         // update the profile image src
         if ($request->profile_image_src) {
-            $fileUpload = new FileUpload($request->profile_image_src);
-            $fileUpload->upload('portrait', $target->id . "-portrait");
+            $fileUpload = new FileController($request->profile_image_src);
+            $URL = $fileUpload->upload('portrait', $target->id . "-portrait");
+            $profileInfo['profile_image_src'] = $URL;
         }
         // If the user is a lecturer, update the banking information
         if (auth()->user()->role === RoleEnum::Lecturer) {
