@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string("stripe_ref_id")->unique();
 
             $table->timestamps();
+
+            $table->unique(["from_user_id", "course_id"]);
         });
     }
 
