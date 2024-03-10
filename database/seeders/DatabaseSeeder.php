@@ -76,7 +76,7 @@ class DatabaseSeeder extends Seeder
 
         
         $lecturerCred = Credentials::factory()->create([
-            "username" => "lecturerA",
+            "username" => "lecturer",
             "password" => bcrypt("password"),
         ]);
         
@@ -86,7 +86,7 @@ class DatabaseSeeder extends Seeder
         ]);
         
         $moderatorCred = Credentials::factory()->create([
-            "username" => "moderatora",
+            "username" => "moderator",
             "password" => bcrypt("password"),
         ]);
         
