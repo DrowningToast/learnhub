@@ -39,7 +39,7 @@ class UsersFactory extends Factory
     {
 
         $cred = Credentials::factory()->create([
-            "username" => $this->faker->userName(),
+            "username" => $this->faker->unique()->userName(),
             "password" => bcrypt("password"),
         ]);
 
@@ -64,7 +64,7 @@ class UsersFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
     }
