@@ -8,6 +8,7 @@ use App\Models\Chapters;
 use App\Models\CourseByUser;
 use App\Models\Courses;
 use App\Models\Credentials;
+use App\Models\Quizzes;
 use App\Models\Reviews;
 use App\Models\Transactions;
 use App\Models\Users;
@@ -28,9 +29,15 @@ class DatabaseSeeder extends Seeder
         foreach ($lecturerBots as $i => $bot) {
             // Generate 4 courses for each lecturer
             $courses = Courses::factory(4)->withLecturer($bot->id)->create();
+            // Generate a quiz for each course
+            
             foreach ($courses as $k => $course) {
                 // Generate 5 chapters for each course
-                Chapters::factory(10)->withCourse($course->id)->create();
+                $chapters = Chapters::factory(10)->withCourse($course->id)->create();
+                // Generate a quiz for each chapter
+                foreach ($chapters as $chapter) {
+                    Quizzes::factory()->inChapter($chapter->id)->create();
+                }
                 // Generate 25 reviews and transaction for each course
                 for ($j = 0; $j < 25; $j++) {
                     $price = $course->buy_price * (1 - $course->discount_percent / 100);
@@ -41,8 +48,6 @@ class DatabaseSeeder extends Seeder
                     // Generate review
                     Reviews::factory()->fromUser($learnerBots[(25 * $k) + $j]->id)->inCourse($course->id)->create();
                 }
-                // Generate transactions for each course
-
             }
         }
 
