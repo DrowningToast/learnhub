@@ -1,76 +1,12 @@
 <?php
-$courses = [
-    [
-        'title' => 'Python Programming ฉบับคนไม่เคยเขียนโปรแกรม Python Programming ฉบับคนไม่เคยเขียนโปรแกรม',
-        'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, deleniti. Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, deleniti. Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, deleniti.',
-        'author' => 'John Doe',
-        'src' => 'https://www.udacity.com/blog/wp-content/uploads/2020/12/Python-Tutorial_Blog-scaled.jpeg',
-        'progress' => 0.5,
-        'href' => '1',
-    ],
-    [
-        'title' => 'Python Programming ฉบับคนไม่เคยเขียนโปรแกรม',
-        'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, deleniti.',
-        'author' => 'John Doe',
-        'src' => 'https://www.udacity.com/blog/wp-content/uploads/2020/12/Python-Tutorial_Blog-scaled.jpeg',
-        'progress' => 0.5,
-        'href' => '1',
-    ],
-    [
-        'title' => 'Python Programming ฉบับคนไม่เคยเขียนโปรแกรม',
-        'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, deleniti.',
-        'author' => 'John Doe',
-        'src' => 'https://www.udacity.com/blog/wp-content/uploads/2020/12/Python-Tutorial_Blog-scaled.jpeg',
-        'progress' => 0.5,
-        'href' => '1',
-    ],
-    [
-        'title' => 'Python Programming ฉบับคนไม่เคยเขียนโปรแกรม',
-        'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, deleniti.',
-        'author' => 'John Doe',
-        'src' => 'https://www.udacity.com/blog/wp-content/uploads/2020/12/Python-Tutorial_Blog-scaled.jpeg',
-        'progress' => 0.5,
-        'href' => '1',
-    ],
-];
-
-$suggested = [
-    [
-        'title' => 'Python Programming ฉบับคนไม่เคยเขียนโปรแกรม Python Programming ฉบับคนไม่เคยเขียนโปรแกรม',
-        'author' => 'John Doe',
-        'href' => '1',
-    ],
-    [
-        'title' => 'Python Programming ฉบับคนไม่เคยเขียนโปรแกรม',
-        'author' => 'John Doe',
-        'href' => '1',
-    ],
-    [
-        'title' => 'Python Programming ฉบับคนไม่เคยเขียนโปรแกรม',
-        'author' => 'John Doe',
-        'href' => '1',
-    ],
-    [
-        'title' => 'Python Programming ฉบับคนไม่เคยเขียนโปรแกรม',
-        'author' => 'John Doe',
-        'href' => '1',
-    ],
-    [
-        'title' => 'Python Programming ฉบับคนไม่เคยเขียนโปรแกรม',
-        'author' => 'John Doe',
-        'href' => '1',
-    ],
-];
-
 $username = 'Supratouch Suwatno';
 $affiliation = 'โรงเรียนอนุบาลหมีน้อย';
 
-$avg_progress =
-    array_reduce($courses, function ($carry, $item) {
-        return $carry + $item['progress'];
-    }) / count($courses);
-
-$profile_src = 'https://avatars.githubusercontent.com/u/58824744?v=4';
+$avg_progress = $enrolledCourses->reduce(
+    function ($carry, $item) {
+        return $carry + $item['progress'] / 100;
+    }
+) / count($enrolledCourses);
 ?>
 
 @php
@@ -152,8 +88,8 @@ $profile_src = 'https://avatars.githubusercontent.com/u/58824744?v=4';
                     <div class="flex flex-col gap-y-8">
                         @foreach ($enrolledCourses as $course)
                             <x-CourseCard title="{{ $course['title'] }}" description="{{ $course['description'] }}"
-                                author="{{ $course['author'] }}" src="{{ $course['src'] }}"
-                                progress="{{ $course['progress'] }}" href="{{ $course['href'] }}"
+                                author="{{ $course['author'] }}" src="{{ $course['cover_image_src'] }}"
+                                progress="{{ $course['progress'] / 100}}" href="{{ $course['href'] }}"
                                 color="{{ $colors[$loop->index % 3] }}"
                                 primaryColor="{{ $primaryColor[$loop->index % 3] }}"
                                 shadowColor="{{ $shadowColor[$loop->index % 3] }}" />

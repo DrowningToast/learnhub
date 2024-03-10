@@ -2,6 +2,7 @@
 
 use App\Enums\RoleEnum;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\LearnController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckIsProfileComplete;
@@ -53,15 +54,7 @@ Route::put('/courses/{course}', [CourseController::class, 'update'])->middleware
 // Transactions
 Route::get('lecturer/transaction', [TransactionController::class, 'index'])->middleware(['auth', LecturerRouteGuard::class]);
 
-Route::get('/learn', function () {
-    return view('courses.index', [
-        'user' => auth()->user(),
-        'enrolledCourses' => auth()->user()->enrolledCourses(),
-        'popularCourses' => Courses::latest()->take(5)->get(),
-        'isLecturer' => auth()->user()->role->value == RoleEnum::Lecturer->value,
-        'managedCourses' => Courses::where('lecturer_id', auth()->id())->latest()->get()
-    ]);
-})->middleware(['auth', CheckIsProfileComplete::class]);
+Route::get('/learn', [LearnController::class, 'index'])->middleware(['auth', CheckIsProfileComplete::class]);
 
 // Edit (self) profile
 Route::get('/profile', [UserController::class, 'edit'])->middleware('auth');
