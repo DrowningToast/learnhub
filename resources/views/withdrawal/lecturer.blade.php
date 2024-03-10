@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class=" text-4xl mt-6 font-bold">
-                {{ number_format($availableBalance, 2) }} บาท
+                {{ number_format($pendingBalance, 2) }} บาท
             </div>
         </div>
     </div>
@@ -47,12 +47,11 @@
 
     <div class="mt-6 flex flex-col gap-4">
         @foreach ($userTransactions as $userTransaction)
-            <x-transaction-history-card amount={{ $userTransaction->amount }} type="RECEIVE" status="COMPLETED" />
+            <x-transaction-history-card amount="{{ $userTransaction->amount }}" type="WITHDRAW"
+                status="{{ $userTransaction->status_id }}" />
         @endforeach
-        <x-transaction-history-card amount="5000" type="RECEIVE" status="COMPLETED" />
-        <x-transaction-history-card amount="5000" type="WITHDRAW" status="CANCELLED" />
-        <x-transaction-history-card amount="5000" type="WITHDRAW" status="PENDING" />
-        <x-transaction-history-card amount="5000" type="RECEIVE" status="COMPLETED" />
+
+        {{ $userTransactions->links() }}
     </div>
 
     <x-withdraw-request-form bankName="{{ $user->bankName }}" accountNumber="{{ $user->accountNumber }}" />

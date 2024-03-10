@@ -44,7 +44,7 @@ if ($bankName === 'SCB') {
             <div class="flex flex-row items-center gap-2 ">
                 <input type="text" id="accountNumber"
                     class="w-full p-4 border bg-[#E0E3E8] focus:outline focus:border-b-[#000842] rounded-xl"
-                    placeholder="ยืนยันรหัสผ่านของคุณ" name="accountNumber" value="{{ $accountNumber }}" />
+                    name="accountNumber" value="{{ $accountNumber }}" />
             </div>
 
             @error('accountNumber')
@@ -57,7 +57,8 @@ if ($bankName === 'SCB') {
             <div class="flex flex-row items-center gap-2 ">
                 <input type="text" id="amount"
                     class="w-full p-4 border border-[#999999] focus:outline focus:border-b-[#000842] rounded-xl"
-                    placeholder="ยืนยันรหัสผ่านของคุณ" name="amount" value="{{ old('amount') }}" />
+                    name="amount" type="number" step="0.1" placeholder="จำนวนเงินที่ต้องการถอน"
+                    value="{{ old('amount') }}" />
             </div>
 
             @error('amount')

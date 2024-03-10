@@ -18,20 +18,25 @@ class WithdrawalController extends Controller
             return redirect('/profile')->with('error_message', 'โปรดกรอกข้อมูลบัญชีธนาคารของคุณก่อน');
         }
 
-        // Get User Transactions
-        $userTransactions = Withdrawals::latest()->findMany($user->id, 'user_id');
+        $userTransactions = Withdrawals::latest()->where('user_id', $user->id)->get();
+        $userTransactionsPagination = Withdrawals::latest()->where('user_id', $user->id)->paginate(5);
 
-        // Filter Pending Transactions
         $pendingTransactions = $userTransactions->filter(function ($transaction) {
-            return $transaction->status === 1;
+            return $transaction->status_id === 1;
         });
 
-        $availableBalance = $userTransactions->sum('amount') - $pendingTransactions->sum('amount');
+        $completedTransactions = $userTransactions->filter(function ($transaction) {
+            return $transaction->status_id === 2;
+        });
+
+        $availableBalance = $userTransactions->sum('amount') - $pendingTransactions->sum('amount') - $completedTransactions->sum('amount');
         $pendingBalance = $pendingTransactions->sum('amount');
+
+
 
         return view('withdrawal.lecturer', [
             'user' => auth()->user(),
-            'userTransactions' => $userTransactions,
+            'userTransactions' => $userTransactionsPagination,
             'pendingTransactions' => $pendingTransactions,
             'pendingBalance' => $pendingBalance,
             'availableBalance' => $availableBalance,
@@ -53,13 +58,16 @@ class WithdrawalController extends Controller
     {
         $user = auth()->user();
 
+        $userTransactions = Withdrawals::latest()->where('user_id', $user->id)->get();
+        $availableBalance = $userTransactions->sum('amount') - $userTransactions->where('status_id', 1)->sum('amount');
+
         $formFields = $request->validate([
-            'amount' => ['required', 'numeric', 'min:1', 'max:' . auth()->user()->points],
+            'amount' => ['required', 'numeric', 'min:1', 'max:' . 9999999],
             'bankName' => ['required', 'string'],
             'accountNumber' => ['required', 'string'],
         ], [
             'amount.required' => 'โปรดกรอกจำนวนเงินที่ต้องการถอน',
-            'amount.numeric' => 'โปรดกรอกจำนวนเงินที่ถูกต้อง',
+            'amount.numeric' => 'จำนวนเงินต้องเป็นตัวเลข',
             'amount.min' => 'จำนวนเงินต้องมากกว่า 0',
             'amount.max' => 'จำนวนเงินที่ถอนต้องน้อยกว่าหรือเท่ากับจำนวนเงินที่มี',
             'bankName.required' => 'โปรดกรอกชื่อธนาคาร',
