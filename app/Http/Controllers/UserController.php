@@ -149,11 +149,6 @@ class UserController extends Controller
         ]);
     }
 
-    public function test(Request $request)
-    {
-        dd($request->all());
-    }
-
     /**
      * Update the specified resource in storage.
      */
