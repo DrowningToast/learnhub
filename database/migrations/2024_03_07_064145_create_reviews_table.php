@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreign("course_id")->references("id")->on("courses")->onDelete("cascade");
 
             $table->float("rating");
-            $table->string("comment")->nullable();
+            $table->longText("comment")->nullable();
 
             $table->timestamps();
 
