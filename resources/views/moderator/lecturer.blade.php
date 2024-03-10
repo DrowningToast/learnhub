@@ -1,37 +1,38 @@
 <?php
-$lecturer = [
-    [
-        'id' => 1,
-        'imgSrc' => '/img/sila.webp',
-        'name' => 'ศิลา ภักดีวงศ์',
-        'course' => 2,
-    ],
-    [
-        'id' => 2,
-        'imgSrc' => '/img/sila.webp',
-        'name' => 'ศิลา ภักดีวงศ์',
-        'course' => 2,
-    ],
-    [
-        'id' => 3,
-        'imgSrc' => '/img/sila.webp',
-        'name' => 'ศิลา ภักดีวงศ์',
-        'course' => 2,
-    ],
-    [
-        'id' => 4,
-        'imgSrc' => '/img/sila.webp',
-        'name' => 'ศิลา ภักดีวงศ์',
-        'course' => 2,
-    ],
-    [
-        'id' => 5,
-        'imgSrc' => '/img/sila.webp',
-        'name' => 'ศิลา ภักดีวงศ์',
-        'course' => 2,
-    ],
+dd($lecturers[0]['ownedCourses']);
+// $lecturer = [
+//     [
+//         'id' => 1,
+//         'imgSrc' => '/img/sila.webp',
+//         'name' => 'ศิลา ภักดีวงศ์',
+//         'course' => 2,
+//     ],
+//     [
+//         'id' => 2,
+//         'imgSrc' => '/img/sila.webp',
+//         'name' => 'ศิลา ภักดีวงศ์',
+//         'course' => 2,
+//     ],
+//     [
+//         'id' => 3,
+//         'imgSrc' => '/img/sila.webp',
+//         'name' => 'ศิลา ภักดีวงศ์',
+//         'course' => 2,
+//     ],
+//     [
+//         'id' => 4,
+//         'imgSrc' => '/img/sila.webp',
+//         'name' => 'ศิลา ภักดีวงศ์',
+//         'course' => 2,
+//     ],
+//     [
+//         'id' => 5,
+//         'imgSrc' => '/img/sila.webp',
+//         'name' => 'ศิลา ภักดีวงศ์',
+//         'course' => 2,
+//     ],
 
-];
+// ];
 ?>
 
 @php
