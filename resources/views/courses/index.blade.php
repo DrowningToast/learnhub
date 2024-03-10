@@ -112,13 +112,14 @@ $profile_src = 'https://avatars.githubusercontent.com/u/58824744?v=4';
                     <div class="flex items-center gap-x-4">
                         <span class="text-xl font-semibold text-[#6F7979]">จัดเรียงตาม</span>
                         <select class="rounded-full bg-[#E2EEFB] text-[#7F92B1] px-4 py-2 border-r-8 border-transparent"
-                            name="genere">
-                            <option value="all">ทั้งหมด</option>
-                            <option value="fundamental">คณิตศาสตร์</option>
-                            <option value="design">ภาษาไทย</option>
-                            <option value="programming">สังคมศึกษา</option>
-                            <option value="applied">ภาษาอังกฤษ</option>
-                            <option value="applied">เทคโนโลยีสารสนเทศ</option>
+                            name="category">
+                            <option value="ALL" selected>หมวดหมู่ทั้งหมด</option>
+                            <option value="1">วิทยาศาสตร์</option>
+                            <option value="2">คณิตศาสตร์</option>
+                            <option value="3">ภาษาไทย</option>
+                            <option value="4">สังคมศึกษา</option>
+                            <option value="5">ภาษาอังกฤษ</option>
+                            <option value="6">เทคโนโลยีสารสนเทศ</option>
                         </select>
                         <select class="rounded-full bg-[#E2EEFB] text-[#7F92B1] px-4 py-2 border-r-8 border-transparent"
                             name="time">
