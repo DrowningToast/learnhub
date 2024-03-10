@@ -56,6 +56,17 @@
 
     <x-withdraw-request-form bankName="{{ $user->bankName }}" accountNumber="{{ $user->accountNumber }}" />
 
+    <h1 class=" text-2xl font-bold mt-10">
+        ธุรกรรมล่าสุด
+    </h1>
+
+    <div class="mt-6 flex flex-col gap-4">
+        @foreach ($courseSellingTransactions as $userTransaction)
+            <x-transaction-history-card amount="{{ $userTransaction->amount }}" type="RECEIVE" status=2 />
+        @endforeach
+
+        {{ $courseSellingTransactions->links() }}
+    </div>
 
     <script>
         function toggleShowForm() {

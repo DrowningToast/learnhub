@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transactions;
 use App\Models\Withdrawals;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,7 @@ class WithdrawalController extends Controller
             return redirect('/profile')->with('error_message', 'โปรดกรอกข้อมูลบัญชีธนาคารของคุณก่อน');
         }
 
+        // WITHDRAWAL TRANSACTIONS
         $userTransactions = Withdrawals::latest()->where('user_id', $user->id)->get();
         $userTransactionsPagination = Withdrawals::latest()->where('user_id', $user->id)->paginate(5);
 
@@ -29,10 +31,20 @@ class WithdrawalController extends Controller
             return $transaction->status_id === 2;
         });
 
-        $availableBalance = $userTransactions->sum('amount') - $pendingTransactions->sum('amount') - $completedTransactions->sum('amount');
         $pendingBalance = $pendingTransactions->sum('amount');
 
+        // COURSE SELLING TRANSACTIONS
+        $courseSellingTransactions = Transactions::latest()->get();
 
+        // COURSES THAT BELONG TO THE USER
+        $course_ids = $user->ownedCourses->pluck('id')->toArray();
+        $courseSellingTransactionsPagination = Transactions::latest()->whereIn('course_id', $course_ids)->paginate(5);
+
+        $courseSellingTransactions = $courseSellingTransactions->filter(function ($transaction) use ($user) {
+            return $transaction->course->lecturer_id === $user->id;
+        });
+
+        $availableBalance = $courseSellingTransactions->sum('amount') - $pendingTransactions->sum('amount') - $completedTransactions->sum('amount');
 
         return view('withdrawal.lecturer', [
             'user' => auth()->user(),
@@ -40,6 +52,7 @@ class WithdrawalController extends Controller
             'pendingTransactions' => $pendingTransactions,
             'pendingBalance' => $pendingBalance,
             'availableBalance' => $availableBalance,
+            'courseSellingTransactions' => $courseSellingTransactionsPagination,
         ]);
     }
 
