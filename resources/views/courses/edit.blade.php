@@ -32,7 +32,7 @@
                     <label for="cover_image_src" class="text-[#1C1C1C] font-semibold">รูปภาพประกอบคอร์สเรียน</label>
                     <p>ขนาดรูปภาพแนะนำ 1920 x 1080</p>
                     <div class="mt-1">
-                        <input type="file" name="cover_image_src" id="cover_image_src"
+                        <input accept="image/*" type="file" name="cover_image_src" id="cover_image_src"
                             onchange="handleImageChange(event)" value="{{ $course->cover_image_src }}">
                     </div>
                 </div>
