@@ -4,6 +4,7 @@ use App\Enums\RoleEnum;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\CheckIsProfileComplete;
 use App\Http\Middleware\LecturerRouteGuard;
 use App\Models\Courses;
 use Illuminate\Support\Facades\Route;
@@ -53,15 +54,6 @@ Route::put('/courses/{course}', [CourseController::class, 'update'])->middleware
 Route::get('lecturer/transaction', [TransactionController::class, 'index'])->middleware(['auth', LecturerRouteGuard::class]);
 
 Route::get('/learn', function () {
-
-    // dd(auth()->user()->role->value == RoleEnum::Lecturer->value);
-
-    $user = auth()->user();
-
-    if ($user->first_name == null || $user->last_name == null || $user->phone == null || $user->email == null) {
-        return redirect('/profile')->with('error_message', 'โปรดกรอกข้อมูลส่วนตัวให้ครบถ้วนก่อนเริ่มใช้งาน LearnHub');
-    }
-
     return view('courses.index', [
         'user' => auth()->user(),
         'enrolledCourses' => auth()->user()->enrolledCourses(),
@@ -69,7 +61,7 @@ Route::get('/learn', function () {
         'isLecturer' => auth()->user()->role->value == RoleEnum::Lecturer->value,
         'managedCourses' => Courses::where('lecturer_id', auth()->id())->latest()->get()
     ]);
-})->middleware('auth');
+})->middleware(['auth', CheckIsProfileComplete::class]);
 
 // Edit (self) profile
 Route::get('/profile', [UserController::class, 'edit'])->middleware('auth');

@@ -14,9 +14,9 @@ return new class extends Migration {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
 
-            $table->string("title");
-            $table->string("description")->nullable();
-            $table->string("cover_image_src")->nullable();
+            $table->longText("title");
+            $table->longText("description")->nullable();
+            $table->longText("cover_image_src")->nullable();
             $table->float("buy_price");
             $table->integer("buy_point")->nullable();
             $table->float("discount_percent");
