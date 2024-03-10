@@ -1,4 +1,4 @@
-<div class="bg-[#4369A2] flex rounded-2xl w-[260px] h-auto p-6 relative">
+<div class="bg-[#4369A2] flex rounded-2xl min-w-[260px] h-auto p-6 relative">
     <div class="rounded-l-full absolute w-16 h-32 z-10 top-1/2 right-0 transform -translate-y-1/2 bg-[#8AB7DC]/50">
     </div>
     

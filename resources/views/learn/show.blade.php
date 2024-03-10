@@ -11,10 +11,10 @@
         </p>
         <div class="mt-6 space-y-2">
             <h2 class="text-2xl font-semibold">
-                บทเรียน
+                ไฟล์ประกอบการเรียนการสอน
             </h2>
-            <div class="flex flex-wrap gap-8">
-                {{-- @foreach ($course->chapters as $index=>$chapter)
+            <div class="flex overflow-y-hidden overflow-x-auto w-auto gap-8 pb-4">
+                @foreach ($course->chapters as $index=>$chapter)
                     @if ($index > count($progress))
                         <x-chapter-card-white
                             chapter="{{$index + 1}}"
@@ -26,8 +26,13 @@
                             title="{{$chapter->title}}"
                         />
                     @endif
-                @endforeach --}}
+                @endforeach
             </div>
+        </div>
+        <div class="mt-8">
+            <h2 class="text-2xl font-semibold">
+                บทเรียน
+            </h2>
             <div class="flex flex-col gap-y-4">
                 @foreach ($course->chapters as $index=>$chapter)
                     <x-chapter-button
@@ -37,10 +42,6 @@
                         durationInMinutes="{{$chapter->durationInMinutes}}"
                         courseId="{{$course->id}}"
                         chapterId="{{$chapter->id}}"
-                        {{-- chapter="{{$chapter->chapter}}"
-                        title="{{$chapter->title}}"
-                        done="{{$index > count($progress)}}"
-                        durationInMinute={{$chapter->durationInMinute}} --}}
                     />
                 @endforeach
             </div>
