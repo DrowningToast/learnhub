@@ -46,8 +46,8 @@ class UsersFactory extends Factory
         $academic = AcademicInfos::factory()->create();
 
         return [
-            "first_name" => $this->faker->firstName(),
-            "last_name" => $this->faker->lastName(),
+            "first_name" => $this->faker->unique()->firstName(),
+            "last_name" => $this->faker->unique()->lastName(),
             "email" => $this->faker->unique()->safeEmail(),
             "phone" => $this->faker->phoneNumber(),
             "profile_image_src" => $this->faker->imageUrl(),
