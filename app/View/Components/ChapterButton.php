@@ -11,7 +11,14 @@ class ChapterButton extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(
+        public int $chapter,
+        public string $title,
+        public bool $done = false,
+        public int $durationInMinutes = 0,
+        public int $courseId,
+        public int $chapterId
+    )
     {
         //
     }

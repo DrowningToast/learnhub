@@ -17,7 +17,7 @@
         </div>
 
         <div class="h-full flex items-end ">
-            <button type="button" class="bg-[#FFFFFF] text-[#2A638A] rounded-full w-full py-2 font-bold font-noto-thai text-xs">Dowload File</button>
+            <button type="button" class="bg-[#FFFFFF] text-[#2A638A] rounded-full w-full py-2 font-bold font-noto-thai text-xs">เข้าเรียน</button>
         </div>
     </div>
 </div>

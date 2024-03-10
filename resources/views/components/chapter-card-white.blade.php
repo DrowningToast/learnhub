@@ -1,4 +1,4 @@
-<div class="bg-[#FFFFFF] flex rounded-2xl  w-[260px] h-auto p-6 border-solid border border-[#C1C7CE]">
+<div class="bg-[#FFFFFF] flex rounded-2xl w-[260px] h-auto p-6 border-solid border border-[#C1C7CE]">
 
     <div class="rounded-lg flex flex-col gap-y-3 w-full h-auto">
 
