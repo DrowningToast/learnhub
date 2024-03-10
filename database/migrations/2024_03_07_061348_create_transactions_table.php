@@ -14,19 +14,18 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger("from_user_id")->unique();
+            $table->unsignedBigInteger("from_user_id");
             $table->foreign("from_user_id")->references("id")->on("users")->onDelete("cascade");
 
-            $table->unsignedBigInteger("to_user_id")->unique();
-            $table->foreign("to_user_id")->references("id")->on("users")->onDelete("cascade");
-
-            $table->unsignedBigInteger("course_id")->unique();
+            $table->unsignedBigInteger("course_id");
             $table->foreign("course_id")->references("id")->on("courses")->onDelete("cascade");
 
-            $table->float("float");
+            $table->float("amount");
             $table->string("stripe_ref_id")->unique();
 
             $table->timestamps();
+
+            $table->unique(["from_user_id", "course_id"]);
         });
     }
 

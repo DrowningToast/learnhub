@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('chapters', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger("course_id")->unique();
+            $table->unsignedBigInteger("course_id");
             $table->foreign("course_id")->references("id")->on("courses")->onDelete("cascade");
 
             $table->string("title");
-            $table->string("description")->nullable();
-            $table->dateTime("deleted_at");
+            $table->longText("description")->nullable();
+            $table->dateTime("deleted_at")->nullable();
 
             $table->timestamps();
         });
