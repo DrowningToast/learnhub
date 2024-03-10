@@ -8,6 +8,7 @@ use App\Models\Chapters;
 use App\Models\CourseByUser;
 use App\Models\Courses;
 use App\Models\Credentials;
+use App\Models\ProgressByUserByCourse;
 use App\Models\QuizScoreByUser;
 use App\Models\Quizzes;
 use App\Models\Reviews;
@@ -15,6 +16,7 @@ use App\Models\Transactions;
 use App\Models\Users;
 use Database\Factories\UsersFactory;
 use Illuminate\Database\Seeder;
+use Laravel\Prompts\Progress;
 
 class DatabaseSeeder extends Seeder
 {
@@ -44,6 +46,11 @@ class DatabaseSeeder extends Seeder
                     CourseByUser::factory()->fromUser($learnerBots[(25 * $k) + $j]->id)->withCourse($course->id)->create();
                     // Generate review
                     Reviews::factory()->fromUser($learnerBots[(25 * $k) + $j]->id)->inCourse($course->id)->create();
+                    // Generate random amount of progress (0 - 10) for each course
+                    $progress = rand(0, 10);
+                    for ($p = 0; $p < $progress; $p++) {
+                        ProgressByUserByCourse::factory()->forUser($learnerBots[(25 * $k) + $j]->id)->forCourse($course->id)->forChapter($chapters[$p]->id)->create();
+                    }
                 }
                 // Generate a quiz for each chapter
                 foreach ($chapters as $chapter) {
