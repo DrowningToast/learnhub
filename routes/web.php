@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\LecturerRouteGuard;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,12 @@ Route::get('/courses/manage', [CourseController::class, 'manage'])->middleware([
 Route::get('/courses/{course}', [CourseController::class, 'show']);
 Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->middleware(['auth', LecturerRouteGuard::class]);
 Route::put('/courses/{course}', [CourseController::class, 'update'])->middleware(['auth', LecturerRouteGuard::class]);
+
+Route::get('/moderator', [ModeratorController::class, 'index'])->middleware('auth');
+Route::get('/moderator/course', [ModeratorController::class, 'course'])->middleware('auth');
+Route::get('/moderator/lecturer', [ModeratorController::class, 'lecturer'])->middleware('auth');
+Route::get('/moderator/learner', [ModeratorController::class, 'learner'])->middleware('auth');
+Route::get('/moderator/withdraw', [ModeratorController::class, 'transaction'])->middleware('auth');
 
 Route::get('/learn', function () {
     return view('courses.index');
