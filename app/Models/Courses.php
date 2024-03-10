@@ -25,6 +25,7 @@ class Courses extends Model
         'discount_percent',
         'hidden',
         'lecturer_id',
+        'category_id',
     ];
 
     public function lecturer()

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Courses;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
@@ -27,9 +28,11 @@ class CourseController extends Controller
 
     public function manage()
     {
-        return view('courses.manage', [
-            'courses' => Courses::where('lecturer_id', auth()->id())->get()
+        dd(Courses::where('lecturer_id', auth()->id())->get());
 
+        return view('courses.manage', [
+            'courses' => Courses::where('lecturer_id', auth()->id())->get(),
+            'user' => auth()->user()
         ]);
     }
 
@@ -45,14 +48,17 @@ class CourseController extends Controller
             'title' => ['required'],
             'buy_price' => ['required'],
             'discount_percent' => ['required'],
-            'cover_image_src' => ['mimes:jpeg,png,jpg,webp', 'required']
+            'cover_image_src' => ['mimes:jpeg,png,jpg,webp', 'required'],
+            'category_id' => ['required', Rule::in(['1', '2', '3', '4', '5', '6']), 'string'],
         ], [
             'title.required' => 'โปรดใส่ชื่อคอร์ส',
             'cover_image_src.image' => 'โปรดใส่ไฟล์รูปภาพเท่านั้น',
             'cover_image_src.mimes' => 'ไฟล์รูปภาพต้องเป็นรูปภาพชนิด jpeg, png, jpg, webp เท่านั้น',
             'cover_image_src.required' => 'โปรดใส่ไฟล์รูปภาพ',
             'buy_price.required' => 'โปรดใส่ราคาคอร์สเรียน',
-            'discount_percent.required' => 'โปรดใส่เปอร์เซนต์ส่วนลด'
+            'discount_percent.required' => 'โปรดใส่เปอร์เซนต์ส่วนลด',
+            'category_id.required' => 'โปรดเลือกหมวดหมู่',
+            'category_id.in' => 'โปรดเลือกหมวดหมู่ให้ถูกต้อง',
         ]);
 
         $formFields['lecturer_id'] = auth()->id();
@@ -62,9 +68,11 @@ class CourseController extends Controller
 
         $formFields['buy_price'] = number_format($formFields['buy_price'], 2);
 
+        // dd($formFields);
+
         $course = Courses::create($formFields);
 
-        return redirect()->route('courses.show', $course->id)->with('success_message', 'สร้างคอร์มเรียนใหม่สำเร็จ!');
+        return redirect("/courses/" . $course->id)->with('success_message', 'สร้างคอร์สเรียนใหม่สำเร็จ!');
     }
 
     /**
@@ -108,12 +116,15 @@ class CourseController extends Controller
             'title' => ['required'],
             'buy_price' => ['required'],
             'discount_percent' => ['required'],
+            'category_id' => ['required', Rule::in(['1', '2', '3', '4', '5', '6'])],
         ], [
             'title.required' => 'โปรดใส่ชื่อคอร์ส',
             'buy_price.decimal' => 'ราคาคอร์สเรียนต้องเป็นตัวเลข หรือทศนิยม',
             'discount_percent.decimal' => 'เปอร์เซนต์ส่วนลดต้องเป็นตัวเลข หรือทศนิยม',
             'buy_price.required' => 'โปรดใส่ราคาคอร์สเรียน',
-            'discount_percent.required' => 'โปรดใส่เปอร์เซนต์ส่วนลด'
+            'discount_percent.required' => 'โปรดใส่เปอร์เซนต์ส่วนลด',
+            'category_id.required' => 'โปรดเลือกหมวดหมู่',
+            'category_id.in' => 'โปรดเลือกหมวดหมู่ให้ถูกต้อง',
         ]);
 
         if ($request->has('cover_image_src')) {

@@ -1,11 +1,11 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Enums\CourseCategoryEnum;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -24,6 +24,9 @@ return new class extends Migration
 
             $table->unsignedBigInteger("lecturer_id");
             $table->foreign("lecturer_id")->references("id")->on("users")->onDelete("cascade");
+
+            // Course Category 1: SCIENCE, 2:MATH, 3:THAI, 4:SOCIAL STUDY, 5:ENGLISH 6:IT
+            $table->enum("category_id", CourseCategoryEnum::values())->default(CourseCategoryEnum::SCIENCE);
 
             $table->dateTime("deleted_at")->nullable();
             $table->timestamps();

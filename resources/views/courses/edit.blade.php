@@ -77,6 +77,24 @@
             </div>
         </div>
 
+        <div class="flex flex-col gap-2 mt-6">
+            <label for="category_id" class="text-[#1C1C1C] font-semibold">หมวดหมู่คอร์สเรียน</label>
+            <select name="category_id" id="category_id"
+                class=" border p-3 rounded-xl focus:outline-none focus:border-[#000842] block w-full mt-1">
+                <option>โปรดเลือกหมวดหมู่ของคอร์สเรียน</option>
+                <option value="1" selected={{ $course->category_id === '1' }}>วิทยาศาสตร์</option>
+                <option value="2" selected={{ $course->category_id === '2' }}>คณิตศาสตร์</option>
+                <option value="3" selected={{ $course->category_id === '3' }}>ภาษาไทย</option>
+                <option value="4" selected={{ $course->category_id === '4' }}>สังคมศึกษา</option>
+                <option value="5" selected={{ $course->category_id === '5' }}>ภาษาอังกฤษ</option>
+                <option value="6" selected={{ $course->category_id === '6' }}>เทคโนโลยีสารสนเทศ</option>
+            </select>
+
+            @error('category_id')
+                <span class="text-red-500">{{ $message }}</span>
+            @enderror
+        </div>
+
         <div class="flex flex-row items-center justify-end gap-6">
             <button
                 class="w-[15%] bg-[#E9F2FC] text-[#2A638A] rounded-3xl font-bold focus:outline-none py-3 text-lg mt-12"><a

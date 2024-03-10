@@ -89,7 +89,7 @@ class UserController extends Controller
         if (auth()->user()->role === RoleEnum::Learner) {
             return redirect('/learn')->with('success_message', $registerSuccMessage);
         } else if (auth()->user()->role === RoleEnum::Lecturer) {
-            return redirect('/courses/manage')->with('success_message', $registerSuccMessage);
+            return redirect('/learn')->with('success_message', $registerSuccMessage);
         }
     }
 

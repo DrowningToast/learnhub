@@ -18,7 +18,7 @@
             <div class="flex flex-col gap-8 p-10 pl-12 mt-20">
 
                 <x-menu-item title="หน้าเเรก" url="/courses/manage" iconSrc="images/icons/menu.png"
-                    isSelected="{{ Request::is('courses/manage') }}" />
+                    isSelected="{{ Request::is('courses/manage') || Request::is('learn') }}" />
                 <x-menu-item title="ธุรกรรม" url="/lecturer/transaction"
                     iconSrc="images/icons/lecturer/transaction/dollar.png"
                     isSelected="{{ Request::is('lecturer/transaction') }}" />
