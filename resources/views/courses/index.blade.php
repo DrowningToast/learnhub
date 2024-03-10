@@ -149,7 +149,7 @@ $profile_src = 'https://avatars.githubusercontent.com/u/58824744?v=4';
                     @endforeach
                 @else
                     <div class="flex flex-col gap-y-8">
-                        @foreach ($courses as $course)
+                        @foreach ($enrolledCourses as $course)
                             <x-CourseCard title="{{ $course['title'] }}" description="{{ $course['description'] }}"
                                 author="{{ $course['author'] }}" src="{{ $course['src'] }}"
                                 progress="{{ $course['progress'] }}" href="{{ $course['href'] }}"
