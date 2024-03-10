@@ -1,15 +1,16 @@
 <?php
 
 use App\Enums\RoleEnum;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\ModeratorController;
-use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\UserController;
-use App\Http\Middleware\CheckIsProfileComplete;
-use App\Http\Middleware\LecturerRouteGuard;
-use App\Http\Middleware\ModeratorRouteGuard;
 use App\Models\Courses;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CourseController;
+use App\Http\Middleware\LecturerRouteGuard;
+use App\Http\Middleware\ModeratorRouteGuard;
+use App\Http\Controllers\ModeratorController;
+use App\Http\Controllers\WithdrawalController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Middleware\CheckIsProfileComplete;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,8 +58,10 @@ Route::get('/moderator/course', [ModeratorController::class, 'course'])->middlew
 Route::get('/moderator/lecturer', [ModeratorController::class, 'lecturer'])->middleware(['auth', ModeratorRouteGuard::class]);
 Route::get('/moderator/learner', [ModeratorController::class, 'learner'])->middleware(['auth', ModeratorRouteGuard::class]);
 Route::get('/moderator/withdraw', [ModeratorController::class, 'transaction'])->middleware(['auth', ModeratorRouteGuard::class]);
+
 // Transactions
-Route::get('lecturer/transaction', [TransactionController::class, 'index'])->middleware(['auth', LecturerRouteGuard::class]);
+Route::get('/lecturer/withdraw', [WithdrawalController::class, 'index'])->middleware(['auth', LecturerRouteGuard::class]);
+Route::post('/lecturer/withdraw', [WithdrawalController::class, 'store'])->middleware(['auth', LecturerRouteGuard::class]);
 
 Route::get('/learn', function () {
     return view('courses.index', [
