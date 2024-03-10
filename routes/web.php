@@ -2,10 +2,12 @@
 
 use App\Enums\RoleEnum;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckIsProfileComplete;
 use App\Http\Middleware\LecturerRouteGuard;
+use App\Http\Middleware\ModeratorRouteGuard;
 use App\Models\Courses;
 use Illuminate\Support\Facades\Route;
 
@@ -42,7 +44,7 @@ route::get('/test', function () {
     return view('chapter');
 });
 // Create Course
-Route::get('/courses/create', [CourseController::class, 'create'])->middleware('auth');
+Route::get('/courses/create', [CourseController::class, 'create'])->middleware('auth', LecturerRouteGuard::class);
 Route::post('/courses', [CourseController::class, 'store'])->middleware('auth');
 
 // Show Course / Update Course
@@ -50,6 +52,11 @@ Route::get('/courses/{course}', [CourseController::class, 'show']);
 Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->middleware(['auth', LecturerRouteGuard::class]);
 Route::put('/courses/{course}', [CourseController::class, 'update'])->middleware(['auth', LecturerRouteGuard::class]);
 
+Route::get('/moderator', [ModeratorController::class, 'index'])->middleware(['auth', ModeratorRouteGuard::class]);
+Route::get('/moderator/course', [ModeratorController::class, 'course'])->middleware(['auth', ModeratorRouteGuard::class]);
+Route::get('/moderator/lecturer', [ModeratorController::class, 'lecturer'])->middleware(['auth', ModeratorRouteGuard::class]);
+Route::get('/moderator/learner', [ModeratorController::class, 'learner'])->middleware(['auth', ModeratorRouteGuard::class]);
+Route::get('/moderator/withdraw', [ModeratorController::class, 'transaction'])->middleware(['auth', ModeratorRouteGuard::class]);
 // Transactions
 Route::get('lecturer/transaction', [TransactionController::class, 'index'])->middleware(['auth', LecturerRouteGuard::class]);
 

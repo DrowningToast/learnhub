@@ -16,7 +16,7 @@ class ModeratorRouteGuard
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->user()->role == RoleEnum::Moderator) {
+        if (!(auth()->user()->role->value == RoleEnum::Moderator->value)) {
             return redirect('/')->with('error_message', 'ไม่มีสิทธิ์ในการเข้าถึงหน้านี้');
         }
         return $next($request);

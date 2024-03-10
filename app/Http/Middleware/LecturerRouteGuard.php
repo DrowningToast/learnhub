@@ -16,7 +16,7 @@ class LecturerRouteGuard
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->user()->role == RoleEnum::Lecturer) {
+        if (!(auth()->user()->role == RoleEnum::Lecturer)) {
             return redirect('/')->with('error_message', 'ไม่มีสิทธิ์ในการเข้าถึงหน้านี้');
         }
         return $next($request);
