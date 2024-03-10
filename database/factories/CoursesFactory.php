@@ -41,13 +41,14 @@ class CoursesFactory extends Factory
     {
         return [
             "title" => $this->faker->sentence(),
-            "description" => $this->faker->paragraph(),
+            "description" => $this->faker->paragraph(4),
             "cover_image_src" => $this->faker->imageUrl(),
             "buy_price" => $this->faker->randomFloat(1, 0, 1000),
             "buy_point" => $this->faker->numberBetween(0, 1000),
             "discount_percent" =>  rand(0,1) > 0.5 ? $this->faker->randomFloat(1, 0, 100) : 0,
             "hidden" => rand(0,1) > 0.8 ? 1 : 0,
             "lecturer_id" => $this->lecturer_id,
+            "category_id" => $this->faker->randomElement(["1", '2', '3', '4', '5', '6', null])
         ];
     }
 }

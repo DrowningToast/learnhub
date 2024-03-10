@@ -20,6 +20,11 @@ return new class extends Migration
             $table->string("title");
             $table->longText("description")->nullable();
             $table->dateTime("deleted_at")->nullable();
+            $table->integer("durationInMinutes")->default(0);
+            $table->string("video_src")->nullable();
+
+            $table->unsignedBigInteger('resource_id')->nullable();
+            $table->foreign('resource_id')->references('id')->on('files')->onDelete('cascade');
 
             $table->timestamps();
         });
