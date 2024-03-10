@@ -1,8 +1,7 @@
 @php
-    $cover_image_src = "https://www.youtube.com/embed/_uQrJ0TkZlc?si=R97Wf3dxJEVBTkgx";
-
     $selected_tab = $_GET['view'] ?? "description";
 @endphp
+
 
 <html class="font-noto-thai">
     @vite('resources/css/app.css')
@@ -48,7 +47,7 @@
                     @endif
             </div>
         </div>
-        <div class="grid place-items-center"><iframe title="course preview" class="w-full h-full rounded-xl" src="{{$cover_image_src}}" allowfullscreen></iframe></div>
+        <div class="grid place-items-center"><img title="course preview" class="w-full h-full rounded-xl" src="{{$cover_image_src}}"></div>
     </section>
 
     <div class="p-14 bg-white">

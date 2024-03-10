@@ -100,6 +100,7 @@ class CourseController extends Controller
         return view('courses.show', [
             'title' => $course->title,
             'description' => $course->description,
+            "cover_image_src" => $course->cover_image_src,
             'reviews' => $reviews,
             'rating' => $rating,
             'enrolled_count' => $enrolled_count,
