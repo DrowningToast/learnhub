@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->string("title");
-            $table->string("description")->nullable();
+            $table->longText("description")->nullable();
             $table->string("cover_image_src")->nullable();
             $table->float("buy_price");
             $table->integer("buy_point")->nullable();

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreign("course_id")->references("id")->on("courses")->onDelete("cascade");
 
             $table->string("title");
-            $table->string("description")->nullable();
+            $table->longText("description")->nullable();
             $table->dateTime("deleted_at")->nullable();
 
             $table->timestamps();

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger("course_id")->unique();
             $table->foreign("course_id")->references("id")->on("courses")->onDelete("cascade");
             $table->string("title");
-            $table->string("description")->nullable();
+            $table->longText("description")->nullable();
             $table->string("quiz_data");
             $table->float("full_score");
             $table->dateTime("expired_at");
