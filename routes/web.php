@@ -1,15 +1,16 @@
 <?php
 
 use App\Enums\RoleEnum;
-use App\Http\Controllers\CourseController;
-use App\Http\Controllers\ModeratorController;
-use App\Http\Controllers\TransactionController;
-use App\Http\Controllers\UserController;
-use App\Http\Middleware\CheckIsProfileComplete;
-use App\Http\Middleware\LecturerRouteGuard;
-use App\Http\Middleware\ModeratorRouteGuard;
 use App\Models\Courses;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CourseController;
+use App\Http\Middleware\LecturerRouteGuard;
+use App\Http\Middleware\ModeratorRouteGuard;
+use App\Http\Controllers\ModeratorController;
+use App\Http\Controllers\WithdrawalController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Middleware\CheckIsProfileComplete;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,16 +44,20 @@ Route::get('/video', function () {
 route::get('/test', function () {
     return view('chapter');
 });
+
 // Create Course
 Route::get('/courses/create', [CourseController::class, 'create'])->middleware('auth', LecturerRouteGuard::class);
 Route::post('/courses', [CourseController::class, 'store'])->middleware('auth');
 
-// Show Course / Update Course
+// Show Course
 Route::get('/courses/{course}', [CourseController::class, 'show']);
+
+// Edit Course
 Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->middleware(['auth', LecturerRouteGuard::class]);
 Route::put('/courses/{course}', [CourseController::class, 'update'])->middleware(['auth', LecturerRouteGuard::class]);
 
 // For moderator
+// Show Moderator Dashboard / Manage Courses / Manage Lecturers / Manage Learners / Manage Withdrawals
 Route::get('/moderator', [ModeratorController::class, 'index'])->middleware(['auth', ModeratorRouteGuard::class]);
 Route::get('/moderator/course', [ModeratorController::class, 'course'])->middleware(['auth', ModeratorRouteGuard::class]);
 Route::get('/moderator/lecturer', [ModeratorController::class, 'lecturer'])->middleware(['auth', ModeratorRouteGuard::class]);
@@ -65,6 +70,11 @@ Route::get('/moderator/learner/edit/{id}', [UserController::class, 'edit'])->mid
 // Transactions
 Route::get('lecturer/transaction', [TransactionController::class, 'index'])->middleware(['auth', LecturerRouteGuard::class]);
 
+// Manage Withdrawals (Lecturer) 
+Route::get('/lecturer/withdraw', [WithdrawalController::class, 'index'])->middleware(['auth', LecturerRouteGuard::class]);
+Route::post('/lecturer/withdraw', [WithdrawalController::class, 'store'])->middleware(['auth', LecturerRouteGuard::class]);
+
+// Show Learn Dashboard for Learners and Lecturers
 Route::get('/learn', function () {
     return view('courses.index', [
         'user' => auth()->user(),
@@ -75,6 +85,6 @@ Route::get('/learn', function () {
     ]);
 })->middleware(['auth', CheckIsProfileComplete::class]);
 
-// Edit (self) profile
+// Edit (Self) Profile
 Route::get('/profile', [UserController::class, 'edit'])->middleware('auth');
 Route::put('/profile', [UserController::class, 'update'])->middleware('auth');

@@ -86,11 +86,7 @@ class UserController extends Controller
 
         $registerSuccMessage = "สร้างบัญชีผู้ใช้งานสำหรับ " . $formFields["username"] . " เสร็จสิ้น ท่านสามารถล็อคอินได้ทันที";
 
-        if (auth()->user()->role === RoleEnum::Learner) {
-            return redirect('/learn')->with('success_message', $registerSuccMessage);
-        } else if (auth()->user()->role === RoleEnum::Lecturer) {
-            return redirect('/learn')->with('success_message', $registerSuccMessage);
-        }
+        return redirect('/learn')->with('success_message', $registerSuccMessage);
     }
 
     public function login(Request $request)
@@ -118,10 +114,12 @@ class UserController extends Controller
         $user = Users::where('credential_id', $credentials->id)->first();
         auth()->login($user, $isUserSaveSession);
 
-        if (auth()->user()->role === RoleEnum::Lecturer) {
-            return redirect('/courses/manage')->with('success_message', 'เข้าสู่ระบบสำเร็จ');
-        } else {
+        if (auth()->user()->role === RoleEnum::Lecturer || auth()->user()->role === RoleEnum::Learner) {
             return redirect('/learn')->with('success_message', 'เข้าสู่ระบบสำเร็จ');
+        } else if (auth()->user()->role === RoleEnum::Moderator) {
+            return redirect('/moderator')->with('success_message', 'เข้าสู่ระบบสำเร็จ');
+        } else {
+            return redirect('/')->with('error_message', 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ');
         }
     }
 
