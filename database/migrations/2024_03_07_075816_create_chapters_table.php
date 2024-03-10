@@ -19,7 +19,7 @@ return new class extends Migration
 
             $table->string("title");
             $table->string("description")->nullable();
-            $table->dateTime("deleted_at");
+            $table->dateTime("deleted_at")->nullable();
 
             $table->timestamps();
         });
