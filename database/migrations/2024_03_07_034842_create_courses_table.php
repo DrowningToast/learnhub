@@ -28,8 +28,9 @@ return new class extends Migration {
             // Course Category 1: SCIENCE, 2:MATH, 3:THAI, 4:SOCIAL STUDY, 5:ENGLISH 6:IT
             $table->enum("category_id", CourseCategoryEnum::values())->default(CourseCategoryEnum::SCIENCE);
 
-            $table->dateTime("deleted_at")->nullable();
             $table->timestamps();
+
+            $table->softDeletes();
         });
     }
 
@@ -38,6 +39,9 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('courses');
+        Schema::table('courses', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+            $table->dropIfExists();
+        });
     }
 };

@@ -41,7 +41,7 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        $request['buy_price'] = $request->buy_price ? number_format($request->buy_price, 2) : 0;
+        $request['buy_price'] = $request->buy_price ? $request->buy_price : 0;
         $request['discount_percent'] = $request->discount_percent ? number_format($request->discount_percent, 2) : 0;
 
         $formFields = $request->validate([
@@ -66,9 +66,7 @@ class CourseController extends Controller
         $formFields['cover_image_src'] = Storage::disk('sftp')->put('courses', $request->cover_image_src);
         $formFields['cover_image_src'] = 'https://' . env('SFTP_HOST') . '/' . Storage::disk('sftp')->url($formFields['cover_image_src']);
 
-        $formFields['buy_price'] = number_format($formFields['buy_price'], 2);
-
-        // dd($formFields);
+        $formFields['description'] = $request->description;
 
         $course = Courses::create($formFields);
 
@@ -102,6 +100,11 @@ class CourseController extends Controller
     {
         if ($course->lecturer_id !== auth()->id()) {
             return back()->with('error_message', 'คุณไม่มีสิทธิ์แก้ไขคอร์สเรียนนี้');
+        }
+
+        if ($request->has('delete')) {
+            $course->delete();
+            return redirect('/learn')->with('success_message', 'ลบคอร์สเรียนสำเร็จ!');
         }
 
         if (!$request->buy_price) {

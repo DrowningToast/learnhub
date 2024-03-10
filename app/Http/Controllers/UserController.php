@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use FileUpload;
 use App\Models\Users;
 use App\Enums\RoleEnum;
 use App\Models\Credentials;
-use FileUpload;
 use Illuminate\Http\Request;
 use App\Models\AcademicInfos;
 use Illuminate\Validation\Rule;
@@ -143,7 +143,7 @@ class UserController extends Controller
         }
 
         $user = Users::find($id);
-    
+
         return view('profile.edit', [
             'user' => $user
         ]);
@@ -258,7 +258,8 @@ class UserController extends Controller
         return redirect('/')->with('success_message', 'ออกจากระบบเสร็จสิ้น');
     }
 
-    public function getCurrentUser($academic = false) {
+    public function getCurrentUser($academic = false)
+    {
         if ($academic) {
             $user = Users::find(auth()->user()->id)->with('academicInfo')->get();
             return $user;
@@ -267,5 +268,5 @@ class UserController extends Controller
             return $user;
         }
     }
-    
+
 }

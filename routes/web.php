@@ -45,7 +45,6 @@ Route::get('/courses/create', [CourseController::class, 'create'])->middleware('
 Route::post('/courses', [CourseController::class, 'store'])->middleware('auth');
 
 // Show Course / Update Course
-Route::get('/courses/manage', [CourseController::class, 'manage'])->middleware(['auth', LecturerRouteGuard::class]);
 Route::get('/courses/{course}', [CourseController::class, 'show']);
 Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->middleware(['auth', LecturerRouteGuard::class]);
 Route::put('/courses/{course}', [CourseController::class, 'update'])->middleware(['auth', LecturerRouteGuard::class]);
@@ -59,8 +58,8 @@ Route::get('/learn', function () {
 
     $user = auth()->user();
 
-    if ($user->first_name == null || $user->last_name == null || $user->phone == null || $user->address == null) {
-        return redirect('/profile')->with('error_message', 'โปรดกรอกข้อมูลส่วนตัวให้ครบถ้วนก่อนเริ่มเรียน');
+    if ($user->first_name == null || $user->last_name == null || $user->phone == null || $user->email == null) {
+        return redirect('/profile')->with('error_message', 'โปรดกรอกข้อมูลส่วนตัวให้ครบถ้วนก่อนเริ่มใช้งาน LearnHub');
     }
 
     return view('courses.index', [

@@ -95,13 +95,23 @@
             @enderror
         </div>
 
-        <div class="flex flex-row items-center justify-end gap-6">
-            <button
-                class="w-[15%] bg-[#E9F2FC] text-[#2A638A] rounded-3xl font-bold focus:outline-none py-3 text-lg mt-12"><a
-                    href="/courses">ยกเลิก</a></button>
+        <div class="flex flex-row items-center justify-between gap-6 mt-12">
+            <div class="w-full">
+                <input type="submit" value="ลบคอร์สเรียน" name="delete"
+                    class="w-[25%] bg-[#DE3730] text-white rounded-3xl font-bold focus:outline-none py-3 text-lg cursor-pointer">
+                {{-- <button
+                    class="w-[25%] bg-[#DE3730] text-white rounded-3xl font-bold focus:outline-none py-3 text-lg mt-12"><a
+                        href="/courses">ลบคอร์สเรียน</a></button> --}}
+            </div>
 
-            <button type="submit"
-                class="w-[15%] bg-[#2A638A] text-white rounded-3xl font-bold focus:outline-none py-3 text-lg mt-12">อัพเดทคอร์สเรียน</button>
+            <div class="w-full flex items-center justify-end gap-6 ">
+                <button
+                    class="w-[25%] bg-[#E9F2FC] text-[#2A638A] rounded-3xl font-bold focus:outline-none py-3 text-lg "><a
+                        href="/courses">ยกเลิก</a></button>
+
+                <button type="submit"
+                    class="w-[25%] bg-[#2A638A] text-white rounded-3xl font-bold focus:outline-none py-3 text-lg ">อัพเดทคอร์สเรียน</button>
+            </div>
         </div>
     </form>
 
