@@ -7,6 +7,7 @@ use App\Enums\RoleEnum;
 use App\Models\Chapters;
 use App\Models\Courses;
 use App\Models\Credentials;
+use App\Models\Reviews;
 use App\Models\Users;
 use Database\Factories\UsersFactory;
 use Illuminate\Database\Seeder;
@@ -18,6 +19,30 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $learnerBots = Users::factory(100)->create();
+        $lecturerBots = Users::factory(5)->withRole(RoleEnum::Lecturer)->create();
+        $moderatorBots = Users::factory(5)->withRole(RoleEnum::Moderator)->create();
+
+        foreach ($lecturerBots as $i => $bot) {
+            // Generate 4 courses for each lecturer
+            $courses = Courses::factory(4)->withLecturer($bot->id)->create();
+            foreach ($courses as $k => $course) {
+                // Generate 5 chapters for each course
+                Chapters::factory(5)->withCourse($course->id)->create();
+                // Generate 5 reviews for each course
+                // for ($j = 0; $j < 5; $j++) {
+                //     Reviews::factory()->fromUser($learnerBots[$j]->id)->inCourse($course->id)->create();
+                // }
+                for ($j = 0; $j < 25; $j++) {
+                    Reviews::factory()->fromUser($learnerBots[(25 * $k) + $j]->id)->inCourse($course->id)->create();
+                }
+                // for ($j = 0; $j < $count; $j++) {
+                    // Reviews::factory()->fromUser($learnerBots[$i * 4 + $k]->id)->inCourse($course->id)->create();
+                // }
+            }
+        }
+
+        // Login stuff
         $learnerCred = Credentials::factory()->create([
             "username" => "learner",
             "password" => bcrypt("password"),
@@ -48,18 +73,6 @@ class DatabaseSeeder extends Seeder
             "credential_id" => $moderatorCred->id,
             "role" => RoleEnum::Moderator,
         ]);
-
-        $learnerBots = Users::factory(10)->create();
-        $lecturerBots = Users::factory(5)->withRole(RoleEnum::Lecturer)->create();
-
-        foreach ($lecturerBots as $bot) {
-            // Generate 4 courses for each lecturer
-            $courses = Courses::factory(4)->withLecturer($bot->id)->create();
-            foreach ($courses as $course) {
-                // Generate 5 chapters for each course
-                Chapters::factory(5)->withCourse($course->id)->create();
-            }
-        }
 
     }
 }
