@@ -1,5 +1,6 @@
 <?php
 
+<<<<<<< HEAD
 use App\Enums\RoleEnum;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ModeratorController;
@@ -9,6 +10,9 @@ use App\Http\Middleware\CheckIsProfileComplete;
 use App\Http\Middleware\LecturerRouteGuard;
 use App\Http\Middleware\ModeratorRouteGuard;
 use App\Models\Courses;
+=======
+use App\Http\Controllers\UserController;
+>>>>>>> parent of d912558 (Merge branch 'feat/coursevideo' of github.com:DrowningToast/learnhub into feat/coursevideo)
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,9 +30,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 // LOGIN / REGISTER / LOGOUT
-Route::get('/login', [UserController::class, 'index'])->middleware('guest')->name('login');
+Route::get('/login', [UserController::class, 'index'])->middleware('guest');
 Route::post('/login', [UserController::class, 'login'])->middleware('guest');
 
 Route::get('/register', [UserController::class, 'create'])->middleware('guest');
@@ -40,6 +43,7 @@ Route::get('/video', function () {
     return view('coursevideo');
 });
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 
@@ -90,3 +94,9 @@ Route::get('/profile', [UserController::class, 'edit'])->middleware('auth');
 Route::put('/profile', [UserController::class, 'update'])->middleware('auth');
 
 >>>>>>> b1b9e5b3b9f8bd03bc8f62e57652c6402f9ff763
+=======
+
+    route::get('/test2', function(){
+        return view('test2');
+});
+>>>>>>> parent of d912558 (Merge branch 'feat/coursevideo' of github.com:DrowningToast/learnhub into feat/coursevideo)

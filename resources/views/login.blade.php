@@ -10,10 +10,7 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="p-6 min-h-screen font-noto-thai relative">
-
-    <x-toast />
-
+<body class="p-6 min-h-screen font-noto-thai">
     <div class="grid grid-cols-2 h-full">
         {{-- RIGHT SIDE --}}
         <div>

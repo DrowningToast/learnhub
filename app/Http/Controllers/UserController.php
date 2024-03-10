@@ -11,7 +11,11 @@ use App\Models\AcademicInfos;
 use Illuminate\Validation\Rule;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\Hash;
+=======
+use Illuminate\Validation\Rules\Enum;
+>>>>>>> parent of d912558 (Merge branch 'feat/coursevideo' of github.com:DrowningToast/learnhub into feat/coursevideo)
 
 class UserController extends Controller
 {
@@ -84,6 +88,7 @@ class UserController extends Controller
 
         auth()->login($user, true);
 
+<<<<<<< HEAD
         $registerSuccMessage = "สร้างบัญชีผู้ใช้งานสำหรับ " . $formFields["username"] . " เสร็จสิ้น ท่านสามารถล็อคอินได้ทันที";
 
         if (auth()->user()->role === RoleEnum::Learner) {
@@ -91,38 +96,32 @@ class UserController extends Controller
         } else if (auth()->user()->role === RoleEnum::Lecturer) {
             return redirect('/learn')->with('success_message', $registerSuccMessage);
         }
+=======
+        return redirect('/')->with('success_message', "สร้างบัญชีผู้ใช้งานสำหรับ " . $formFields["username"] . " เสร็จสิ้น ท่านสามารถล็อคอินได้ทันที");
+>>>>>>> parent of d912558 (Merge branch 'feat/coursevideo' of github.com:DrowningToast/learnhub into feat/coursevideo)
     }
 
     public function login(Request $request)
     {
         $formFields = $request->validate(
             [
-                'username' => ['required', Rule::exists('credentials', 'username')],
+                'username' => ['required'],
                 'password' => ['required', 'min:8'],
             ],
             [
                 'username.required' => 'โปรดกรอกชื่อผู้ใช้',
                 'password.required' => 'โปรดกรอกรหัสผ่าน',
                 'password.min' => 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร',
-                'username.exists' => 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง',
             ]
         );
 
         $isUserSaveSession = $request->get('saveSession') !== null ? true : false;
 
-        $credentials = Credentials::where('username', $formFields['username'])->first();
-        if (!$credentials || !Hash::check($formFields['password'], $credentials->password)) {
-            return back()->with('error_message', 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+        if (auth()->attempt((['username' => $formFields['username'], 'password' => $formFields['password']]), $isUserSaveSession)) {
+            return redirect('/')->with('success_message', 'เข้าสู่ระบบสำเร็จ');
         }
 
-        $user = Users::where('credential_id', $credentials->id)->first();
-        auth()->login($user, $isUserSaveSession);
-
-        if (auth()->user()->role === RoleEnum::Lecturer) {
-            return redirect('/courses/manage')->with('success_message', 'เข้าสู่ระบบสำเร็จ');
-        } else {
-            return redirect('/learn')->with('success_message', 'เข้าสู่ระบบสำเร็จ');
-        }
+        return back()->with('error_message', 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
     }
 
     /**
