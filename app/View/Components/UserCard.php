@@ -15,7 +15,7 @@ class UserCard extends Component
         public int $pid,
         public string $name,
         public string $imgSrc,
-        public int $course,
+        public string $course,
     )
     {
         //

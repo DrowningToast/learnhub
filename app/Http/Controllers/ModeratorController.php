@@ -23,7 +23,9 @@ class ModeratorController extends Controller
 
     public function lecturer()
     {
-        return view('moderator.lecturer');
+        $users = Users::where('role', 'LECTURER')->get()->ownCourses;
+        dd($users);
+        return view('moderator.lecturer', ['users' => $users]);
     }
 
     public function learner()
