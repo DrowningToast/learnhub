@@ -11,10 +11,12 @@ use App\Models\Transactions;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Courses extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'title',
@@ -25,6 +27,7 @@ class Courses extends Model
         'discount_percent',
         'hidden',
         'lecturer_id',
+        'category_id',
     ];
 
     public function lecturer()

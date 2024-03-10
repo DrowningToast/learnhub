@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Users;
 use App\Enums\RoleEnum;
 use App\Models\Credentials;
-use FileUpload;
+use FileUploadController;
 use Illuminate\Http\Request;
 use App\Models\AcademicInfos;
 use Illuminate\Validation\Rule;
@@ -89,7 +89,7 @@ class UserController extends Controller
         if (auth()->user()->role === RoleEnum::Learner) {
             return redirect('/learn')->with('success_message', $registerSuccMessage);
         } else if (auth()->user()->role === RoleEnum::Lecturer) {
-            return redirect('/courses/manage')->with('success_message', $registerSuccMessage);
+            return redirect('/learn')->with('success_message', $registerSuccMessage);
         }
     }
 
@@ -143,7 +143,7 @@ class UserController extends Controller
         }
 
         $user = Users::find($id);
-    
+
         return view('profile.edit', [
             'user' => $user
         ]);
@@ -221,8 +221,9 @@ class UserController extends Controller
         }
         // update the profile image src
         if ($request->profile_image_src) {
-            $fileUpload = new FileUpload($request->profile_image_src);
-            $fileUpload->upload('portrait', $target->id . "-portrait");
+            $fileUpload = new FileController($request->profile_image_src);
+            $URL = $fileUpload->upload('portrait', $target->id . "-portrait");
+            $profileInfo['profile_image_src'] = $URL;
         }
         // If the user is a lecturer, update the banking information
         if (auth()->user()->role === RoleEnum::Lecturer) {
@@ -258,7 +259,8 @@ class UserController extends Controller
         return redirect('/')->with('success_message', 'ออกจากระบบเสร็จสิ้น');
     }
 
-    public function getCurrentUser($academic = false) {
+    public function getCurrentUser($academic = false)
+    {
         if ($academic) {
             $user = Users::find(auth()->user()->id)->with('academicInfo')->get();
             return $user;
@@ -267,5 +269,5 @@ class UserController extends Controller
             return $user;
         }
     }
-    
+
 }
