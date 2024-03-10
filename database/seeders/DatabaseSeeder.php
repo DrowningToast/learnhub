@@ -29,16 +29,10 @@ class DatabaseSeeder extends Seeder
             foreach ($courses as $k => $course) {
                 // Generate 5 chapters for each course
                 Chapters::factory(5)->withCourse($course->id)->create();
-                // Generate 5 reviews for each course
-                // for ($j = 0; $j < 5; $j++) {
-                //     Reviews::factory()->fromUser($learnerBots[$j]->id)->inCourse($course->id)->create();
-                // }
+                // Generate 25 reviews for each course
                 for ($j = 0; $j < 25; $j++) {
                     Reviews::factory()->fromUser($learnerBots[(25 * $k) + $j]->id)->inCourse($course->id)->create();
                 }
-                // for ($j = 0; $j < $count; $j++) {
-                    // Reviews::factory()->fromUser($learnerBots[$i * 4 + $k]->id)->inCourse($course->id)->create();
-                // }
             }
         }
 
