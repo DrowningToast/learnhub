@@ -82,7 +82,8 @@ class CourseController extends Controller
 
         $course = Courses::findOrFail($id);
         $rating = Reviews::where('course_id', $id)->avg('rating');
-        $reviews = Reviews::where('course_id', $id)->take(6)->inRandomOrder()->get();
+        // NEED PAGINATION  
+        $reviews = Reviews::where('course_id', $id)->take(6)->inRandomOrder()->get();  
         $enrolled_count = CourseByUser::where('course_id', $id)->count();
         $reviews_count = Reviews::where('course_id', $id)->count();
         $owned = false;

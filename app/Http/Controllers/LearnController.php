@@ -28,7 +28,7 @@ class LearnController extends Controller
         return view('learn.index', [
             'user' => auth()->user(),
             'enrolledCourses' => $courses,
-            'popularCourses' => Courses::latest()->take(5)->get(),
+            'popularCourses' => Courses::withCount('enrolledUsers')->orderBy('enrolled_users_count', 'desc')->limit(5)->get(),
             'isLecturer' => auth()->user()->role->value == RoleEnum::Lecturer->value,
             'managedCourses' => Courses::where('lecturer_id', auth()->id())->latest()->get()
         ]);
