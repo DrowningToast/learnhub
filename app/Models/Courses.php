@@ -49,4 +49,16 @@ class Courses extends Model
     {
         return $this->hasMany(Transactions::class, 'course_id', 'id');
     }
+
+    public function scopeFilter($query, array $filters)
+    {
+        if ($filters['title'] ?? false) {
+            $query->where('title', 'like', '%' . request('title') . '%');
+        }
+
+        if (($filters['categoryId'] ?? false) && $filters['categoryId'] !== 'ทั้งหมด') {
+            $query->where('category_id', '=', request('categoryId'));
+        }
+    }
+
 }

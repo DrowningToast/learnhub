@@ -11,7 +11,10 @@ class courseButton extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(
+        public string $checked = 'false',
+        public string $rvalue
+    )
     {
         //
     }

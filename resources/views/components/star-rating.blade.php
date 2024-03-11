@@ -1,5 +1,5 @@
 <div class="flex gap-x-1 items-center">
-    <p>1.00</p>
+    <p>{{ number_format((float)$rating, 2) }}</p>
     <div class="flex gap-x-1 items-center mb-1">
         @php
             $i = 0;
