@@ -61,14 +61,21 @@ $lecturer = [
                 <div class="flex items-center gap-x-4">
                     <span class="text-xl font-semibold text-[#6F7979]">จัดเรียงตาม: </span>
                     <select class="select-blue" name="statusId">
-                        <option value="ALL">ทั้งหมด</option>
-                        <option value="1">กำลังดำเนินการ</option>
-                        <option value="2">สำเร็จ</option>
-                        <option value="3">ไม่สำเร็จ</option>
+                        <option value="ALL" {{ app('request')->input('statusId') === 'ALL' ? 'selected' : '' }}>
+                            ทั้งหมด
+                        </option>
+                        <option value="1" {{ app('request')->input('statusId') === '1' ? 'selected' : '' }}>
+                            กำลังดำเนินการ</option>
+                        <option value="2" {{ app('request')->input('statusId') === '2' ? 'selected' : '' }}>สำเร็จ
+                        </option>
+                        <option value="3" {{ app('request')->input('statusId') === '3' ? 'selected' : '' }}>
+                            ไม่สำเร็จ</option>
                     </select>
                     <select class="select-blue" name="orderBy">
-                        <option value="latest">ใหม่สุด-เก่าสุด</option>
-                        <option value="oldest">เก่าสุด-ใหม่สุด</option>
+                        <option value="latest" {{ app('request')->input('orderBy') === 'latest' ? 'selected' : '' }}>
+                            ใหม่สุด-เก่าสุด</option>
+                        <option value="oldest" {{ app('request')->input('orderBy') === 'oldest' ? 'selected' : '' }}>
+                            เก่าสุด-ใหม่สุด</option>
                     </select>
                 </div>
             </form>

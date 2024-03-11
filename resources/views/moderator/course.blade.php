@@ -29,17 +29,25 @@
                 <div class="flex items-center gap-x-4">
                     <span class="text-xl font-semibold text-[#6F7979]">จัดเรียงตาม</span>
                     <select class="select-blue" name="categoryId">
-                        <option selected>ทั้งหมด</option>
-                        <option value="1">วิทยาศาสตร์</option>
-                        <option value="2">คณิตศาสตร์</option>
-                        <option value="3">ภาษาไทย</option>
-                        <option value="3">สังคมศึกษา</option>
-                        <option value="4">ภาษาอังกฤษ</option>
-                        <option value="5">เทคโนโลยีสารสนเทศ</option>
+                        <option>ทั้งหมด</option>
+                        <option value="1" {{ app('request')->input('categoryId') === '1' ? 'selected' : '' }}>
+                            วิทยาศาสตร์</option>
+                        <option value="2" {{ app('request')->input('categoryId') === '2' ? 'selected' : '' }}>
+                            คณิตศาสตร์</option>
+                        <option value="3" {{ app('request')->input('categoryId') === '3' ? 'selected' : '' }}>
+                            ภาษาไทย</option>
+                        <option value="4" {{ app('request')->input('categoryId') === '4' ? 'selected' : '' }}>
+                            สังคมศึกษา</option>
+                        <option value="5" {{ app('request')->input('categoryId') === '5' ? 'selected' : '' }}>
+                            ภาษาอังกฤษ</option>
+                        <option value="6" {{ app('request')->input('categoryId') === '6' ? 'selected' : '' }}>
+                            เทคโนโลยีสารสนเทศ</option>
                     </select>
                     <select class="select-blue" name="orderBy">
-                        <option value="latest">ใหม่สุด-เก่าสุด</option>
-                        <option value="oldest">เก่าสุด-ใหม่สุด</option>
+                        <option value="latest" {{ app('request')->input('orderBy') === 'latest' ? 'selected' : '' }}>
+                            ใหม่สุด-เก่าสุด</option>
+                        <option value="oldest" {{ app('request')->input('orderBy') === 'oldest' ? 'selected' : '' }}>
+                            เก่าสุด-ใหม่สุด</option>
                     </select>
                 </div>
             </form>
