@@ -22,7 +22,8 @@ services:
 
     laravel.test:
         build:
-            context: ./vendor/laravel/sail/runtimes/8.3
+            # context: ./vendor/laravel/sail/runtimes/8.3
+            context: ./deploy
             dockerfile: Dockerfile
             args:
                 WWWGROUP: "${WWWGROUP}"
