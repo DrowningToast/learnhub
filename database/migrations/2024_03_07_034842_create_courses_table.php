@@ -26,7 +26,7 @@ return new class extends Migration {
             $table->foreign("lecturer_id")->references("id")->on("users")->onDelete("cascade");
 
             // Course Category 1: SCIENCE, 2:MATH, 3:THAI, 4:SOCIAL STUDY, 5:ENGLISH 6:IT
-            $table->enum("category_id", CourseCategoryEnum::values())->default(CourseCategoryEnum::SCIENCE);
+            $table->enum("category_id", CourseCategoryEnum::values())->nullable();
 
             $table->timestamps();
 

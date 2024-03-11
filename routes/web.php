@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\RoleEnum;
+use App\Http\Controllers\LearnController;
 use App\Models\Courses;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\WithdrawalController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Middleware\CheckIsProfileComplete;
 use App\Http\Middleware\ModAndLectRouteGuard;
+use App\Models\Reviews;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +27,10 @@ use App\Http\Middleware\ModAndLectRouteGuard;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $top_review = Reviews::whereNot('comment', "=", null)->orderBy('rating', 'desc')->take(3)->get();
+    return view('welcome', [
+        'top_review' => $top_review,
+    ]);
 });
 
 
@@ -63,10 +68,15 @@ Route::get('/moderator', [ModeratorController::class, 'index'])->middleware(['au
 Route::get('/moderator/course', [ModeratorController::class, 'course'])->middleware(['auth', ModeratorRouteGuard::class]);
 Route::get('/moderator/lecturer', [ModeratorController::class, 'lecturer'])->middleware(['auth', ModeratorRouteGuard::class]);
 Route::get('/moderator/learner', [ModeratorController::class, 'learner'])->middleware(['auth', ModeratorRouteGuard::class]);
+
+// Show Withdrawal Request (Approve & Reject)
 Route::get('/moderator/withdraw', [ModeratorController::class, 'transaction'])->middleware(['auth', ModeratorRouteGuard::class]);
+Route::put('/moderator/withdraw/approve', [ModeratorController::class, 'approve'])->middleware(['auth', ModeratorRouteGuard::class]);
+Route::put('/moderator/withdraw/reject', [ModeratorController::class, 'reject'])->middleware(['auth', ModeratorRouteGuard::class]);
 
 // edit (any) profile (moderator)
 Route::get('/moderator/user/edit/{id}', [UserController::class, 'edit'])->middleware(['auth', ModeratorRouteGuard::class]);
+Route::get('/moderator/lecturer/edit/{id}', [UserController::class, 'edit'])->middleware(['auth', ModeratorRouteGuard::class]);
 
 // Transactions
 Route::get('lecturer/transaction', [TransactionController::class, 'index'])->middleware(['auth', LecturerRouteGuard::class]);
@@ -76,15 +86,8 @@ Route::get('/lecturer/withdraw', [WithdrawalController::class, 'index'])->middle
 Route::post('/lecturer/withdraw', [WithdrawalController::class, 'store'])->middleware(['auth', LecturerRouteGuard::class]);
 
 // Show Learn Dashboard for Learners and Lecturers
-Route::get('/learn', function () {
-    return view('courses.index', [
-        'user' => auth()->user(),
-        'enrolledCourses' => auth()->user()->enrolledCourses(),
-        'popularCourses' => Courses::latest()->take(5)->get(),
-        'isLecturer' => auth()->user()->role->value == RoleEnum::Lecturer->value,
-        'managedCourses' => Courses::where('lecturer_id', auth()->id())->latest()->get()
-    ]);
-})->middleware(['auth', CheckIsProfileComplete::class]);
+Route::get('/learn', [LearnController::class, 'index'])->middleware(['auth', CheckIsProfileComplete::class]);
+Route::get('/learn/{course}', [LearnController::class, 'show'])->middleware('auth', CheckIsProfileComplete::class);
 
 // Edit (Self) Profile
 Route::get('/profile', [UserController::class, 'edit'])->middleware('auth');

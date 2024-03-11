@@ -21,14 +21,29 @@
             <p class="text-3xl 2xl:text-4xl font-beth text-white text-center mt-8"><a href="/">LearnHub</a></p>
 
             <div class="flex flex-col gap-8 p-10 pl-12 mt-20">
+                <x-menu-item title="หน้าเเรก" url="{{ $isModerator ? '/moderator' : '/learn' }}"
+                    iconSrc="images/icons/menu.png"
+                    isSelected="{{ Request::is('learn') || Request::is('moderator') }}" />
 
-                <x-menu-item title="หน้าเเรก" url="/learn" iconSrc="images/icons/menu.png"
-                    isSelected="{{ Request::is('courses/manage') || Request::is('learn') }}" />
-
-                @if ($isLecturer || $isModerator)
+                @if ($isLecturer)
                     <x-menu-item title="ถอนเงิน" url="/lecturer/withdraw"
                         iconSrc="images/icons/lecturer/transaction/dollar.png"
                         isSelected="{{ Request::is('lecturer/withdraw') }}" />
+                @endif
+
+                @if ($isModerator)
+                    <x-menu-item title="คำขอถอนเงิน" url="/moderator/withdraw"
+                        iconSrc="images/icons/lecturer/transaction/dollar.png"
+                        isSelected="{{ Request::is('moderator/withdraw') }}" />
+
+                    <x-menu-item title="จัดการคอร์สเรียน" url="/moderator/course" iconSrc="images/icons/settings.png"
+                        isSelected="{{ str_contains(Request::path(), 'course') }}" />
+
+                    <x-menu-item title="จัดการผู้เรียน" url="/moderator/learner" iconSrc="images/icons/settings.png"
+                        isSelected="{{ str_contains(Request::path(), 'learner') || str_contains(Request::path(), 'user') }}" />
+
+                    <x-menu-item title="จัดการผู้สอน" url="/moderator/lecturer" iconSrc="images/icons/settings.png"
+                        isSelected="{{ Request::is('moderator/lecturer') || str_contains(Request::path(), 'lecturer') }}" />
                 @endif
 
                 <x-menu-item title="ตั้งค่า" url="/profile" iconSrc="images/icons/settings.png"

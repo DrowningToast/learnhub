@@ -3,21 +3,23 @@
 namespace App\View\Components;
 
 use Closure;
-use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
 
-class UserCard extends Component
+class ChapterButton extends Component
 {
     /**
      * Create a new component instance.
      */
     public function __construct(
-        public int $pid,
-        public string $name,
-        public string $imgSrc,
-        public string $course,
-        public bool $isLecturer = false
-    ) {
+        public int $chapter,
+        public string $title,
+        public bool $done = false,
+        public int $durationInMinutes = 0,
+        public int $courseId,
+        public int $chapterId
+    )
+    {
         //
     }
 
@@ -26,6 +28,6 @@ class UserCard extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.user-card');
+        return view('components.chapter-button');
     }
 }
