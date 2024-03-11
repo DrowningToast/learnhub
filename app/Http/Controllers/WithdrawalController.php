@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Courses;
 use App\Models\Transactions;
 use App\Models\Withdrawals;
 use Illuminate\Http\Request;
@@ -40,8 +41,9 @@ class WithdrawalController extends Controller
         $course_ids = $user->ownedCourses->pluck('id')->toArray();
         $courseSellingTransactionsPagination = Transactions::latest()->whereIn('course_id', $course_ids)->paginate(5);
 
-        $courseSellingTransactions = $courseSellingTransactions->filter(function ($transaction) use ($user) {
-            return $transaction->course->lecturer_id === $user->id;
+        $courseSellingTransactions = $courseSellingTransactions->filter(function ($transaction) {
+            $course = Courses::withTrashed()->find($transaction->course_id);
+            return $course->lecturer_id === auth()->user()->id;
         });
 
         $availableBalance = $courseSellingTransactions->sum('amount') - $pendingTransactions->sum('amount') - $completedTransactions->sum('amount');

@@ -138,6 +138,12 @@ class CourseController extends Controller
             return redirect('/learn')->with('success_message', 'ลบคอร์สเรียนสำเร็จ!');
         }
 
+        if ($request->has('back') && auth()->user()->role->value === 'MODERATOR') {
+            return redirect('/moderator/course');
+        } else if ($request->has('back')) {
+            return redirect('/learn');
+        }
+
         if (!$request->buy_price) {
             $request['buy_price'] = 0.0;
         }

@@ -198,6 +198,7 @@ class UserController extends Controller
 
         // Find target of edit using email
         $target = Users::where('email', $fields['email'])->first();
+
         // Validate the role
         if (auth()->user()->role === RoleEnum::Moderator) {
 
@@ -205,10 +206,6 @@ class UserController extends Controller
             return back()->with('error_message', 'คุณไม่มีสิทธิ์แก้ไขข้อมูลของผู้ใช้อื่น');
         }
 
-
-
-
-        // dd($target->academicInfo);
         // update the academic information
         if ($target->academicInfo->exists()) {
             $target->academicInfo->update($academicInfo);
@@ -232,8 +229,10 @@ class UserController extends Controller
 
         $target->update($profileInfo);
 
-        if ($target->id != auth()->user()->id) {
-            return redirect('/moderator/learner/edit/' . $target->id)->with('success_message', 'อัพเดทข้อมูลสำเร็จ');
+        if ($target->id != auth()->user()->id && $target->role->value === RoleEnum::Learner->value) {
+            return redirect('/moderator/user/edit/' . $target->id)->with('success_message', 'อัพเดทข้อมูลสำเร็จ');
+        } else if ($target->id != auth()->user()->id && $target->role->value === RoleEnum::Lecturer->value) {
+            return redirect('/moderator/lecturer/edit/' . $target->id)->with('success_message', 'อัพเดทข้อมูลสำเร็จ');
         } else {
             return $this->edit($target->id)->with('success_message', 'อัพเดทข้อมูลสำเร็จ');
         }

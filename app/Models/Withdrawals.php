@@ -21,6 +21,13 @@ class Withdrawals extends Model
         'status_id', // 1: REQUESTED 2: APPROVED 3: DECLINED
     ];
 
+    public function scopeFilter($query, array $filters)
+    {
+        if (($filters['statusId'] ?? false) && $filters['statusId'] !== 'ALL') {
+            $query->where('status_id', $filters['statusId']);
+        }
+    }
+
     public function user()
     {
         return $this->belongsTo(Users::class, 'user_id', 'id');
