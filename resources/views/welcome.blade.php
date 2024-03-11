@@ -62,24 +62,27 @@
         {{-- section 3 --}}
         <div class="w-full flex justify-center items-center mt-20 bg-gradient-to-b from-[#F4F8FF] from-80% to-white to-95% scroll-mt-24" id="all-course">
             <div class="rounded-xl w-11/12 flex flex-col gap-y-7">
-                <div class="flex justify-between">
-                    <h1 class="text-5xl font-extrabold">คอร์สทั้งหมด</h1>
-                    <div
-                        class="flex items-center text-xl bg-white rounded-lg px-2 py-1 shadow-[inset_1px_1px_8px_4px_rgba(0,0,0,0.1)]">
-                        <input type="text" class="px-3 py-3 outline-none w-96 bg-transparent"
-                            placeholder="ค้นหาคอร์สของคุณ">
-                        <button class="bg-[#D4E3FF] p-3 rounded-lg"><x-bi-search
-                                class="text-blue-800 text-2xl" /></button>
+                <form action="/#all-course" method="get" class="flex flex-col gap-y-7">
+                    @csrf
+                    <div class="flex justify-between">
+                        <h1 class="text-5xl font-extrabold">คอร์สทั้งหมด</h1>
+                        <div
+                            class="flex items-center text-xl bg-white rounded-lg px-2 py-1 shadow-[inset_1px_1px_8px_4px_rgba(0,0,0,0.1)]">
+                            <input type="text" name="search-course" class="px-3 py-3 outline-none w-96 bg-transparent"
+                                 value="{{ app('request')->input('search-course') }}" placeholder="ค้นหาคอร์สของคุณ">
+                            <button type="submit" class="bg-[#D4E3FF] p-3 rounded-lg"><x-bi-search
+                                    class="text-blue-800 text-2xl" /></button>
+                        </div>
                     </div>
-                </div>
-                <div class="flex justify-center items-center gap-x-8 bg-[#E2EEFB] px-8 py-5 rounded-lg overflow-x-auto">
-                    <x-CourseButton>วิทยาศาสตร์</x-CourseButton>
-                    <x-CourseButton>คณิตศาสตร์</x-CourseButton>
-                    <x-CourseButton>ภาษาไทย</x-CourseButton>
-                    <x-CourseButton>สังคมศึกษา</x-CourseButton>
-                    <x-CourseButton>ภาษาอังกฤษ</x-CourseButton>
-                    <x-CourseButton>เทคโนโลยีสารสนเทศ</x-CourseButton>
-                </div>
+                    <div class="flex justify-center items-center gap-x-8 bg-[#E2EEFB] px-8 py-5 rounded-lg overflow-x-auto">
+                        <x-CourseButton rvalue="sci" checked="{{ app('request')->input('filter-course') }}">วิทยาศาสตร์</x-CourseButton>
+                        <x-CourseButton rvalue="math" checked="{{ app('request')->input('filter-course') }}">คณิตศาสตร์</x-CourseButton>
+                        <x-CourseButton rvalue="thai" checked="{{ app('request')->input('filter-course') }}">ภาษาไทย</x-CourseButton>
+                        <x-CourseButton rvalue="social" checked="{{ app('request')->input('filter-course') }}">สังคมศึกษา</x-CourseButton>
+                        <x-CourseButton rvalue="eng" checked="{{ app('request')->input('filter-course') }}">ภาษาอังกฤษ</x-CourseButton>
+                        <x-CourseButton rvalue="tech" checked="{{ app('request')->input('filter-course') }}">เทคโนโลยีสารสนเทศ</x-CourseButton>
+                    </div>
+                </form>
                 <div class="grid grid-cols-3 gap-x-14 gap-y-10">
                     <x-SellCourseCard banner="/img/courseBanner.webp" lecturer="นายศิลา ภักดีวงศ์"
                         lecProfile="/img/sila.webp" category="เทคโนโลยีสารสนเทศ"
@@ -123,9 +126,24 @@
     <div class="w-full h-screen bg-gradient-to-b from-white from-30% to-[#7F92B1] flex flex-col justify-center items-center px-14 gap-y-14">
         <h1 class="text-6xl font-bold">รีวิวจากผู้เรียน</h1>
         <div class="flex w-full gap-x-10">
-            <x-CommentCard  className="scale-[0.85]" />
-            <x-CommentCard />
-            <x-CommentCard className="scale-[0.85]"/>
+            <x-CommentCard className="scale-[0.85]" 
+                imgSrc="{{ $top_review[1]['user']['profile_image_src'] }}"
+                name="{{ $top_review[1]['user']['first_name'] }} {{ $top_review[1]['user']['last_name'] }}"
+                courseName="{{ $top_review[1]['course']['title'] }}"
+                comment="{{ $top_review[1]['comment'] }}" rating="{{ $top_review[1]['rating'] }}"
+            />
+            <x-CommentCard className=""
+                imgSrc="{{ $top_review[0]['user']['profile_image_src'] }}"
+                name="{{ $top_review[0]['user']['first_name'] }} {{ $top_review[0]['user']['last_name'] }}"
+                courseName="{{ $top_review[0]['course']['title'] }}"
+                comment="{{ $top_review[0]['comment'] }}" rating="{{ $top_review[0]['rating'] }}"
+            />
+            <x-CommentCard className="scale-[0.85]" 
+                imgSrc="{{ $top_review[2]['user']['profile_image_src'] }}"
+                name="{{ $top_review[2]['user']['first_name'] }} {{ $top_review[2]['user']['last_name'] }}"
+                courseName="{{ $top_review[2]['course']['title'] }}"
+                comment="{{ $top_review[2]['comment'] }}" rating="{{ $top_review[2]['rating'] }}"
+            />
         </div>
     </div>
 

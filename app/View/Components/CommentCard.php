@@ -12,7 +12,12 @@ class CommentCard extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public string $className = ''
+        public string $className = '',
+        public string $imgSrc,
+        public string $name,
+        public string $courseName,
+        public string $comment,
+        public string $rating,
     )
     {
         //
