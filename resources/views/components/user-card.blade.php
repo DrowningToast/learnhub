@@ -10,7 +10,7 @@
                 <p>{{ $course }} Course</p>
             </button>
         </a>
-        <a href="#">
+        <a href="/moderator/user/edit/{{ $pid }}">
             <x-fas-arrow-right class="w-6 text-gray-500"/>
         </a>
    </div>

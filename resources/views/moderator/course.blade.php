@@ -1,42 +1,3 @@
-<?php
-$courses = [
-    [
-        'title' => 'Python Programming ฉบับคนไม่เคยเขียนโปรแกรม Python Programming ฉบับคนไม่เคยเขียนโปรแกรม',
-        'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, deleniti. Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, deleniti. Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, deleniti.',
-        'author' => 'John Doe',
-        'src' => 'https://www.udacity.com/blog/wp-content/uploads/2020/12/Python-Tutorial_Blog-scaled.jpeg',
-        'progress' => 0.5,
-        'href' => '1',
-    ],
-    [
-        'title' => 'Python Programming ฉบับคนไม่เคยเขียนโปรแกรม',
-        'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, deleniti.',
-        'author' => 'John Doe',
-        'src' => 'https://www.udacity.com/blog/wp-content/uploads/2020/12/Python-Tutorial_Blog-scaled.jpeg',
-        'progress' => 0.5,
-        'href' => '1',
-    ],
-    [
-        'title' => 'Python Programming ฉบับคนไม่เคยเขียนโปรแกรม',
-        'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, deleniti.',
-        'author' => 'John Doe',
-        'src' => 'https://www.udacity.com/blog/wp-content/uploads/2020/12/Python-Tutorial_Blog-scaled.jpeg',
-        'progress' => 0.5,
-        'href' => '1',
-    ],
-    [
-        'title' => 'Python Programming ฉบับคนไม่เคยเขียนโปรแกรม',
-        'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, deleniti.',
-        'author' => 'John Doe',
-        'src' => 'https://www.udacity.com/blog/wp-content/uploads/2020/12/Python-Tutorial_Blog-scaled.jpeg',
-        'progress' => 0.5,
-        'href' => '1',
-    ],
-];
-
-
-?>
-
 @php
     $colors = ['bg-[#E2EEFB]', 'bg-[#F2E6FF]', 'bg-[#FFEAF0]'];
     $primaryColor = ['bg-[#4369A2]', 'bg-[#8B68B1]', 'bg-[#C97D93]'];
@@ -86,8 +47,8 @@ $courses = [
             <div class="flex flex-col gap-y-8">
                 @foreach ($courses as $course)
                     <x-MenuCard title="{{ $course['title'] }}" description="{{ $course['description'] }}"
-                        author="{{ $course['author'] }}" imgSrc="{{ $course['src'] }}"
-                        href="/moderator/course/{{ $course['href'] }}" bgColor="{{ $colors[$loop->index % 3] }}"
+                        author="{{ $course['lecturer']['first_name'] }} {{ $course['lecturer']['last_name'] }}" imgSrc="{{ $course['cover_image_src'] }}"
+                        href="/courses/{{ $course['id'] }}/edit" bgColor="{{ $colors[$loop->index % 3] }}"
                         btnColor="{{ $primaryColor[$loop->index % 3] }}"
                         shColor="{{ $shadowColor[$loop->index % 3] }}" />
                 @endforeach

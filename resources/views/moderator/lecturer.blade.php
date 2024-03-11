@@ -1,5 +1,5 @@
 <?php
-dd($lecturers[0]['ownedCourses']);
+// dd($lecturers[0]['ownedCourses']);
 // $lecturer = [
 //     [
 //         'id' => 1,
@@ -82,12 +82,12 @@ dd($lecturers[0]['ownedCourses']);
                 </div>
             </form>
             <div class="flex flex-col gap-y-8">
-                @foreach ($lecturer as $l)
+                @foreach ($lecturers as $l)
                     <x-user-card
                         pid="{{ $l['id'] }}"
-                        imgSrc="{{ $l['imgSrc'] }}"
-                        name="{{ $l['name'] }}"
-                        course="{{ $l['course'] }}"
+                        imgSrc="{{ $l['profile_image_src'] }}"
+                        name="{{ $l['first_name'] }} {{ $l['last_name'] }}"
+                        course="{{ count($l['ownedCourses']) }}"
                     />
                 @endforeach
             </div>

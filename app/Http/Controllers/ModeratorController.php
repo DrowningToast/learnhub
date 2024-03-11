@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Courses;
 use Illuminate\Http\Request;
 use Workbench\App\Models\User;
 use App\Models\Users;
@@ -18,7 +19,10 @@ class ModeratorController extends Controller
 
     public function course()
     {
-        return view('moderator.course');
+        $corses = Courses::all();
+        return view('moderator.course', [
+            'courses' => $corses
+        ]);
     }
 
     public function lecturer()
@@ -29,7 +33,8 @@ class ModeratorController extends Controller
 
     public function learner()
     {
-        return view('moderator.learner');
+        $learners = Users::where('role', 'LEARNER')->get();
+        return view('moderator.learner', ['learners' => $learners]);
     }
 
     public function transaction()
