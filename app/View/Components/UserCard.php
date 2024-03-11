@@ -16,8 +16,8 @@ class UserCard extends Component
         public string $name,
         public string $imgSrc,
         public string $course,
-    )
-    {
+        public bool $isLecturer = false
+    ) {
         //
     }
 

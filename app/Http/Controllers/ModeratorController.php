@@ -81,7 +81,27 @@ class ModeratorController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        dd($request->all());
+
+    }
+
+    public function approve(Request $request)
+    {
+        $withdrawel = Withdrawals::find($request->id);
+
+        $withdrawel->status_id = 2;
+        $withdrawel->save();
+
+        return redirect()->back()->with('success_message', 'คำขอถอนเงินถูกอนุมัติแล้ว');
+    }
+
+    public function reject(Request $request)
+    {
+        $withdrawel = Withdrawals::find($request->id);
+
+        $withdrawel->status_id = 3;
+        $withdrawel->save();
+
+        return redirect()->back()->with('success_message', 'ปฎิเสธคำขอถอนเงินแล้ว');
     }
 
     /**

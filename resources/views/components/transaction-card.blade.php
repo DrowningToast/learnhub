@@ -11,6 +11,7 @@
             <form action="" method="post">
                 @csrf
                 @method('PUT')
+                <input type="text" name="id" id="id" value="{{ $pid }}" class="hidden">
                 <button type="submit" formaction="/moderator/withdraw/reject" class="p-3 bg-[#C1C7CE] rounded-md"><img
                         src="/images/icons/close.png" alt="no-accept" class="w-6"></button>
                 <button type="submit" formaction="/moderator/withdraw/approve" class="p-3 bg-[#CBE6FF] rounded-md"><img
