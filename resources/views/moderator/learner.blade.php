@@ -1,39 +1,3 @@
-<?php
-$lecturer = [
-    [
-        'id' => 1,
-        'imgSrc' => '/img/sila.webp',
-        'name' => 'ศิลา ภักดีวงศ์',
-        'course' => 2,
-    ],
-    [
-        'id' => 2,
-        'imgSrc' => '/img/sila.webp',
-        'name' => 'ศิลา ภักดีวงศ์',
-        'course' => 2,
-    ],
-    [
-        'id' => 3,
-        'imgSrc' => '/img/sila.webp',
-        'name' => 'ศิลา ภักดีวงศ์',
-        'course' => 2,
-    ],
-    [
-        'id' => 4,
-        'imgSrc' => '/img/sila.webp',
-        'name' => 'ศิลา ภักดีวงศ์',
-        'course' => 2,
-    ],
-    [
-        'id' => 5,
-        'imgSrc' => '/img/sila.webp',
-        'name' => 'ศิลา ภักดีวงศ์',
-        'course' => 2,
-    ],
-
-];
-?>
-
 @php
     $colors = ['bg-[#E2EEFB]', 'bg-[#F2E6FF]', 'bg-[#FFEAF0]'];
     $primaryColor = ['bg-[#4369A2]', 'bg-[#8B68B1]', 'bg-[#C97D93]'];
@@ -81,13 +45,12 @@ $lecturer = [
                 </div>
             </form>
             <div class="flex flex-col gap-y-8">
-                @foreach ($lecturer as $l)
-                    {{-- <p>{{ $l['id'] }}</p> --}}
+                @foreach ($learners as $l)
                     <x-user-card
                         pid="{{ $l['id'] }}"
-                        imgSrc="{{ $l['imgSrc'] }}"
-                        name="{{ $l['name'] }}"
-                        course="{{ $l['course'] }}"
+                        imgSrc="{{ $l['profile_image_src'] }}"
+                        name="{{ $l['first_name'] }} {{ $l['last_name'] }}"
+                        course="{{ count($l['enrolledCourses']) }}"
                     />
                 @endforeach
             </div>

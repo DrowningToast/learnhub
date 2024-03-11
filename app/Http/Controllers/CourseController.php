@@ -96,7 +96,7 @@ class CourseController extends Controller
      */
     public function update(Request $request, Courses $course)
     {
-        if ($course->lecturer_id !== auth()->id()) {
+        if (!(($course->lecturer_id === auth()->id()) || (auth()->user()->role->value === 'MODERATOR'))) {
             return back()->with('error_message', 'คุณไม่มีสิทธิ์แก้ไขคอร์สเรียนนี้');
         }
 

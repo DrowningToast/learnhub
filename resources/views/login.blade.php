@@ -10,7 +10,7 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="p-6 min-h-screen font-noto-thai relative">
+<body class="p-6 min-h-screen font-noto-thai relative bg-white grid place-items-center">
 
     <x-toast />
 
@@ -22,8 +22,8 @@
                     @csrf
                     <div>
                         <p class=" text-3xl font-bold mb-4">เข้าสู่ระบบ</p>
-                        <p>ยังไม่มีบัญชีผู้ใช้ ? <span class="text-[#4C5F7C]"><a
-                                    href="/register?role=LEARNER">สมัครสมาชิก</a></span>
+                        <p>ยังไม่มีบัญชีผู้ใช้ ? 
+                            <a class="text-[#4C5F7C] underline" href="/register?role=LEARNER">สมัครสมาชิก</a>
                         </p>
                     </div>
 

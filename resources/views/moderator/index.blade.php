@@ -10,6 +10,7 @@
             bgColor="bg-[#E2EEFB]"
             author=""
             shColor="hover:shadow-[#C1D9F2]"
+            href="/moderator/course"
         />
         <x-MenuCard 
             title="จัดการผู้เรียน" 
@@ -19,6 +20,7 @@
             bgColor="bg-[#F2E6FF]"
             author=""
             shColor="hover:shadow-[#CCB9E0]"
+            href="/moderator/learner"
         />
         <x-MenuCard 
             title="จัดการผู้สอน" 
@@ -28,6 +30,7 @@
             bgColor="bg-[#FFEAF0]"
             author=""
             shColor="hover:shadow-[#EFC4D0]"
+            href="/moderator/lecturer"
         />
         <x-MenuCard 
             title="จัดการธุรกรรม" 
@@ -37,6 +40,7 @@
             bgColor="bg-[#E2EEFB]"
             author=""
             shColor="hover:shadow-[#C1D9F2]"
+            href="/moderator/withdraw"
         />
     </div>
 </x-left_side_layout>
