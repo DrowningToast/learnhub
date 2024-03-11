@@ -23,9 +23,6 @@ return new class extends Migration
             $table->integer("durationInMinutes")->default(0);
             $table->string("video_src")->nullable();
 
-            $table->unsignedBigInteger('resource_id')->nullable();
-            $table->foreign('resource_id')->references('id')->on('files')->onDelete('cascade');
-
             $table->timestamps();
         });
     }

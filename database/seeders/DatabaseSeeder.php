@@ -3,20 +3,20 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Files;
+use App\Models\Users;
 use App\Enums\RoleEnum;
-use App\Models\Chapters;
-use App\Models\CourseByUser;
 use App\Models\Courses;
-use App\Models\Credentials;
-use App\Models\ProgressByUserByCourse;
-use App\Models\QuizScoreByUser;
 use App\Models\Quizzes;
 use App\Models\Reviews;
+use App\Models\Chapters;
+use App\Models\Credentials;
+use App\Models\CourseByUser;
 use App\Models\Transactions;
-use App\Models\Users;
-use Database\Factories\UsersFactory;
+use App\Models\QuizScoreByUser;
 use Illuminate\Database\Seeder;
-use Laravel\Prompts\Progress;
+use Database\Factories\UsersFactory;
+use App\Models\ProgressByUserByCourse;
 
 class DatabaseSeeder extends Seeder
 {
@@ -37,6 +37,15 @@ class DatabaseSeeder extends Seeder
             foreach ($courses as $k => $course) {
                 // Generate 5 chapters for each course
                 $chapters = Chapters::factory(10)->withCourse($course->id)->create();
+                foreach($chapters as $index => $chapter) {
+                    $random = rand(0, 10);
+                    if ($random > 7) {
+                        break;
+                    }
+                    // Mock files for each chapter
+                    Files::factory()->inChapter($chapter->id)->create();
+                }
+
                 // Generate 25 reviews and transaction for each course
                 for ($j = 0; $j < 25; $j++) {
                     $price = $course->buy_price * (1 - $course->discount_percent / 100);

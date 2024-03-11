@@ -14,6 +14,10 @@ return new class extends Migration {
             $table->id();
             $table->string('file_path');
             $table->string('file_name');
+
+            $table->unsignedBigInteger('chapter_id');
+            $table->foreign('chapter_id')->references('id')->on('chapters')->onDelete('cascade');
+            
             $table->timestamps();
         });
     }
