@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\RoleEnum;
+use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\LearnController;
 use App\Models\Courses;
@@ -88,3 +89,7 @@ Route::get('/learn/{course}', [LearnController::class, 'show'])->middleware('aut
 // Edit (Self) Profile
 Route::get('/profile', [UserController::class, 'edit'])->middleware('auth');
 Route::put('/profile', [UserController::class, 'update'])->middleware('auth');
+
+// Create Chapter
+Route::get('/courses/{course}/chapters/create', [ChapterController::class, 'create'])->middleware(['auth', ModAndLectRouteGuard::class]);
+Route::post('/courses/{course}/chapters/create', [ChapterController::class, 'store'])->middleware(['auth', ModAndLectRouteGuard::class]);

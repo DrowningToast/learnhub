@@ -31,6 +31,7 @@ class CourseController extends Controller
 
     public function manage()
     {
+
         return view('courses.manage', [
             'courses' => Courses::where('lecturer_id', auth()->id())->get(),
             'user' => auth()->user()
@@ -71,7 +72,7 @@ class CourseController extends Controller
 
         $course = Courses::create($formFields);
 
-        return redirect("/courses/" . $course->id)->with('success_message', 'สร้างคอร์สเรียนใหม่สำเร็จ!');
+        return redirect("/learn/" . $course->id)->with('success_message', 'สร้างคอร์สเรียนใหม่สำเร็จ!');
     }
 
     /**
