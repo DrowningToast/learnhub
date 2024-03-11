@@ -63,7 +63,7 @@
                         class="w-20 from-[#3D6EB3] to-[#B4C8E9] bg-gradient-to-t absolute -inset-y-24 -right-5 transform rotate-45 opacity-60">
                     </div>
                 </div>
-                <div class="flex items-center gap-x-4">
+                {{-- <div class="flex items-center gap-x-4">
                     <span class="text-xl font-semibold text-[#6F7979]">จัดเรียงตาม: </span>
                     <select class="select-blue" name="genere">
                         <option value="all">ทั้งหมด</option>
@@ -77,7 +77,7 @@
                         <option value="latest">ใหม่สุด-เก่าสุด</option>
                         <option value="oldest">เก่าสุด-ใหม่สุด</option>
                     </select>
-                </div>
+                </div> --}}
             </form>
             <div class="flex flex-col gap-y-8">
                 @foreach ($lecturers as $l)
