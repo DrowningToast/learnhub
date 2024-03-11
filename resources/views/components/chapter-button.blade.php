@@ -1,6 +1,6 @@
 <div class="relative overflow-hidden flex items-center gap-x-6 px-9 py-5 rounded-3xl {{$done ? "text-white bg-[#6196C0]" : "text-black"}} border-[1px] border-[#DBE3EE]">
     @if ($done)
-        <div class="absolute left-7 inset-0">
+        <div class="absolute left-7 inset-y-0">
             <div class="absolute w-24 left-12 inset-y-0 bg-[#72A8CF] rotate-45 rounded-xl">
             </div>
             <div class="absolute w-24 left-4 inset-y-0 bg-[#6196C0] rotate-45 rounded-xl">

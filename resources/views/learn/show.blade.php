@@ -47,4 +47,17 @@
             </div>
         </div>
     </div>
+    <div>
+        {{-- review --}}
+        <h1>
+            คะแนนและรีวิว
+        </h1>
+        <form action="/review" method="POST" >
+            @csrf
+            @method('PUT')
+            <div class="flex flex-col divide-y-2">
+
+            </div>
+        </form>
+    </div>
 </x-left_side_layout>

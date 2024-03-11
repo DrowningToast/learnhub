@@ -2,7 +2,7 @@
 $username = 'Supratouch Suwatno';
 $affiliation = 'โรงเรียนอนุบาลหมีน้อย';
 
-$avg_progress = $enrolledCourses->reduce(
+$avg_progress = count($enrolledCourses) <= 0 ? 0 : $enrolledCourses->reduce(
     function ($carry, $item) {
         return $carry + $item['progress'] / 100;
     }
