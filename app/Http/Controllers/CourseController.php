@@ -102,6 +102,7 @@ class CourseController extends Controller
             'title' => $course->title,
             'description' => $course->description,
             "cover_image_src" => $course->cover_image_src,
+// NEED PAGINATION
             'reviews' => $reviews,
             'rating' => $rating,
             'enrolled_count' => $enrolled_count,
