@@ -2,11 +2,12 @@
 $username = 'Supratouch Suwatno';
 $affiliation = 'โรงเรียนอนุบาลหมีน้อย';
 
-$avg_progress = count($enrolledCourses) <= 0 ? 0 : $enrolledCourses->reduce(
-    function ($carry, $item) {
-        return $carry + $item['progress'] / 100;
-    }
-) / count($enrolledCourses);
+$avg_progress =
+    count($enrolledCourses) <= 0
+        ? 0
+        : $enrolledCourses->reduce(function ($carry, $item) {
+                return $carry + $item['progress'] / 100;
+            }) / count($enrolledCourses);
 ?>
 
 @php
@@ -32,7 +33,7 @@ $avg_progress = count($enrolledCourses) <= 0 ? 0 : $enrolledCourses->reduce(
             <form class="space-y-4">
                 <div class="w-auto h-auto relative overflow-hidden rounded-2xl">
                     <input class="w-full rounded-2xl px-4 py-3 border-2 border-gray-200" type="text"
-                        placeholder="ค้นหา...">
+                        placeholder="ค้นหา..." name="title" value="{{ $oldInputValue }}">
                     <buton>
                         <img src={{ asset('images/icons/magnify.png') }}
                             class="absolute top-1/2 right-4 transform -translate-y-1/2 w-6 h-6 z-10" alt="">
@@ -48,19 +49,31 @@ $avg_progress = count($enrolledCourses) <= 0 ? 0 : $enrolledCourses->reduce(
                     <div class="flex items-center gap-x-4">
                         <span class="text-xl font-semibold text-[#6F7979]">จัดเรียงตาม</span>
                         <select class="rounded-full bg-[#E2EEFB] text-[#7F92B1] px-4 py-2 border-r-8 border-transparent"
-                            name="category">
-                            <option value="ALL" selected>หมวดหมู่ทั้งหมด</option>
-                            <option value="1">วิทยาศาสตร์</option>
-                            <option value="2">คณิตศาสตร์</option>
-                            <option value="3">ภาษาไทย</option>
-                            <option value="4">สังคมศึกษา</option>
-                            <option value="5">ภาษาอังกฤษ</option>
-                            <option value="6">เทคโนโลยีสารสนเทศ</option>
+                            name="categoryId">
+                            <option value="ALL"
+                                {{ app('request')->input('categoryId') === 'ALL' ? 'selected' : '' }}>หมวดหมู่ทั้งหมด
+                            </option>
+                            <option value="1" {{ app('request')->input('categoryId') === '1' ? 'selected' : '' }}>
+                                วิทยาศาสตร์</option>
+                            <option value="2" {{ app('request')->input('categoryId') === '2' ? 'selected' : '' }}>
+                                คณิตศาสตร์</option>
+                            <option value="3" {{ app('request')->input('categoryId') === '3' ? 'selected' : '' }}>
+                                ภาษาไทย</option>
+                            <option value="4" {{ app('request')->input('categoryId') === '4' ? 'selected' : '' }}>
+                                สังคมศึกษา</option>
+                            <option value="5" {{ app('request')->input('categoryId') === '5' ? 'selected' : '' }}>
+                                ภาษาอังกฤษ</option>
+                            <option value="6" {{ app('request')->input('categoryId') === '6' ? 'selected' : '' }}>
+                                เทคโนโลยีสารสนเทศ</option>
                         </select>
                         <select class="rounded-full bg-[#E2EEFB] text-[#7F92B1] px-4 py-2 border-r-8 border-transparent"
                             name="time">
-                            <option value="latest">ใหม่สุด-เก่าสุด</option>
-                            <option value="oldest">เก่าสุด-ใหม่สุด</option>
+                            <option value="latest" {{ app('request')->input('time') === 'latest' ? 'selected' : '' }}>
+                                ใหม่สุด-เก่าสุด
+                            </option>
+                            <option value="oldest" {{ app('request')->input('time') === 'oldest' ? 'selected' : '' }}>
+                                เก่าสุด-ใหม่สุด
+                            </option>
                         </select>
                     </div>
 
@@ -77,8 +90,7 @@ $avg_progress = count($enrolledCourses) <= 0 ? 0 : $enrolledCourses->reduce(
             <div class="flex flex-col gap-y-8">
                 @if ($isLecturer)
                     @foreach ($managedCourses as $course)
-                        <x-CourseCard title="{{ $course['title'] }}"
-                         description="{{ $course->description }}"
+                        <x-CourseCard title="{{ $course['title'] }}" description="{{ $course->description }}"
                             author="{{ $course->lecturer->first_name . ' ' . $course->lecturer->last_name }}"
                             progress="{{ 0.0 }}" src="{{ $course['cover_image_src'] }}"
                             href="{{ $course['href'] }}" color="{{ $colors[$loop->index % 3] }}"
@@ -90,7 +102,7 @@ $avg_progress = count($enrolledCourses) <= 0 ? 0 : $enrolledCourses->reduce(
                         @foreach ($enrolledCourses as $course)
                             <x-CourseCard title="{{ $course['title'] }}" description="{{ $course['description'] }}"
                                 author="{{ $course['author'] }}" src="{{ $course['cover_image_src'] }}"
-                                progress="{{ $course['progress'] / 100}}" href="{{ $course['href'] }}"
+                                progress="{{ $course['progress'] / 100 }}" href="{{ $course['href'] }}"
                                 color="{{ $colors[$loop->index % 3] }}"
                                 primaryColor="{{ $primaryColor[$loop->index % 3] }}"
                                 shadowColor="{{ $shadowColor[$loop->index % 3] }}" />
@@ -120,7 +132,8 @@ $avg_progress = count($enrolledCourses) <= 0 ? 0 : $enrolledCourses->reduce(
                                     <div class="flex flex-col">
                                         <h5>{{ $course['title'] }} </h5>
                                         <span class="text-sm font-medium text-[#C1C7CE]">
-                                            สอนโดย {{ $course['author'] }}
+                                            สอนโดย
+                                            {{ $course->lecturer->first_name . ' ' . $course->lecturer->last_name }}
                                         </span>
                                     </div>
                                 </a>

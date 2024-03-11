@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\RoleEnum;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\LearnController;
 use App\Models\Courses;
 use Illuminate\Support\Facades\Route;
@@ -26,12 +27,7 @@ use App\Models\Reviews;
 |
 */
 
-Route::get('/', function () {
-    $top_review = Reviews::whereNot('comment', "=", null)->orderBy('rating', 'desc')->take(3)->get();
-    return view('welcome', [
-        'top_review' => $top_review,
-    ]);
-});
+Route::get('/', [Controller::class, 'index']);
 
 
 // LOGIN / REGISTER / LOGOUT
