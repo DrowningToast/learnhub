@@ -18,7 +18,8 @@ class MenuCard extends Component
         public string $author = "",
         public string $bgColor,
         public string $btnColor,
-        public string $shColor = ""
+        public string $shColor = "",
+        public string $href = ""
     )
     {
         //

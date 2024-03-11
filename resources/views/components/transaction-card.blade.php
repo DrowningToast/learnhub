@@ -1,7 +1,7 @@
 <div class="h-24 w-full rounded-2xl border border-[#DBE3EE] flex items-center justify-between px-10 py-3 hover:shadow-xl duration-200">
     <div class="h-full flex gap-x-4 items-center">
          <img src="{{ $imgSrc }}" alt="user-profile" class="h-full rounded-full aspect-square">
-         <p class="font-semibold text-xl">{{ $name }} ถอน / โอนเงินจำนวน {{ $money }} บาทไปที่บัญชี {{ $bankName }} {{ $accountNumber }}  </p>
+         <p class="font-semibold text-xl"><span class="text-[#2A638A] font-bold">{{ $name }}</span> ถอน / โอนเงินจำนวน <span class="text-[#2A638A] font-bold">{{ $money }}</span> บาทไปที่บัญชี {{ $bankName }} {{ $accountNumber }}  </p>
     </div>
     <div class="h-full flex gap-x-4 items-center">
         @if ($status == 'WAITING')
