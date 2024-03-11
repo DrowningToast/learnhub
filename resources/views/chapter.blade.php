@@ -3,7 +3,7 @@
         <x-chapter-card chapter=1
         title="บลูเบอร์รีเซ็กซ์อิมพีเรียล โฮลวีตธัมโม"
         />
-        <x-chapter-card-white chapter=1
+        {{-- <x-chapter-card-white chapter=1
         title="บลูเบอร์รีเซ็กซ์อิมพีเรียล โฮลวีตธัมโม"
         />
         <x-chapter-card-white chapter=1
@@ -11,6 +11,6 @@
         />
         <x-chapter-card-white chapter=1
         title="บลูเบอร์รีเซ็กซ์อิมพีเรียล โฮลวีตธัมโม"
-        />
+        /> --}}
     </div>
 </x-whiteNavbarLayout>

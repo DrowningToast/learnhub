@@ -1,7 +1,7 @@
-<div class="absolute w-full flex flex-row justify-center rounded-xl">
+<div class="absolute w-full flex flex-row justify-center rounded-xl z-50">
     @if (session()->has('success_message'))
         <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show"
-            class=" z-50 fixed top-12 w-fit shadow-xl flex flex-row items-center justify-center bg-white drop-shadow-xl px-12 py-3 rounded-xl">
+            class="z-50 fixed top-12 w-fit shadow-xl flex flex-row items-center justify-center bg-white drop-shadow-xl px-12 py-3 rounded-xl">
             <div class=" font-semibold text-sm flex flex-row items-center gap-4 rounded-full">
                 <img src="{{ asset('images/icons/success.png') }}" alt="" class="w-8 h-8">
                 {{ session('success_message') }}

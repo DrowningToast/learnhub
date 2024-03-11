@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\RoleEnum;
+use App\Http\Controllers\LearnController;
 use App\Models\Courses;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -81,15 +82,8 @@ Route::get('/lecturer/withdraw', [WithdrawalController::class, 'index'])->middle
 Route::post('/lecturer/withdraw', [WithdrawalController::class, 'store'])->middleware(['auth', LecturerRouteGuard::class]);
 
 // Show Learn Dashboard for Learners and Lecturers
-Route::get('/learn', function () {
-    return view('courses.index', [
-        'user' => auth()->user(),
-        'enrolledCourses' => auth()->user()->enrolledCourses(),
-        'popularCourses' => Courses::latest()->take(5)->get(),
-        'isLecturer' => auth()->user()->role->value == RoleEnum::Lecturer->value,
-        'managedCourses' => Courses::where('lecturer_id', auth()->id())->latest()->get()
-    ]);
-})->middleware(['auth', CheckIsProfileComplete::class]);
+Route::get('/learn', [LearnController::class, 'index'])->middleware(['auth', CheckIsProfileComplete::class]);
+Route::get('/learn/{course}', [LearnController::class, 'show'])->middleware('auth', CheckIsProfileComplete::class);
 
 // Edit (Self) Profile
 Route::get('/profile', [UserController::class, 'edit'])->middleware('auth');

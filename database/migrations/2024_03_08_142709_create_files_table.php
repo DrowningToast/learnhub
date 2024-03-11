@@ -13,8 +13,11 @@ return new class extends Migration {
         Schema::create('files', function (Blueprint $table) {
             $table->id();
             $table->string('file_path');
-            $table->foreignId('chapter_id')->nullable()->constrained('chapters')->onDelete('cascade');
             $table->string('file_name');
+
+            $table->unsignedBigInteger('chapter_id');
+            $table->foreign('chapter_id')->references('id')->on('chapters')->onDelete('cascade');
+            
             $table->timestamps();
         });
     }

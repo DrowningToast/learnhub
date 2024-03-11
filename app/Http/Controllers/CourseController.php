@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CourseByUser;
 use App\Models\Courses;
+use App\Models\Reviews;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
@@ -15,6 +17,7 @@ class CourseController extends Controller
      */
     public function index()
     {
+        // สำหรับหน้าแสดง
         //
     }
 
@@ -76,8 +79,38 @@ class CourseController extends Controller
      */
     public function show(string $id)
     {
+
+        $course = Courses::findOrFail($id);
+        $rating = Reviews::where('course_id', $id)->avg('rating');
+        // NEED PAGINATION  
+        $reviews = Reviews::where('course_id', $id)->take(6)->inRandomOrder()->get();  
+        $enrolled_count = CourseByUser::where('course_id', $id)->count();
+        $reviews_count = Reviews::where('course_id', $id)->count();
+        $owned = false;
+
+        if (auth()->check()) {
+            $owned = CourseByUser::where('course_id', $id)->where('user_id', auth()->id())->exists() ? true : false;
+        }
+
+        $lecturer = $course->lecturer;
+        $lecturer['affiliate'] = $lecturer->academicInfo->institute ?? $lecturer->academicInfo->campus ?? $lecturer->academicInfo->school ?? null;
+        $lecturer['courses'] = Courses::where('lecturer_id', $lecturer->id)->count();
+
+        $suggestions = Courses::where('id', '!=', $course->id)->inRandomOrder()->take(3)->get();
+
         return view('courses.show', [
-            'course' => Courses::find($id)
+            'title' => $course->title,
+            'description' => $course->description,
+            "cover_image_src" => $course->cover_image_src,
+// NEED PAGINATION
+            'reviews' => $reviews,
+            'rating' => $rating,
+            'enrolled_count' => $enrolled_count,
+            'reviews_count' => $reviews_count,
+            'already_owned' => $owned,
+            'lecturer' => $lecturer,
+            'chapters' => $course->chapters,
+            'suggestions' => $suggestions,
         ]);
     }
 

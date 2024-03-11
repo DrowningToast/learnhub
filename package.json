@@ -5,7 +5,7 @@
         "dev": "vite & php artisan serve --port=3000",
         "build": "vite build",
         "compose": "docker-compose -f docker-compose.yml up -d --build",
-        "setup": "composer install && npm install -g pnpm && pnpm install && pnpm run compose"
+        "setup": "composer install && composer update && npm install -g pnpm && pnpm install && pnpm run compose"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.18",
