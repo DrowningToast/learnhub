@@ -13,6 +13,7 @@ use App\Http\Controllers\WithdrawalController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Middleware\CheckIsProfileComplete;
 use App\Http\Middleware\ModAndLectRouteGuard;
+use App\Models\Reviews;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,10 @@ use App\Http\Middleware\ModAndLectRouteGuard;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $top_review = Reviews::whereNot('comment', "=", null)->orderBy('rating', 'desc')->take(3)->get();
+    return view('welcome', [
+        'top_review' => $top_review,
+    ]);
 });
 
 
