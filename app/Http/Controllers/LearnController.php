@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Enums\RoleEnum;
 use App\Models\Courses;
+use App\Models\CourseByUser;
+use Illuminate\Support\Facades\DB;
 use App\Models\ProgressByUserByCourse;
 
 class LearnController extends Controller
@@ -25,10 +27,19 @@ class LearnController extends Controller
             }   
         );
 
+        $popularCoursesByIds = CourseByUser::query()->groupBy('course_id')->select('course_id', DB::raw('count(*) as total'))->orderBy('total', 'desc')->limit(5)->get();
+
+        $popularCourses = $popularCoursesByIds->map(
+            function ($course) {
+                return Courses::find($course->course_id);
+            }
+        );
+
         return view('learn.index', [
             'user' => auth()->user(),
             'enrolledCourses' => $courses,
-            'popularCourses' => Courses::withCount('enrolledUsers')->orderBy('enrolled_users_count', 'desc')->limit(5)->get(),
+            "popularCourses" => $popularCourses,
+            // 'popularCourses' => Courses::withCount('enrolledUsers')->orderBy('enrolled_users_count', 'desc')->limit(5)->get(),
             'isLecturer' => auth()->user()->role->value == RoleEnum::Lecturer->value,
             'managedCourses' => Courses::where('lecturer_id', auth()->id())->latest()->get()
         ]);
