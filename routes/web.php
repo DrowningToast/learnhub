@@ -78,6 +78,7 @@ Route::post('/lecturer/withdraw', [WithdrawalController::class, 'store'])->middl
 
 // Show Learn Dashboard for Learners and Lecturers
 Route::get('/learn', [LearnController::class, 'index'])->middleware(['auth', CheckIsProfileComplete::class]);
+Route::get('/learn/{course}', [LearnController::class, 'show'])->middleware('auth', CheckIsProfileComplete::class);
 
 // Edit (Self) Profile
 Route::get('/profile', [UserController::class, 'edit'])->middleware('auth');
