@@ -23,7 +23,7 @@
                     @csrf
                     <div>
                         <p class=" text-3xl font-bold mb-4">สมัครสมาชิก</p>
-                        <p>มีบัญชีผู้ใช้เแล้ว ? <span class="text-[#4C5F7C]"><a href="/login">เข้าสู่ระบบ</a></span>
+                        <p>มีบัญชีผู้ใช้เแล้ว ? <a class="text-[#4C5F7C] underline" href="/login">เข้าสู่ระบบ</a>
                         </p>
                     </div>
 
@@ -120,7 +120,7 @@
                     <p class=" font-noto-thai text-4xl text-white">สมัครสมาชิก
                         <span class="font-beth text-[#2560B4]">LearnHub</span>
                     </p>
-                    <p class="font-poppins mt-3 text-lg text-white">Lorem Ipsum is simply</p>
+                    <p class=" mt-3 text-xl text-white">เติมเต็มความรู้ พัฒนาทักษะ</p>
                 </div>
             </div>
         </div>

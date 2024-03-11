@@ -26,9 +26,9 @@
                     isSelected="{{ Request::is('courses/manage') || Request::is('learn') }}" />
 
                 @if ($isLecturer || $isModerator)
-                    <x-menu-item title="ถอนเงิน" url="/lecturer/transaction"
+                    <x-menu-item title="ถอนเงิน" url="/lecturer/withdraw"
                         iconSrc="images/icons/lecturer/transaction/dollar.png"
-                        isSelected="{{ Request::is('lecturer/transaction') }}" />
+                        isSelected="{{ Request::is('lecturer/withdraw') }}" />
                 @endif
 
                 <x-menu-item title="ตั้งค่า" url="/profile" iconSrc="images/icons/settings.png"
