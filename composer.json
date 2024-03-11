@@ -26,6 +26,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "league/flysystem-sftp-v3": "^3.23",
+        "mallardduck/blade-boxicons": "^2.4",
         "owenvoke/blade-fontawesome": "^2.6",
         "ryangjchandler/blade-tabler-icons": "^2.2"
     },
