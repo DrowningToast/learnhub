@@ -26,7 +26,7 @@ class FilesFactory extends Factory
         return [
             //
             "file_path" => $this->faker->imageUrl(),
-            "file_name" => $this->faker->sentence(),
+            "file_name" => $this->faker->words(2, true),
             "chapter_id" => $this->chapter_id
         ];
     }

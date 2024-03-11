@@ -18,7 +18,7 @@
                 <div class="felx font-noto-thai">
                     <div class="flex text-2xl gap-3 text-[#2A638A]">
                         {{-- <x-ri-arrow-left-wide-fill" class="text-black"/> --}}
-                        <p class="font-bold">Chapter 1:</p>
+                        <p class="font-bold">บทที่ 1:</p>
                         <p> ออกแบบเว็บด้วย HTML</p>
                     </div>
 

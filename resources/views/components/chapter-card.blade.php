@@ -12,12 +12,14 @@
         </div>
 
         <div class="flex flex-col gap-y-2 text-xl min-h-32 pr-10">
-            <p class=" font-bold text-white font-noto-thai">Chapter {{ $chapter }} :</p>
+            <p class=" font-bold text-white font-noto-thai">บทที่ {{ $chapter }} :</p>
             <p class=" text-white font-noto-thai">{{ $title }}</p>
         </div>
 
-        <div class="h-full flex items-end ">
-            <button type="button" class="bg-[#FFFFFF] text-[#2A638A] rounded-full w-full py-2 font-bold font-noto-thai text-xs">เข้าเรียน</button>
-        </div>
+        <a class="inline-block w-full h-full" href='{{$href}}'>
+            <div class="h-full flex items-end ">
+                <button type="button" class="bg-[#FFFFFF] text-[#2A638A] rounded-full w-full py-2 font-bold font-noto-thai text-xs">เข้าเรียน</button>
+            </div>
+        </a>
     </div>
 </div>

@@ -93,7 +93,7 @@ class CourseController extends Controller
         }
 
         $lecturer = $course->lecturer;
-        $lecturer['affiliate'] = $lecturer->academicInfo->company ?? $lecturer->academicInfo->university ?? $lecturer->academicInfo->school ?? $lecturer->academicInfo->organization ?? null;
+        $lecturer['affiliate'] = $lecturer->academicInfo->institute ?? $lecturer->academicInfo->campus ?? $lecturer->academicInfo->school ?? null;
         $lecturer['courses'] = Courses::where('lecturer_id', $lecturer->id)->count();
 
         $suggestions = Courses::where('id', '!=', $course->id)->inRandomOrder()->take(3)->get();

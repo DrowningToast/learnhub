@@ -4,11 +4,13 @@
             <x-bxs-file class="text-white w-full"/>
         </div>
         <div class="flex flex-col gap-y-2 text-xl min-h-32 pr-10">
-            <p class=" font-bold text-black font-noto-thai">Chapter {{$chapter}} :</p>
+            <p class=" font-bold text-black font-noto-thai">บทที่ {{$chapter}} :</p>
             <p class=" text-black font-noto-thai">{{$title}}</p>
         </div>
-        <div class="h-full flex items-end ">
-            <button type="button" class="bg-[#FFFFFF] text-xs rounded-full w-full py-2 font-bold border-solid border border-[#C1C7CE] font-noto-thai">เข้าเรียน</button>
-        </div>
+        <a class="inline-block w-full h-full" href='{{$href}}'>
+            <div class="w-full h-full flex items-end ">
+                <button type="button" class="bg-[#FFFFFF] text-xs rounded-full w-full py-2 font-bold border-solid border border-[#C1C7CE] font-noto-thai">เข้าเรียน</button>
+            </div>
+        </a>        
     </div>
 </div>

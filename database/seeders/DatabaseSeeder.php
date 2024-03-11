@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
                 foreach($chapters as $index => $chapter) {
                     $random = rand(0, 10);
                     if ($random > 7) {
-                        break;
+                        continue;
                     }
                     // Mock files for each chapter
                     Files::factory()->inChapter($chapter->id)->create();

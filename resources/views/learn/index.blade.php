@@ -77,7 +77,8 @@ $avg_progress = count($enrolledCourses) <= 0 ? 0 : $enrolledCourses->reduce(
             <div class="flex flex-col gap-y-8">
                 @if ($isLecturer)
                     @foreach ($managedCourses as $course)
-                        <x-CourseCard title="{{ $course['title'] }}" description="{{ $course->description }}"
+                        <x-CourseCard title="{{ $course['title'] }}"
+                         description="{{ $course->description }}"
                             author="{{ $course->lecturer->first_name . ' ' . $course->lecturer->last_name }}"
                             progress="{{ 0.0 }}" src="{{ $course['cover_image_src'] }}"
                             href="{{ $course['href'] }}" color="{{ $colors[$loop->index % 3] }}"
