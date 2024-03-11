@@ -1,6 +1,5 @@
 <x-whiteNavBarLayout>
     <div class="w-full min-h-screen font-noto-thai bg-[#F4F8FF]">
-
         {{-- hero --}}
         <div
             class="bg-gradient-to-b from-[#7F92B1] from-10% to-[#FFF]/0 to-90% w-full min-h-screen flex justify-center items-center ">
@@ -14,7 +13,7 @@
                     <div class="flex items-center gap-x-5 ">
                         <a href="/login"
                             class="bg-[#2A638A] text-white px-9 py-3 rounded-lg font-semibold">เข้าสู่ระบบ</a>
-                        <a href="/relative"
+                        <a href="/register"
                             class="text-[#2A638A] px-9 py-3 rounded-xl underline font-semibold">ลงทะเบียน</a>
                     </div>
                 </div>
@@ -100,7 +99,7 @@
                             category="{{ $course->category_id }}"
                             description="{{ strlen($course->title) >= 50 ? substr($course->title, 0, 50) . '...' : $course->title }}"
                             duration="{{ $course->duration }}" lectures="{{ count($course->chapters) }}"
-                            price="{{ $course->buy_price }}" rating="{{ $course->rating }}" />
+                            price="{{ $course->buy_price }}" rating="{{ floatval($course->rating) }}" />
                     @endforeach
                 </div>
 

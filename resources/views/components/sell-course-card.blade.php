@@ -25,7 +25,7 @@
             <div class="bg-[#D4E3FF] text-[#235B9C] font-bold text-base text-nowrap px-3 py-4 rounded-xl">
                 {{ $category }}</div>
         </div>
-        <div class="px-2">
+        <div class="px-2 h-[8svh]">
             <p class="font-bold text-xl">{{ $description }}</p>
         </div>
         <div class="flex justify-between px-2">
@@ -39,8 +39,8 @@
             </div>
         </div>
         <div class="bg-[#D4E3FF] flex justify-between items-center rounded-xl p-5 font-bold text-lg">
-            <p>&#3647;{{ $price }}</p>
-            <x-star-rating rating={{ $rating }} />
+            <p>&#3647; {{ $price }}</p>
+            <x-star-rating rating="{{ $rating }}" />
         </div>
     </div>
 </a>

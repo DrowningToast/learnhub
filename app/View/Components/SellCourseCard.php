@@ -18,7 +18,7 @@ class SellCourseCard extends Component
         public string $duration,
         public int $lectures,
         public string $price,
-        public float $rating = 3.8
+        public float $rating = 0.0
     ) {
         $this->price = number_format((float) $price, 2, '.', '');
     }

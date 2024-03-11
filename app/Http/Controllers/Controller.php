@@ -21,7 +21,7 @@ class Controller extends BaseController
 
         $coursesPagination->map(function ($course) {
             // GET COURSE DURATIONS
-            $duration = $course->chapters->sum('duration');
+            $duration = $course->chapters->sum('durationInMinutes');
             $hours = floor($duration / 60);
             $minutes = $duration % 60;
             $course['duration'] = $hours . ' ชั่วโมง ' . $minutes . ' นาที';
@@ -35,7 +35,7 @@ class Controller extends BaseController
         });
 
         // TOP REVIEWS
-        $top_review = Reviews::whereNot('comment', "=", null)->orderBy('rating', 'desc')->take(3)->get();
+        $top_review = Reviews::whereNot('comment', "=", null)->orderBy('rating', 'desc')->inRandomOrder()->take(3)->get();
 
         return view('welcome', [
             'top_review' => $top_review,
