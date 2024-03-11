@@ -12,9 +12,8 @@ class starRating extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public float $rating = 3.8
-    )
-    {
+        public float $rating = 0.0
+    ) {
         //
     }
 

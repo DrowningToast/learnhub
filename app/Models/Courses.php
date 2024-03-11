@@ -52,12 +52,13 @@ class Courses extends Model
 
     public function scopeFilter($query, array $filters)
     {
+
         if ($filters['title'] ?? false) {
-            $query->where('title', 'like', '%' . request('title') . '%');
+            $query->where('title', 'like', '%' . $filters['title'] . '%');
         }
 
         if (($filters['categoryId'] ?? false) && $filters['categoryId'] !== 'ทั้งหมด') {
-            $query->where('category_id', '=', request('categoryId'));
+            $query->where('category_id', '=', $filters['categoryId']);
         }
     }
 
