@@ -29,6 +29,8 @@ class ChaptersFactory extends Factory
             "title" => $this->faker->sentence(),
             "description" => $this->faker->paragraph(),
             "course_id" => $this->course_id,
+            "durationInMinutes" => $this->faker->numberBetween(0, 240),
+            "video_src" => "https://project-itacademy.s3.ap-southeast-1.amazonaws.com/Probability+and+Statistics+4_+Random+Variables.mp4"
         ];
     }
 }
