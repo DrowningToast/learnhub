@@ -15,12 +15,11 @@ class TransactionCard extends Component
         public int $pid,
         public string $name,
         public string $imgSrc,
-        public string $money,
+        public float $money,
         public string $bankName,
         public string $accountNumber,
-        public string $status,
-    )
-    {
+        public int $status,
+    ) {
         //
     }
 

@@ -7,7 +7,7 @@ $lecturer = [
         'money' => 5000,
         'bankName' => 'SCB',
         'accountNumber' => '123-4-56789-0',
-        'status' => 'SUCCESS'
+        'status' => 'SUCCESS',
     ],
     [
         'id' => 2,
@@ -16,7 +16,7 @@ $lecturer = [
         'money' => 5000,
         'bankName' => 'SCB',
         'accountNumber' => '123-4-56789-0',
-        'status' => 'WAITING'
+        'status' => 'WAITING',
     ],
     [
         'id' => 2,
@@ -25,7 +25,7 @@ $lecturer = [
         'money' => 5000,
         'bankName' => 'SCB',
         'accountNumber' => '123-4-56789-0',
-        'status' => 'CANCEL'
+        'status' => 'CANCEL',
     ],
 ];
 ?>
@@ -45,8 +45,8 @@ $lecturer = [
             </h1>
             <form class="space-y-4 w-full">
                 <div class=" h-auto relative overflow-hidden rounded-2xl w-full focus-within:shadow-lg duration-200">
-                    <input class="w-full rounded-2xl px-4 py-3 border-2 border-gray-200 h-16 outline-none text-lg" type="text"
-                        placeholder="ค้นหา...">
+                    <input class="w-full rounded-2xl px-4 py-3 border-2 border-gray-200 h-16 outline-none text-lg"
+                        type="text" placeholder="ค้นหา...">
                     <buton>
                         <img src={{ asset('images/icons/magnify.png') }}
                             class="absolute top-1/2 right-4 transform -translate-y-1/2 w-6 h-6 z-10" alt="">
@@ -60,31 +60,25 @@ $lecturer = [
                 </div>
                 <div class="flex items-center gap-x-4">
                     <span class="text-xl font-semibold text-[#6F7979]">จัดเรียงตาม: </span>
-                    <select class="select-blue"
-                        name="genere">
+                    <select class="select-blue" name="genere">
                         <option value="all">ทั้งหมด</option>
                         <option value="fundamental">กำลังดำเนินการ</option>
                         <option value="design">สำเร็จ</option>
                         <option value="programming">ไม่สำเร็จ</option>
                     </select>
-                    <select class="select-blue"
-                        name="time">
+                    <select class="select-blue" name="time">
                         <option value="latest">ใหม่สุด-เก่าสุด</option>
                         <option value="oldest">เก่าสุด-ใหม่สุด</option>
                     </select>
                 </div>
             </form>
             <div class="flex flex-col gap-y-8">
-                @foreach ($lecturer as $l)
-                    <x-TransactionCard
-                        pid="{{ $l['id'] }}"
-                        imgSrc="{{ $l['imgSrc'] }}"
-                        name="{{ $l['name'] }}"
-                        money="{{ $l['money'] }}"
-                        bankName="{{ $l['bankName'] }}"
-                        accountNumber="{{ $l['accountNumber'] }}"
-                        status="{{ $l['status'] }}"
-                    />
+                @foreach ($transactions as $l)
+                    <x-TransactionCard pid="{{ $l->id }}"
+                        imgSrc="{{ $l->user->profile_image_src ? $l->user->profile_image_src : asset('images/icons/DefaultPortrait.jpg') }}"
+                        name="{{ $l->user->first_name . ' ' . $l->user->last_name }}" money="{{ $l->amount }}"
+                        bankName="{{ $l->user->bankName }}" accountNumber="{{ $l->user->accountNumber }}"
+                        status="{{ $l->status_id }}" />
                 @endforeach
             </div>
         </div>

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Courses;
+use App\Models\Withdrawals;
 use Illuminate\Http\Request;
 use Workbench\App\Models\User;
 use App\Models\Users;
+
 class ModeratorController extends Controller
 {
     /**
@@ -39,8 +41,13 @@ class ModeratorController extends Controller
 
     public function transaction()
     {
-        return view('moderator.transaction');
+        $transactions = Withdrawals::latest()->get();
+
+        return view('moderator.transaction', [
+            'transactions' => $transactions
+        ]);
     }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -74,7 +81,7 @@ class ModeratorController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        dd($request->all());
     }
 
     /**
