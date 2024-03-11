@@ -21,9 +21,15 @@ class ModeratorController extends Controller
 
     public function course()
     {
-        $corses = Courses::all();
+        if (request('orderBy') === 'latest') {
+            $corses = Courses::latest()->filter(request(['title', 'categoryId']))->get();
+        } else {
+            $corses = Courses::oldest()->filter(request(['title', 'categoryId']))->get();
+        }
+
         return view('moderator.course', [
-            'courses' => $corses
+            'courses' => $corses,
+            'oldInputValue' => request('title')
         ]);
     }
 

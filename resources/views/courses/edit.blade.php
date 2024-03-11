@@ -82,12 +82,12 @@
             <select name="category_id" id="category_id"
                 class=" border p-3 rounded-xl focus:outline-none focus:border-[#000842] block w-full mt-1">
                 <option>โปรดเลือกหมวดหมู่ของคอร์สเรียน</option>
-                <option value="1" selected={{ $course->category_id === '1' }}>วิทยาศาสตร์</option>
-                <option value="2" selected={{ $course->category_id === '2' }}>คณิตศาสตร์</option>
-                <option value="3" selected={{ $course->category_id === '3' }}>ภาษาไทย</option>
-                <option value="4" selected={{ $course->category_id === '4' }}>สังคมศึกษา</option>
-                <option value="5" selected={{ $course->category_id === '5' }}>ภาษาอังกฤษ</option>
-                <option value="6" selected={{ $course->category_id === '6' }}>เทคโนโลยีสารสนเทศ</option>
+                <option value="1" {{ $course->category_id == '1' ? 'selected' : '' }}>วิทยาศาสตร์</option>
+                <option value="2" {{ $course->category_id == '2' ? 'selected' : '' }}>คณิตศาสตร์</option>
+                <option value="3" {{ $course->category_id == '3' ? 'selected' : '' }}>ภาษาไทย</option>
+                <option value="4" {{ $course->category_id == '4' ? 'selected' : '' }}>สังคมศึกษา</option>
+                <option value="5" {{ $course->category_id == '5' ? 'selected' : '' }}>ภาษาอังกฤษ</option>
+                <option value="6" {{ $course->category_id == '6' ? 'selected' : '' }}>เทคโนโลยีสารสนเทศ</option>
             </select>
 
             @error('category_id')
@@ -105,9 +105,8 @@
             </div>
 
             <div class="w-full flex items-center justify-end gap-6 ">
-                <button
-                    class="w-[25%] bg-[#E9F2FC] text-[#2A638A] rounded-3xl font-bold focus:outline-none py-3 text-lg "><a
-                        href="/courses">ยกเลิก</a></button>
+                <input type="submit" value="ยกเลิก" name="back"
+                    class="w-[25%] bg-[#E9F2FC] text-[#2A638A] rounded-3xl font-bold focus:outline-none py-3 text-lgcursor-pointer">
 
                 <button type="submit"
                     class="w-[25%] bg-[#2A638A] text-white rounded-3xl font-bold focus:outline-none py-3 text-lg ">อัพเดทคอร์สเรียน</button>

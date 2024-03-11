@@ -13,8 +13,8 @@
             </h1>
             <form class="space-y-4 w-full">
                 <div class=" h-auto relative overflow-hidden rounded-2xl w-full">
-                    <input class="w-full rounded-2xl px-4 py-3 border-2 border-gray-200 h-16 outline-none text-lg" type="text"
-                        placeholder="ค้นหา...">
+                    <input class="w-full rounded-2xl px-4 py-3 border-2 border-gray-200 h-16 outline-none text-lg"
+                        type="text" placeholder="ค้นหาโดยใช้ชื่อคอร์ส..." name="title" value="{{ $oldInputValue }}">
                     <buton>
                         <img src={{ asset('images/icons/magnify.png') }}
                             class="absolute top-1/2 right-4 transform -translate-y-1/2 w-6 h-6 z-10" alt="">
@@ -28,17 +28,16 @@
                 </div>
                 <div class="flex items-center gap-x-4">
                     <span class="text-xl font-semibold text-[#6F7979]">จัดเรียงตาม</span>
-                    <select class="select-blue"
-                        name="genere">
-                        <option value="all">ทั้งหมด</option>
-                        <option value="fundamental">คณิตศาสตร์</option>
-                        <option value="design">ภาษาไทย</option>
-                        <option value="programming">สังคมศึกษา</option>
-                        <option value="applied">ภาษาอังกฤษ</option>
-                        <option value="applied">เทคโนโลยีสารสนเทศ</option>
+                    <select class="select-blue" name="categoryId">
+                        <option selected>ทั้งหมด</option>
+                        <option value="1">วิทยาศาสตร์</option>
+                        <option value="2">คณิตศาสตร์</option>
+                        <option value="3">ภาษาไทย</option>
+                        <option value="3">สังคมศึกษา</option>
+                        <option value="4">ภาษาอังกฤษ</option>
+                        <option value="5">เทคโนโลยีสารสนเทศ</option>
                     </select>
-                    <select class="select-blue"
-                        name="time">
+                    <select class="select-blue" name="orderBy">
                         <option value="latest">ใหม่สุด-เก่าสุด</option>
                         <option value="oldest">เก่าสุด-ใหม่สุด</option>
                     </select>
@@ -47,9 +46,9 @@
             <div class="flex flex-col gap-y-8">
                 @foreach ($courses as $course)
                     <x-MenuCard title="{{ $course['title'] }}" description="{{ $course['description'] }}"
-                        author="{{ $course['lecturer']['first_name'] }} {{ $course['lecturer']['last_name'] }}" imgSrc="{{ $course['cover_image_src'] }}"
-                        href="/courses/{{ $course['id'] }}/edit" bgColor="{{ $colors[$loop->index % 3] }}"
-                        btnColor="{{ $primaryColor[$loop->index % 3] }}"
+                        author="{{ $course['lecturer']['first_name'] }} {{ $course['lecturer']['last_name'] }}"
+                        imgSrc="{{ $course['cover_image_src'] }}" href="/courses/{{ $course['id'] }}/edit"
+                        bgColor="{{ $colors[$loop->index % 3] }}" btnColor="{{ $primaryColor[$loop->index % 3] }}"
                         shColor="{{ $shadowColor[$loop->index % 3] }}" />
                 @endforeach
             </div>
