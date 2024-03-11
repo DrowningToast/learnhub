@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\View;
 class SellCourseCard extends Component
 {
     public function __construct(
+        public string $courseId,
         public string $banner,
         public string $lecturer,
         public string $lecProfile,

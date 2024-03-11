@@ -1,11 +1,9 @@
 <x-whiteNavBarLayout>
     <div class="w-full min-h-screen font-noto-thai bg-[#F4F8FF]">
-        {{-- navbar --}}
-        <x-NavLanding />
 
         {{-- hero --}}
         <div
-            class="bg-gradient-to-b from-[#7F92B1] from-10% to-[#FFF]/0 to-90% w-full min-h-screen flex justify-center items-center pt-14">
+            class="bg-gradient-to-b from-[#7F92B1] from-10% to-[#FFF]/0 to-90% w-full min-h-screen flex justify-center items-center ">
             <div class="grid grid-cols-2 w-10/12 gap-x-16">
                 <div class="flex justify-center flex-col gap-y-5">
                     <div class="flex flex-col gap-y-5">
@@ -96,7 +94,7 @@
                 </form>
                 <div class="grid grid-cols-4 gap-x-12 gap-y-12 mt-6">
                     @foreach ($courses as $course)
-                        <x-SellCourseCard banner="{{ $course->cover_image_src }}"
+                        <x-SellCourseCard banner="{{ $course->cover_image_src }}" courseId="{{ $course->id }}"
                             lecturer="{{ $course->lecturer->first_name . ' ' . $course->lecturer->last_name }}"
                             lecProfile="{{ $course->lecturer->profile_image_src }}"
                             category="{{ $course->category_id }}"
