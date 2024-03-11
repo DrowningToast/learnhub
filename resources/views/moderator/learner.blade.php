@@ -14,7 +14,7 @@
             <form class="space-y-4 w-full">
                 <div class=" h-auto relative overflow-hidden rounded-2xl w-full focus-within:shadow-lg duration-200">
                     <input class="w-full rounded-2xl px-4 py-3 border-2 border-gray-200 h-16 outline-none text-lg"
-                        type="text" placeholder="ค้นหา...">
+                        type="text" placeholder="ค้นหาโดยชื่อผู้เรียน..." name="name" value="{{ $oldInputValue }}">
                     <buton>
                         <img src={{ asset('images/icons/magnify.png') }}
                             class="absolute top-1/2 right-4 transform -translate-y-1/2 w-6 h-6 z-10" alt="">

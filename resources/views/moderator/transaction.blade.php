@@ -43,10 +43,10 @@ $lecturer = [
             <h1 class="text-5xl font-bold text-[#4369A2] font-noto-thai">
                 จัดการผู้สอน
             </h1>
-            <form class="space-y-4 w-full" action="/withdraw">
+            <form class="space-y-4 w-full">
                 <div class=" h-auto relative overflow-hidden rounded-2xl w-full focus-within:shadow-lg duration-200">
                     <input class="w-full rounded-2xl px-4 py-3 border-2 border-gray-200 h-16 outline-none text-lg"
-                        type="text" placeholder="ค้นหาผู้สอน..." name="lecturerName">
+                        type="text" placeholder="ค้นหาผู้สอน..." name="name" value="{{ $oldInputValue }}">
                     <buton>
                         <img src={{ asset('images/icons/magnify.png') }}
                             class="absolute top-1/2 right-4 transform -translate-y-1/2 w-6 h-6 z-10" alt="">
@@ -61,10 +61,10 @@ $lecturer = [
                 <div class="flex items-center gap-x-4">
                     <span class="text-xl font-semibold text-[#6F7979]">จัดเรียงตาม: </span>
                     <select class="select-blue" name="statusId">
-                        <option value="0">ทั้งหมด</option>
+                        <option value="ALL">ทั้งหมด</option>
                         <option value="1">กำลังดำเนินการ</option>
                         <option value="2">สำเร็จ</option>
-                        <option value="programming">ไม่สำเร็จ</option>
+                        <option value="3">ไม่สำเร็จ</option>
                     </select>
                     <select class="select-blue" name="orderBy">
                         <option value="latest">ใหม่สุด-เก่าสุด</option>

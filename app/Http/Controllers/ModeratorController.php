@@ -36,21 +36,51 @@ class ModeratorController extends Controller
     public function lecturer()
     {
         $lecturers = Users::where('role', 'LECTURER')->get();
-        return view('moderator.lecturer', ['lecturers' => $lecturers]);
+
+        if (request('name')) {
+            $lecturers = $lecturers->filter(function ($lecturer) {
+                return str_contains(strtolower($lecturer->first_name), strtolower(request('name'))) ||
+                    str_contains(strtolower($lecturer->last_name), strtolower(request('name')));
+            });
+        }
+
+        return view('moderator.lecturer', ['lecturers' => $lecturers, 'oldInputValue' => request('name')]);
     }
 
     public function learner()
     {
         $learners = Users::where('role', 'LEARNER')->get();
-        return view('moderator.learner', ['learners' => $learners]);
+
+        if (request('name')) {
+            $learners = $learners->filter(function ($learner) {
+                return str_contains(strtolower($learner->first_name), strtolower(request('name'))) ||
+                    str_contains(strtolower($learner->last_name), strtolower(request('name')));
+            });
+        }
+
+        return view('moderator.learner', ['learners' => $learners, 'oldInputValue' => request('name')]);
     }
 
     public function transaction()
     {
-        $transactions = Withdrawals::latest()->get();
+        if (request('orderBy') === 'latest') {
+            $transactions = Withdrawals::latest()->get();
+        } else {
+            $transactions = Withdrawals::oldest()->get();
+        }
+
+        $transactions = Withdrawals::filter(request(['statusId']))->get();
+
+        if (request('name')) {
+            $transactions = $transactions->filter(function ($transaction) {
+                return str_contains(strtolower($transaction->user->first_name), strtolower(request('name'))) ||
+                    str_contains(strtolower($transaction->user->last_name), strtolower(request('name')));
+            });
+        }
 
         return view('moderator.transaction', [
-            'transactions' => $transactions
+            'transactions' => $transactions,
+            'oldInputValue' => request('name')
         ]);
     }
 
