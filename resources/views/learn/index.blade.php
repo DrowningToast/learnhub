@@ -1,15 +1,3 @@
-<?php
-$username = 'Supratouch Suwatno';
-$affiliation = 'โรงเรียนอนุบาลหมีน้อย';
-
-$avg_progress =
-    count($enrolledCourses) <= 0
-        ? 0
-        : $enrolledCourses->reduce(function ($carry, $item) {
-                return $carry + $item['progress'] / 100;
-            }) / count($enrolledCourses);
-?>
-
 @php
     $colors = ['bg-[#E2EEFB]', 'bg-[#F2E6FF]', 'bg-[#FFEAF0]'];
     $primaryColor = ['bg-[#4369A2]', 'bg-[#8B68B1]', 'bg-[#C97D93]'];

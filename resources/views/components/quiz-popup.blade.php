@@ -114,7 +114,7 @@
         form.submit();
     }
 
-    const handleClose = () => {
-        document.querySelector('.fixed').style.display = 'none';
-    }
+    // const handleClose = () => {
+    //     document.querySelector('.fixed').style.display = 'none';
+    // }
 </script>

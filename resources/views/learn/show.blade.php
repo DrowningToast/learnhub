@@ -22,7 +22,6 @@
             <div class="flex overflow-y-hidden overflow-x-auto w-auto gap-8 pb-4">
                 @foreach ($course->chapters as $index => $chapter)
                     @if ($chapter->files->count() <= 0)
-                        <p class="text-[#C6CBD3] text-center">ไม่พบเอกสาร</p>
                         @break
                     @endif
                     @foreach ($chapter->files as $file)
