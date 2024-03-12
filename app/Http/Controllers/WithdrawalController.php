@@ -73,11 +73,16 @@ class WithdrawalController extends Controller
     {
         $user = auth()->user();
 
-        $userTransactions = Withdrawals::latest()->where('user_id', $user->id)->get();
+        $userTransactions = Transactions::latest()->get();
+        $userTransactions = $userTransactions->filter(function ($transaction) {
+            $course = Courses::withTrashed()->find($transaction->course_id);
+            return $course->lecturer_id === auth()->user()->id;
+        });
+
         $availableBalance = $userTransactions->sum('amount') - $userTransactions->where('status_id', 1)->sum('amount');
 
         $formFields = $request->validate([
-            'amount' => ['required', 'numeric', 'min:1', 'max:' . 9999999],
+            'amount' => ['required', 'numeric', 'min:1', 'max:' . $availableBalance],
             'bankName' => ['required', 'string'],
             'accountNumber' => ['required', 'string'],
         ], [
