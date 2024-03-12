@@ -99,6 +99,12 @@ Route::post('/courses/{course}/chapters/create', [ChapterController::class, 'sto
 Route::get('/courses/{course}/chapters/{chapter}/quizzes/create', [QuizController::class, 'create'])->middleware(['auth', ModAndLectRouteGuard::class]);
 Route::post('/courses/{course}/chapters/{chapter}/quizzes/create', [QuizController::class, 'store'])->middleware(['auth', ModAndLectRouteGuard::class]);
 
+// Edit Quiz
+Route::get('/courses/{course}/chapters/{chapter}/quizzes/edit ', [QuizController::class, 'edit'])->middleware(['auth', ModAndLectRouteGuard::class]);
+Route::post('/courses/{course}/chapters/{chapter}/quizzes/edit', [QuizController::class, 'update'])->middleware(['auth', ModAndLectRouteGuard::class]);
+
 // Edit Chapter
 Route::get('/courses/{course}/chapters/{chapter}/edit', [ChapterController::class, 'edit'])->middleware(['auth', ModAndLectRouteGuard::class]);
 Route::put('/courses/{course}/chapters/{chapter}/edit', [ChapterController::class, 'update'])->middleware(['auth', ModAndLectRouteGuard::class]);
+
+// http://localhost:3000/courses/21/chapters/206/quizzes/edit
