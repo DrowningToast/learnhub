@@ -82,8 +82,10 @@ class CourseController extends Controller
 
         $course = Courses::findOrFail($id);
         $rating = Reviews::where('course_id', $id)->avg('rating');
+
         // NEED PAGINATION  
-        $reviews = Reviews::where('course_id', $id)->take(6)->inRandomOrder()->get();  
+        $reviews = Reviews::where('course_id', $id)->inRandomOrder()->paginate(6)->fragment('reviews');
+
         $enrolled_count = CourseByUser::where('course_id', $id)->count();
         $reviews_count = Reviews::where('course_id', $id)->count();
         $owned = false;
@@ -102,7 +104,7 @@ class CourseController extends Controller
             'title' => $course->title,
             'description' => $course->description,
             "cover_image_src" => $course->cover_image_src,
-// NEED PAGINATION
+            // NEED PAGINATION
             'reviews' => $reviews,
             'rating' => $rating,
             'enrolled_count' => $enrolled_count,
