@@ -14,6 +14,10 @@ class QuizPopup extends Component
     public function __construct(
         public string $courseid,
         public string $chapterid,
+        public string $question,
+        public string $choiceA,
+        public string $choiceB,
+        public string $choiceC,
     )
     {
         //

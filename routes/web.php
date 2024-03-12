@@ -17,6 +17,8 @@ use App\Http\Middleware\ModAndLectRouteGuard;
 use App\Http\Controllers\WithdrawalController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Middleware\CheckIsProfileComplete;
+use App\Models\Chapters;
+use App\Models\Quizzes;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,44 +84,35 @@ Route::get('/learn', [LearnController::class, 'index'])->middleware(['auth', Che
 Route::get('/learn/{course}', [LearnController::class, 'show'])->middleware('auth', CheckIsProfileComplete::class);
 
 // Show Chapter Video
-Route::get('/learn/{course}/{vdoId}', function (int $course, string $vdoId) {
-    // $course = Courses::find($course);
-    $video = [
-        [
-            'chapNo' => 1,
-            'title' => 'Sex Video',
-            'id' => $vdoId
-        ],
-        [
-            'chapNo' => 2,
-            'title' => 'Sex Video 2',
-            'id' => $vdoId
-        ],
-        [
-            'chapNo' => 3,
-            'title' => 'Sex Video 3',
-            'id' => $vdoId
-        ],
-        [
-            'chapNo' => 4,
-            'title' => 'Sex Video 4',
-            'id' => $vdoId
-        ],
-        [
-            'chapNo' => 5,
-            'title' => 'Sex Video 5',
-            'id' => $vdoId
-        ],
-    ];
+Route::get('/learn/{course}/{chapId}', function (int $course, string $chapId) {
+    $course = Courses::find($course);
+    $chapter = Chapters::find($chapId);
+    $newArr = array_map(function ($v, $k) {
+        $v['chapId'] = $k+1;
+        return $v;
+    }, $course['chapters']->toArray(), array_keys($course['chapters']->toArray()));
+    // dd($newArr);
     return view('courses.video', [
-        'ytid' => $vdoId,
-        'courseid' => $course
+        'allChaps' => $newArr,
+        'course' => $course,
+        'chapter' => $chapter
     ]);
 });
 
 // Check answer quiz
 Route::post('/learn/{course}/quiz/{chapter}', function (string $course, string $chapter) {
-    $score = 3;
+    $score = 0;
+    $quiz = Quizzes::where('chapter_id', $chapter)->first();
+    $quiz_data = json_decode($quiz['quiz_data']);
+    $answers = request()->all();
+    $counter = 1;
+    foreach ($quiz_data as $question) {
+        // dd($question);
+        if ($question->answer == $answers['q' . $counter]) {
+            $score++;
+        }
+        $counter++;
+    }
     return redirect(sprintf('/learn/%s/%s?score=%u', $course, $chapter, $score));
 });
 

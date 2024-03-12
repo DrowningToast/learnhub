@@ -11,56 +11,74 @@
 </head>
 
 <body>
+    {{-- {{ dd($chapter) }} --}}
+    @php
+        preg_match(
+            '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i',
+            $chapter['video_src'],
+            $match,
+        );
+        $youtube_id = $match[1];
+    @endphp
     <div class="flex p-10 bg-gradient-to-b from-[#2A638A] to-black w-full min-h-screen">
         <div class="flex bg-white rounded-2xl w-full pb-10">
-            <div class="flex gap-y-10">
-                <div class="flex flex-col px-5 ">
-                    <div class=" flex font-noto-thai text-[40px] text-[#2A638A] gap-x-5 gap-y-5 pt-10 pb-5 items-center">
-                        <a href="/courses/{{ $courseid }}"><x-ri-arrow-left-s-line class="text-black w-10 cursor-pointer"/></a>
-                        <p class="font-bold">Chapter 1 : ออกแบบเว็บด้วย HTML</p>
+            <div class="grid grid-cols-4 gap-y-10">
+                <div class="flex flex-col px-5 col-span-3">
+                    <div
+                        class=" flex font-noto-thai text-[40px] text-[#2A638A] gap-x-5 gap-y-5 pt-10 pb-5 items-center">
+                        <a href="/learn/{{ $chapter['course_id'] }}"><x-ri-arrow-left-s-line
+                                class="text-black w-10 cursor-pointer" /></a>
+                        <p class="font-bold">{{ $chapter['title'] }}</p>
                     </div>
                     <div class="font-noto-thai text-[14px] text-[#A8ACAC] pl-10 pb-7">
-                        <p class="indent-10 font-bold">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                            eiusmod tempor"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                            tempor"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"Lorem
-                            ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
+                        <p class="indent-10 font-bold">{{ $chapter['description'] }}</p>
                     </div>
                     <div class="pl-2 pb-12 h-full">
-                        <iframe src="https://www.youtube.com/embed/{{ $ytid }}" title="YouTube video player"
+                        <iframe src="https://www.youtube.com/embed/{{ $youtube_id }}" title="YouTube video player"
                             frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen width="100%" class="aspect-video"></iframe>
+                            allowfullscreen width="100%" class="aspect-video w-full"></iframe>
                     </div>
                     <div class="flex items-center flex-col w-full ">
                         <p class="font-bold text-[16px] font-noto-thai text-[#0D1D29]">Chapter 2 : ออกแบบเว็บด้วย HTML
                         </p>
                         <a href=""><x-ri-arrow-down-s-line class="w-10 flex justify-center" /></a>
-
                     </div>
                 </div>
 
-                <div class="flex flex-col w-[560px] p-5 pt-[7%] gap-5">
+                <div class="flex flex-col p-5 pt-[7%] gap-5 col-span-1">
                     {{-- do quiz button --}}
-                    <x-quiz-popup courseid="{{ $courseid }}" chapterid="{{ $ytid }}" />
+                    <a href="{{ url()->current() }}/?doquiz=true&no=1"
+                        class="flex rounded-2xl bg-[#024B71] w-full font-noto-thai items-center gap-x-3 justify-center py-3">
+                        <x-tabler-bulb-filled class="text-white w-[32px] h-[32px]" />
+                        <p class="font-[#20px] text-white font-bold">Do Quiz</p>
+                    </a>
+                    @if (app('request')->input('doquiz') == 'true')
+                        @php
+                            $no = 'q' . app('request')->input('no');
+                            $q = json_decode($chapter['quizz']['quiz_data'])->$no;
+                        @endphp
+                        <x-quiz-popup question="{{ $q->question }}" choiceA="{{ $q->choice_a }}"
+                            choiceB="{{ $q->choice_b }}" choiceC="{{ $q->choice_c }}"
+                            courseid="{{ $chapter['course_id'] }}" chapterid="{{ $chapter['id'] }}" />
+                    @endif
                     {{-- score popup --}}
-                    <x-score-popup />
+                    <x-score-popup courseId="{{ $course['id'] }}" />
                     <div class="overflow-y-auto ">
-                        <div class="rounded-3xl pb-4">
-                            <a href=""><x-chapter-next-up chapter=1 title="ออกแบบเว็บด้วย HTML"
-                                    img="y9kkXTucnLU" /></a>
-                        </div>
-                        <div class="rounded-3xl pb-4">
-                            <a href=""><x-chapter-next-up chapter=2 title="ออกแบบเว็บด้วย css"
-                                    img="1ScFEz7SiPQ" /></a>
-                        </div>
-                        <div class="rounded-3xl pb-4">
-                            <a href=""><x-chapter-next-up chapter=3 title="ออกแบบเว็บด้วย js"
-                                    img="YeAhmfUf0uY" /></a>
-                        </div>
-                        <div class="rounded-3xl pb-4">
-                            <a href=""><x-chapter-next-up chapter=4 title="ออกแบบเว็บด้วย laravel"
-                                    img="lCHrVoFNT2U" /></a>
-                        </div>
+                        @foreach ($allChaps as $chap)
+                            @php
+                                preg_match(
+                                    '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i',
+                                    $chap['video_src'],
+                                    $childMatch,
+                                );
+                                $ytid = $childMatch[1];
+                            @endphp
+                            <div class="rounded-3xl pb-4">
+                                <a href=""><x-chapter-next-up chapter="{{ $chap['chapId'] }}"
+                                        title="{{ $chap['title'] }}" img="{{ $ytid }}" /></a>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

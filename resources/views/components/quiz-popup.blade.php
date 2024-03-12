@@ -8,39 +8,32 @@
         </div>
     </div>
 
-    <a href="{{ url()->current() }}/?doquiz=true&no=1"
-        class="flex rounded-2xl bg-[#024B71] w-full font-noto-thai items-center gap-x-3 justify-center py-3">
-        <x-tabler-bulb-filled class="text-white w-[32px] h-[32px]" />
-        <p class="font-[#20px] text-white font-bold">Do Quiz Chapter 1</p>
-    </a>
     <div
         class="{{ app('request')->input('doquiz') == 'true' ? 'flex' : 'hidden' }} h-screen w-full bg-black/50 top-0 left-0 z-50 fixed justify-center items-center">
         <div class="w-1/2 bg-white rounded-xl relative p-10">
             <a href="{{ url()->current() }}" class="absolute top-2 right-3 test-xl font-bold">X</a>
             <div class="flex flex-col gap-y-2 w-full    ">
                 <p class="text-[#A3ACB6]">คำถามข้อที่ {{ app('request')->input('no') }}</p>
-                <p class="text-xl font-medium">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque porro
-                    repellat cumque nulla rerum. Ut at atque veritatis. Sed vel consequatur totam ea atque, recusandae
-                    quae excepturi ullam aspernatur exercitationem.</p>
+                <p class="text-xl font-medium">{{ $question }}</p>
                 <p class="text-[#A3ACB6]">ตัวเลือก</p>
                 <div class="flex flex-col gap-y-2 w-full">
                     <div class="w-full">
-                        <input type="radio" name="choice" value="a" id="a" class="hidden peer" />
+                        <input type="radio" name="choice" value="A" id="a" class="hidden peer" />
                         <label for="a"
                             class="rounded-xl px-5 py-3 peer-checked:bg-gradient-to-r peer-checked:from-[#2A638A] peer-checked:to-[#0B1A24] peer-checked:text-white text-xl w-full flex gap-x-3"><span
-                                class="font-bold">ก.</span>Lorem ipsum dolor sit amet consectetur.</label>
+                                class="font-bold">ก.</span>{{ $choiceA }}</label>
                     </div>
                     <div class="w-full">
-                        <input type="radio" name="choice" value="b" id="b" class="hidden peer" />
+                        <input type="radio" name="choice" value="B" id="b" class="hidden peer" />
                         <label for="b"
                             class="rounded-xl px-5 py-3 peer-checked:bg-gradient-to-r peer-checked:from-[#2A638A] peer-checked:to-[#0B1A24] peer-checked:text-white text-xl w-full flex gap-x-3"><span
-                                class="font-bold">ข.</span>Lorem ipsum dolor sit amet consectetur.</label>
+                                class="font-bold">ข.</span>{{ $choiceB }}</label>
                     </div>
                     <div class="w-full">
-                        <input type="radio" name="choice" value="c" id="c" class="hidden peer" />
+                        <input type="radio" name="choice" value="C" id="c" class="hidden peer" />
                         <label for="c"
                             class="rounded-xl px-5 py-3 peer-checked:bg-gradient-to-r peer-checked:from-[#2A638A] peer-checked:to-[#0B1A24] peer-checked:text-white text-xl w-full flex gap-x-3"><span
-                                class="font-bold">ค.</span>Lorem ipsum dolor sit amet consectetur.</label>
+                                class="font-bold">ค.</span>{{ $choiceC }}</label>
                     </div>
                 </div>
                 {{-- <div>

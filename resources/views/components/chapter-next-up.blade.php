@@ -7,9 +7,7 @@
         </div>
     </div>
 
-    <div class="flex absolute text-white font-noto-thai font-[14px]  top-[70%] left-[10%]">
-        <p class="font-bold"> Chapter {{ $chapter }} :</p>
-        <p class="">{{ $title }}</p>
+    <div class="flex absolute text-white font-noto-thai font-[14px] w-full justify-center top-[70%] left-1/2 transform -translate-x-1/2 bg-black/70 px-2 py-1 rounded-sm">
+        <p class="font-bold"> Chapter {{ $chapter }} : {{ $title }}</p>
     </div>
-
 </div>
