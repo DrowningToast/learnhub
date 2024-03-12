@@ -1,20 +1,22 @@
 <?php
 
 use App\Enums\RoleEnum;
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\LearnController;
 use App\Models\Courses;
+use App\Models\Reviews;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LearnController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ChapterController;
 use App\Http\Middleware\LecturerRouteGuard;
 use App\Http\Middleware\ModeratorRouteGuard;
 use App\Http\Controllers\ModeratorController;
+use App\Http\Middleware\ModAndLectRouteGuard;
 use App\Http\Controllers\WithdrawalController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Middleware\CheckIsProfileComplete;
-use App\Http\Middleware\ModAndLectRouteGuard;
-use App\Models\Reviews;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,3 +90,19 @@ Route::get('/learn/{course}', [LearnController::class, 'show'])->middleware('aut
 // Edit (Self) Profile
 Route::get('/profile', [UserController::class, 'edit'])->middleware('auth');
 Route::put('/profile', [UserController::class, 'update'])->middleware('auth');
+
+// Create Chapter
+Route::get('/courses/{course}/chapters/create', [ChapterController::class, 'create'])->middleware(['auth', ModAndLectRouteGuard::class]);
+Route::post('/courses/{course}/chapters/create', [ChapterController::class, 'store'])->middleware(['auth', ModAndLectRouteGuard::class]);
+
+// Create Quiz
+Route::get('/courses/{course}/chapters/{chapter}/quizzes/create', [QuizController::class, 'create'])->middleware(['auth', ModAndLectRouteGuard::class]);
+Route::post('/courses/{course}/chapters/{chapter}/quizzes/create', [QuizController::class, 'store'])->middleware(['auth', ModAndLectRouteGuard::class]);
+
+// Edit Quiz
+Route::get('/courses/{course}/chapters/{chapter}/quizzes/edit ', [QuizController::class, 'edit'])->middleware(['auth', ModAndLectRouteGuard::class]);
+Route::post('/courses/{course}/chapters/{chapter}/quizzes/edit', [QuizController::class, 'update'])->middleware(['auth', ModAndLectRouteGuard::class]);
+
+// Edit Chapter
+Route::get('/courses/{course}/chapters/{chapter}/edit', [ChapterController::class, 'edit'])->middleware(['auth', ModAndLectRouteGuard::class]);
+Route::put('/courses/{course}/chapters/{chapter}/edit', [ChapterController::class, 'update'])->middleware(['auth', ModAndLectRouteGuard::class]);

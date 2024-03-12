@@ -25,8 +25,10 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+        "league/flysystem-ftp": "^3.25",
         "league/flysystem-sftp-v3": "^3.23",
         "mallardduck/blade-boxicons": "^2.4",
+        "matthewbdaly/laravel-azure-storage": "^2.0",
         "owenvoke/blade-fontawesome": "^2.6"
     },
     "require-dev": {

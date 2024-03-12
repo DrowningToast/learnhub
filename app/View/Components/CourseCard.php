@@ -22,6 +22,7 @@ class CourseCard extends Component
         public string $primaryColor,
         public string $color,
         public string $shadowColor,
+        public int $id,
     ) {
         //   
     }
