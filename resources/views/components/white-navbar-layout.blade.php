@@ -13,7 +13,7 @@
 <body class="w-full min-h-screen font-noto-thai">
     <x-toast />
 
-    <x-NavLanding />
+    <x-nav-landing />
 
     <main class="pt-14">
         {{ $slot }}
