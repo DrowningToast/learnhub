@@ -145,7 +145,8 @@
                 </article>
                 <article>
                     <div class="grid grid-cols-3 px-4 py-6 gap-x-4">
-                        <img class="rounded-full aspect-square" src={{ $lecturer['profile_image_src'] }} />
+                        <img class="rounded-full aspect-square"
+                            src={{ $lecturer['profile_image_src'] ? $lecturer['profile_image_src'] : asset('images/icons/DefaultPortrait.jpg') }} />
                         <div class="col-span-2 flex flex-col justify-center gap-y-2">
                             <span class="text-xl font-semibold">{{ $lecturer['first_name'] }}
                                 {{ $lecturer['last_name'] }}</span>
@@ -191,11 +192,14 @@
                                     <div class="flex gap-x-3">
                                         <div
                                             class="w-14 h-14 rounded-full bg-[#2D2F31] text-white text-xl font-bold grid place-items-center">
-                                            <span>{{ $review['user']['first_name'][0] }}{{ $review['user']['last_name'][0] }}</span>
+                                            <span>
+                                                <img class="rounded-full aspect-square"
+                                                    src={{ $review['user']['profile_image_src'] ? $review['user']['profile_image_src'] : asset('images/icons/DefaultPortrait.jpg') }} />
+                                            </span>
                                         </div>
                                         <div class="flex flex-col justify-evenly">
-                                            <span class="font-semibold">{{ $review['user']['first_name'][0] }}
-                                                {{ $review['user']['last_name'][0] }}.</span>
+                                            <span class="font-semibold">{{ $review['user']['first_name'] }}
+                                                {{ $review['user']['last_name'] }}.</span>
                                             <div class="flex gap-x-2 items-baseline">
                                                 <div class="flex items-baseline gap-x-1">
                                                     @for ($i = 0; $i < round($review['rating']); $i++)
@@ -207,7 +211,7 @@
                                                             class="w-3 h-3">
                                                     @endfor
                                                 </div>
-                                                <span class="text-xs text-[#DB8383]">
+                                                <span class="text-xs ">
                                                     เมื่อวันที่ {{ date('Y-m-d', $review['updatedAt']) }}
                                                 </span>
                                             </div>
