@@ -47,19 +47,11 @@ class LearnController extends Controller
         }
 
         // FILTER BY TITLE
-        if (request('title')) {
+        if (request()->has('title') && request('title') != '') {
             $courses = $courses->filter(
                 function ($course) {
+                    $course = $course->course;
                     return str_contains(strtolower($course['title']), strtolower(request('title')));
-                }
-            );
-        }
-
-        // FILTER BY CATEGORY ID
-        if (request('categoryId') && request('categoryId') != 'ALL') {
-            $courses = $courses->filter(
-                function ($course) {
-                    return intval($course->course['category_id']) == intval(request('categoryId'));
                 }
             );
 

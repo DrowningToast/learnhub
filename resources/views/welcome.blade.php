@@ -47,8 +47,8 @@
                         containerClass="hover:from-[#F5CC63] hover:to-[#F5CC63]/20"
                         childrenClass="from-[#F5CC63] to-[#F5CC63]/20" />
 
-                    <x-feature-card baseImage="/img/features/money_base.webp" hoverImage="/img/features/money_hover.webp"
-                        title="ราคาประหยัด"
+                    <x-feature-card baseImage="/img/features/money_base.webp"
+                        hoverImage="/img/features/money_hover.webp" title="ราคาประหยัด"
                         description="คุ้มค่า ใช้งานง่าย เหมาะกับทุกคน จ่ายเงินเพียงครั้งเดียว เรียนได้ตลอดชีพ"
                         containerClass="hover:from-[#52B6B4] hover:to-[#52B6B4]/20"
                         childrenClass="from-[#52B6B4] to-[#52B6B4]/20" />
@@ -134,20 +134,25 @@
     <div
         class="w-full h-[75svh] bg-gradient-to-b from-white from-30% to-[#7F92B1] flex flex-col justify-center items-center px-14 gap-y-14">
         <h1 class="text-6xl font-bold">รีวิวจากผู้เรียน</h1>
-        <div class="flex w-full gap-x-10">
-            <x-comment-card className="scale-[0.85]" imgSrc="{{ $top_review[1]['user']['profile_image_src'] }}"
-                name="{{ $top_review[1]['user']['first_name'] }} {{ $top_review[1]['user']['last_name'] }}"
-                courseName="{{ $top_review[1]['course']['title'] }}" comment="{{ $top_review[1]['comment'] }}"
-                rating="{{ $top_review[1]['rating'] }}" />
-            <x-comment-card className="" imgSrc="{{ $top_review[0]['user']['profile_image_src'] }}"
-                name="{{ $top_review[0]['user']['first_name'] }} {{ $top_review[0]['user']['last_name'] }}"
-                courseName="{{ $top_review[0]['course']['title'] }}" comment="{{ $top_review[0]['comment'] }}"
-                rating="{{ $top_review[0]['rating'] }}" />
-            <x-comment-card className="scale-[0.85]" imgSrc="{{ $top_review[2]['user']['profile_image_src'] }}"
-                name="{{ $top_review[2]['user']['first_name'] }} {{ $top_review[2]['user']['last_name'] }}"
-                courseName="{{ $top_review[2]['course']['title'] }}" comment="{{ $top_review[2]['comment'] }}"
-                rating="{{ $top_review[2]['rating'] }}" />
-        </div>
+
+        @if (count($top_review) !== 3)
+            <p class="text-2xl ">ยังไม่มีรีวิว</p>
+        @else
+            <div class="flex w-full gap-x-10">
+                <x-comment-card className="scale-[0.85]" imgSrc="{{ $top_review[1]['user']['profile_image_src'] }}"
+                    name="{{ $top_review[1]['user']['first_name'] }} {{ $top_review[1]['user']['last_name'] }}"
+                    courseName="{{ $top_review[1]['course']['title'] }}" comment="{{ $top_review[1]['comment'] }}"
+                    rating="{{ $top_review[1]['rating'] }}" />
+                <x-comment-card className="" imgSrc="{{ $top_review[0]['user']['profile_image_src'] }}"
+                    name="{{ $top_review[0]['user']['first_name'] }} {{ $top_review[0]['user']['last_name'] }}"
+                    courseName="{{ $top_review[0]['course']['title'] }}" comment="{{ $top_review[0]['comment'] }}"
+                    rating="{{ $top_review[0]['rating'] }}" />
+                <x-comment-card className="scale-[0.85]" imgSrc="{{ $top_review[2]['user']['profile_image_src'] }}"
+                    name="{{ $top_review[2]['user']['first_name'] }} {{ $top_review[2]['user']['last_name'] }}"
+                    courseName="{{ $top_review[2]['course']['title'] }}" comment="{{ $top_review[2]['comment'] }}"
+                    rating="{{ $top_review[2]['rating'] }}" />
+            </div>
+        @endif
     </div>
 
     {{-- footer --}}
