@@ -2,6 +2,7 @@
     $selected_tab = $_GET['view'] ?? 'description';
 
     $requiredPoints = intval($course->buy_price / 10);
+    $isLogggedIn = auth()->user();
 @endphp
 
 <x-white-navbar-layout>
@@ -61,11 +62,12 @@
                                 @endif
                             </a>
 
-                            @if ($requiredPoints <= $user->points)
+                            @if ($isLogggedIn && $requiredPoints <= $user->points)
                                 <form action="/courses/{{ $course->id }}/enroll" method="post">
                                     @csrf
                                     <div class="w-full mt-6 text-lg">
-                                        คุณมีแต้มสะสมทั้งหมด <span class="font-bold">{{ $user->points }}</span> แต้ม
+                                        คุณมีแต้มสะสมทั้งหมด <span
+                                            class="font-bold">{{ $user ? $user->points : 0 }}</span> แต้ม
                                         สามารถใช้แต้มสะสมจำนวน <span class="font-bold">
                                             {{ $requiredPoints }}</span> ในการแลกซื้อคอร์สนี้
                                         <button type="submit" class="underline font-semibold">
@@ -73,9 +75,10 @@
                                         </button>
                                     </div>
                                 </form>
-                            @else
+                            @elseif ($isLogggedIn && $requiredPoints > $user->points)
                                 <div class="w-full mt-6 text-lg">
-                                    คุณมีแต้มสะสมทั้งหมด <span class="font-bold">{{ $user->points }}</span> แต้ม
+                                    คุณมีแต้มสะสมทั้งหมด <span class="font-bold">{{ $user ? $user->points : 0 }}</span>
+                                    แต้ม
                                     สามารถใช้แต้มสะสมจำนวน <span class="font-bold">
                                         {{ $requiredPoints }}</span> ในการแลกซื้อคอร์สนี้
                                     <a>ไม่สามารถแลกซื้อได้ เนื่องจากแต้มไม่เพียงพอ</a>
