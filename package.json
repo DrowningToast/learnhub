@@ -5,7 +5,7 @@
         "dev": "vite & php artisan serve --port=3000",
         "build": "vite build",
         "compose:dev": "docker-compose -f docker-compose.dev.yml up -d --build",
-        "compose:prod": "docker-compose -f docker-compose.prod.yml up -d --build",
+        "compose:prod": "pnpm i && dotenv -e .env.prod -- docker-compose -f docker-compose.prod.yml up -d --build",
         "setup": "composer install && composer update && npm install -g pnpm && pnpm install && pnpm run compose:dev"
     },
     "devDependencies": {
@@ -19,5 +19,8 @@
         "prettier-plugin-tailwindcss": "^0.5.12",
         "tailwindcss": "^3.4.1",
         "vite": "^5.0.0"
+    },
+    "dependencies": {
+        "dotenv-cli": "^7.4.1"
     }
 }
