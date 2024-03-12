@@ -212,10 +212,6 @@
         </div>
 
         <div class="flex flex-row items-center justify-between gap-6 mt-12">
-            <div class="w-full font-semibold text-[#555] underline">
-                <a href="/learn/{{ $course->id }}">ข้ามการเพิ่มแบบทดสอบ (สามารถเพิ่มได้ภายหลัง)</a>
-            </div>
-
             <div class="flex flex-row items-center justify-end gap-6 w-full">
                 <a class="w-[25%] bg-[#E9F2FC] text-[#2A638A] rounded-3xl text-center font-bold focus:outline-none py-3 text-lg"
                     href="/learn/{{ $course->id }}">
