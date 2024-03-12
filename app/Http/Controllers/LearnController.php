@@ -20,6 +20,7 @@ class LearnController extends Controller
                 $course = $courseByUser->course;
                 $completed = count(ProgressByUserByCourse::where('course_id', $course->id)->where('user_id', auth()->id())->get());
                 return [
+                    "id" => $course->id,
                     "title" => $course->title,
                     "description" => $course->description,
                     "author" => $course->lecturer->first_name . " " . $course->lecturer->last_name,
@@ -91,15 +92,17 @@ class LearnController extends Controller
 
         return view('learn.show', [
             'course' => $course,
+            'review' => $review,
             'progress' => $progress,
-            'review' => $review
+            'isLearner' => auth()->user()->role->value == RoleEnum::Learner->value,
         ]);
     }
 
     /**
      * Submit a review
      */
-    public function review(Request $request, Courses $course) {
+    public function review(Request $request, Courses $course)
+    {
         $fields = $request->validate([
             'rating' => ['required', 'numeric', 'min:1', 'max:5'],
             'comment' => ['string', 'nullable']

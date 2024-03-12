@@ -31,6 +31,7 @@ class CourseController extends Controller
 
     public function manage()
     {
+
         return view('courses.manage', [
             'courses' => Courses::where('lecturer_id', auth()->id())->get(),
             'user' => auth()->user()
@@ -64,14 +65,14 @@ class CourseController extends Controller
 
         $formFields['lecturer_id'] = auth()->id();
 
-        $formFields['cover_image_src'] = Storage::disk('sftp')->put('courses', $request->cover_image_src);
-        $formFields['cover_image_src'] = 'https://' . env('SFTP_HOST') . '/' . Storage::disk('sftp')->url($formFields['cover_image_src']);
+        $formFields['cover_image_src'] = Storage::disk('azure')->put('courses', $request->file('cover_image_src'));
+        $formFields['cover_image_src'] = Storage::disk('azure')->url($formFields['cover_image_src']);
 
         $formFields['description'] = $request->description;
 
         $course = Courses::create($formFields);
 
-        return redirect("/courses/" . $course->id)->with('success_message', 'สร้างคอร์สเรียนใหม่สำเร็จ!');
+        return redirect("/learn/" . $course->id)->with('success_message', 'สร้างคอร์สเรียนใหม่สำเร็จ!');
     }
 
     /**

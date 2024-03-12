@@ -19,6 +19,7 @@ class Quizzes extends Model
         'quiz_data',
         'full_score',
         'expired_at',
+        'chapter_id',
     ];
 
     public function course()

@@ -95,7 +95,7 @@ $avg_progress =
                             progress="{{ 0.0 }}" src="{{ $course['cover_image_src'] }}"
                             href="{{ $course['href'] }}" color="{{ $colors[$loop->index % 3] }}"
                             primaryColor="{{ $primaryColor[$loop->index % 3] }}"
-                            shadowColor="{{ $shadowColor[$loop->index % 3] }}" />
+                            shadowColor="{{ $shadowColor[$loop->index % 3] }}" id="{{ $course->id }}" />
                     @endforeach
                 @else
                     <div class="flex flex-col gap-y-8">
@@ -105,7 +105,7 @@ $avg_progress =
                                 progress="{{ $course['progress'] / 100 }}" href="{{ $course['href'] }}"
                                 color="{{ $colors[$loop->index % 3] }}"
                                 primaryColor="{{ $primaryColor[$loop->index % 3] }}"
-                                shadowColor="{{ $shadowColor[$loop->index % 3] }}" />
+                                shadowColor="{{ $shadowColor[$loop->index % 3] }}" id="{{ $course->id }}" />
                         @endforeach
                     </div>
                 @endif

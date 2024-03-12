@@ -4,12 +4,13 @@
 
 <x-white-navbar-layout>
     <div>
-        <section class="p-14 px:24 2xl:px-36 grid grid-cols-2 gap-x-24 from-[#2A638A] to-[#0B1A24] bg-gradient-to-r">
+        <section
+            class="p-14 py-20 px:24 2xl:px-36 grid grid-cols-2 gap-x-24 from-[#2A638A] to-[#0B1A24] bg-gradient-to-r items-center">
             <div class="flex flex-col gap-y-6 text-white justify-center">
                 <div class="space-y-1">
                     <h1 class="text-4xl font-bold leading-relaxed whitespace-preline">{{ $title }}</h1>
                     <h3 class="text-xl font-bold text-[#D4E4F6]">
-                        {{ $description }}
+                        {{ strlen($description) >= 750 ? substr($description, 0, 750) . '...' : $description }}
                     </h3>
                 </div>
                 <div class="flex items-baseline gap-x-4">
@@ -45,7 +46,7 @@
                     @endif
                 </div>
             </div>
-            <div class="grid place-items-end"><img title="course preview" class="w-[65%] h-auto object-cover rounded-xl"
+            <div class="grid place-items-end"><img title="course preview" class="w-[70%] h-auto object-cover rounded-xl"
                     src="{{ $cover_image_src }}"></div>
         </section>
 
@@ -73,7 +74,7 @@
                 <article class="col-span-2">
                     @if ($selected_tab == 'description')
                         <div class=" text-[#676767] py-6">
-                            <h4 class="font-semibold">
+                            <h4 class="font-semibold text-3xl text-[#2A638A] mb-4">
                                 คำอธิบายคอร์สออนไลน์
                             </h4>
                             {{ $description }}
@@ -107,7 +108,7 @@
                     <div class="grid grid-cols-3 px-4 py-6 gap-x-4">
                         <img class="rounded-full aspect-square" src={{ $lecturer['profile_image_src'] }} />
                         <div class="col-span-2 flex flex-col justify-center gap-y-2">
-                            <span class="text-xl font-semibold text-[#00532A]">{{ $lecturer['first_name'] }}
+                            <span class="text-xl font-semibold">{{ $lecturer['first_name'] }}
                                 {{ $lecturer['last_name'] }}</span>
                             <div class="flex flex-col">
                                 <span class="text-sm text-[#262323]">{{ $lecturer['affiliate'] }}</span>
@@ -123,14 +124,14 @@
                     </div>
                     <div class="flex flex-col gap-y-8 mt-6">
                         @foreach ($suggestions as $suggestion)
-                            <a href={{ $suggestion['href'] }}>
+                            <a href={{ $suggestion['id'] }}>
                                 <img src={{ $suggestion['cover_image_src'] }} alt="course image"
                                     class="w-full h-48 object-cover rounded-xl">
-                                <div class="flex flex-col gap-y-2">
+                                <div class="flex flex-col gap-y-2 mt-4">
                                     <span
                                         class="text-lg font-semibold text-[#2A638A]">{{ $suggestion['title'] }}</span>
                                     <span
-                                        class="text-sm text-[#676767]">{{ $suggestion['lecturer']['first_name'] . $suggestion['lecturer']['last_name'] }}</span>
+                                        class="text-sm text-[#676767]">{{ $suggestion['lecturer']['first_name'] . ' ' . $suggestion['lecturer']['last_name'] }}</span>
                                 </div>
                             </a>
                         @endforeach

@@ -12,15 +12,14 @@ class ChapterCard extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public int $chapter,
+        public string $chapter,
         public string $title,
         public string $href,
-        )
-    {
+    ) {
 
-        
-        
-        
+
+
+
     }
 
     /**

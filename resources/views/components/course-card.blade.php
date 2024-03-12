@@ -1,4 +1,4 @@
-<a href="/learn/{{ $href }}">
+<a href="/learn/{{ $id }}">
     <div class="grid grid-cols-10 gap-x-8 rounded-2xl {{ $color }} p-8 {{ $shadowColor }} hover:shadow-xl">
         <div class="col-span-4">
             <img class="rounded-md" src={{ $src }} alt={{ $title . 'preview video' }}>
