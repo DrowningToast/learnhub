@@ -7,6 +7,9 @@ use App\Models\Courses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\ProgressByUserByCourse;
+use App\Models\QuizScoreByUser;
+use App\Models\Quizzes;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -83,9 +86,30 @@ class ChapterController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $course, string $chapId)
     {
-        //
+        if (request()->input('doquiz') === "true") {
+            $chap = Chapters::find($chapId);
+            if (QuizScoreByUser::where('quiz_id', $chap['quizz']['id'])->where('user_id', auth()->user()->id)->first()) {
+                return redirect(url()->current())->with('error_message', 'คุณได้ทำแบบทดสอบนี้ไปแล้ว');
+            }
+            // if (Quizzes::where('chapter_id', $chapId)->) {
+            //     return redirect('/learn/' . $course . '/' . $chapId . '/quizzes/create');
+            // }
+        }
+        $course = Courses::find($course);
+        $chapter = Chapters::find($chapId);
+        // dd($chapter)
+        $newArr = array_map(function ($v, $k) {
+            $v['chapId'] = $k + 1;
+            return $v;
+        }, $course['chapters']->toArray(), array_keys($course['chapters']->toArray()));
+        // dd($newArr);
+        return view('courses.video', [
+            'allChaps' => $newArr,
+            'course' => $course,
+            'chapter' => $chapter
+        ]);
     }
 
     /**
@@ -136,6 +160,39 @@ class ChapterController extends Controller
         return redirect('/learn/' . $chapter->course->id)->with('success_message', 'บทเรียนถูกแก้ไขเรียบร้อยแล้ว');
     }
 
+    public function quiz(string $course, string $chapter)
+    {
+        $score = 0;
+        $quiz = Quizzes::where('chapter_id', $chapter)->first();
+        $quiz_data = json_decode($quiz['quiz_data']);
+        $answers = request()->all();
+        $counter = 1;
+        foreach ($quiz_data as $question) {
+            // dd($question);
+            if ($question->answer == $answers['q' . $counter]) {
+                $score++;
+            }
+            $counter++;
+        }
+
+        $chaptarget = Chapters::find($chapter);
+
+        QuizScoreByUser::create([
+            'quiz_id' => $chaptarget['quizz']['id'],
+            'user_id' => auth()->user()->id,
+            'answer_data' => "[a, c, b]",
+            'submitted_at' => now(),
+            'score' => $score
+        ]);
+
+        ProgressByUserByCourse::create([
+            "user_id" => auth()->user()->id,
+            "course_id" => $course,
+            "chapter_id" => $chapter
+        ]);
+
+        return redirect(sprintf('/learn/%s/%s?score=%u', $course, $chapter, $score));
+    }
     /**
      * Remove the specified resource from storage.
      */

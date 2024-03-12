@@ -18,6 +18,8 @@ use App\Http\Middleware\ModAndLectRouteGuard;
 use App\Http\Controllers\WithdrawalController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Middleware\CheckIsProfileComplete;
+use App\Models\Chapters;
+use App\Models\Quizzes;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,13 +44,6 @@ Route::post('/register', [UserController::class, 'store'])->middleware('guest');
 
 Route::get('/logout', [UserController::class, 'logout'])->middleware('auth');
 
-Route::get('/video', function () {
-    return view('coursevideo');
-});
-
-route::get('/test', function () {
-    return view('chapter');
-});
 
 // Create Course
 Route::get('/courses/create', [CourseController::class, 'create'])->middleware('auth', LecturerRouteGuard::class);
@@ -56,6 +51,7 @@ Route::post('/courses', [CourseController::class, 'store'])->middleware('auth');
 
 // Show Course
 Route::get('/courses/{course}', [CourseController::class, 'show']);
+
 
 // Edit Course (Lecturer & Moderator)
 Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->middleware(['auth', ModAndLectRouteGuard::class]);
@@ -88,6 +84,12 @@ Route::post('/lecturer/withdraw', [WithdrawalController::class, 'store'])->middl
 Route::get('/learn', [LearnController::class, 'index'])->middleware(['auth', CheckIsProfileComplete::class]);
 Route::get('/learn/{course}', [LearnController::class, 'show'])->middleware('auth', CheckIsProfileComplete::class);
 Route::post('/learn/{course}/review', [LearnController::class, 'review'])->middleware('auth', CheckIsProfileComplete::class);
+
+// Show Chapter Video
+Route::get('/learn/{course}/{chapId}', [ChapterController::class, 'show']);
+
+// Check answer quiz
+Route::post('/learn/{course}/quiz/{chapter}', [ChapterController::class, 'quiz']);
 
 // Edit (Self) Profile
 Route::get('/profile', [UserController::class, 'edit'])->middleware('auth');
