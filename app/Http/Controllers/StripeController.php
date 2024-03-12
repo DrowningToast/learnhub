@@ -14,8 +14,6 @@ class StripeController extends Controller
 {
     public function checkout(Courses $course)
     {
-        // dd($course);
-
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
 
         if ($course->discount_percent > 0) {
