@@ -53,28 +53,6 @@
             @enderror
         </div>
 
-        {{-- <div class="mt-6">
-            <div class="flex flex-row justify-between">
-                <div class="flex flex-col gap-2">
-                    <label for="files" class="text-[#1C1C1C] font-semibold">เอกสารประกอบการเรียน</label>
-                    <div class="mt-1">
-                        <input type="file" name="attachment[]" id="attachment" multiple
-                            onchange="handleUploadFileChange(event)" value="{{ old('file') }}">
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-6">
-                <div id="uploadedFilesPreview" class="flex flex-row gap-4 overflow-y-auto w-full"></div>
-            </div>
-
-            <div class="mt-3">
-                @error('file')
-                    <span class="text-red-500 ">{{ $message }}</span>
-                @enderror
-            </div>
-        </div> --}}
-
         <div class="flex flex-row items-center justify-between gap-6 mt-12">
             <div class="w-full">
                 <input type="submit" value="ลบบทเรียน" name="delete"

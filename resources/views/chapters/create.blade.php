@@ -89,8 +89,6 @@
     function handleUploadFileChange(event) {
         if (event.target.files.length <= 0) return;
 
-        console.log(event.target.files)
-
         const uploadedFilesPreview = document.getElementById('uploadedFilesPreview');
         uploadedFilesPreview.innerHTML = '';
 
