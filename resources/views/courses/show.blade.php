@@ -1,5 +1,7 @@
 @php
     $selected_tab = $_GET['view'] ?? 'description';
+
+    $requiredPoints = intval($course->buy_price / 10);
 @endphp
 
 <x-white-navbar-layout>
@@ -10,7 +12,7 @@
                 <div class="space-y-1">
                     <h1 class="text-4xl font-bold leading-relaxed whitespace-preline">{{ $title }}</h1>
                     <h3 class="text-xl font-bold text-[#D4E4F6]">
-                        {{ strlen($description) >= 750 ? substr($description, 0, 750) . '...' : $description }}
+                        {{ strlen($description) >= 300 ? substr($description, 0, 300) . ' ...' : $description }}
                     </h3>
                 </div>
                 <div class="flex items-baseline gap-x-4">
@@ -38,11 +40,48 @@
                             </a>
                         </div>
                     @else
-                        <a href="#">
-                            <button class="bg-white rounded-2xl text-[#2A638A] font-bold px-24 py-3 text-xl">
-                                ซื้อเลย
-                            </button>
-                        </a>
+                        <div class="flex flex-col gap-4">
+                            <a href="/courses/{{ $courseId }}/checkout">
+                                <button class="bg-white rounded-2xl text-[#2A638A] font-bold px-24 py-3 text-xl mr-4">
+                                    ซื้อเลย
+                                </button>
+
+
+                                @if ($course->buy_price === 0)
+                                    <span class="font-bold text-lg">ฟรี</span>
+                                @elseif ($course->buy_price > 0 && $course->discount_percent > 0)
+                                    <span class="font-bold text-lg">ราคา
+                                        {{ number_format(($course->buy_price * (100 - $course->discount_percent)) / 100, 2) }}
+                                        บาท</span> ลด
+                                    {{ $course->discount_percent }}%
+                                    <span class="line-through text-lg">{{ number_format($course->buy_price, 2) }}</span>
+                                    บาท
+                                @else
+                                    <span class="font-bold">ราคา {{ number_format($course->buy_price, 2) }} บาท</span>
+                                @endif
+                            </a>
+
+                            @if ($requiredPoints <= $user->points)
+                                <form action="/courses/{{ $course->id }}/enroll" method="post">
+                                    @csrf
+                                    <div class="w-full mt-6 text-lg">
+                                        คุณมีแต้มสะสมทั้งหมด <span class="font-bold">{{ $user->points }}</span> แต้ม
+                                        สามารถใช้แต้มสะสมจำนวน <span class="font-bold">
+                                            {{ $requiredPoints }}</span> ในการแลกซื้อคอร์สนี้
+                                        <button type="submit" class="underline font-semibold">
+                                            แลกซื้อด้วยแต้มสะสม
+                                        </button>
+                                    </div>
+                                </form>
+                            @else
+                                <div class="w-full mt-6 text-lg">
+                                    คุณมีแต้มสะสมทั้งหมด <span class="font-bold">{{ $user->points }}</span> แต้ม
+                                    สามารถใช้แต้มสะสมจำนวน <span class="font-bold">
+                                        {{ $requiredPoints }}</span> ในการแลกซื้อคอร์สนี้
+                                    <a>ไม่สามารถแลกซื้อได้ เนื่องจากแต้มไม่เพียงพอ</a>
+                                </div>
+                            @endif
+                        </div>
                     @endif
                 </div>
             </div>
@@ -106,7 +145,8 @@
                 </article>
                 <article>
                     <div class="grid grid-cols-3 px-4 py-6 gap-x-4">
-                        <img class="rounded-full aspect-square" src={{ $lecturer['profile_image_src'] }} />
+                        <img class="rounded-full aspect-square"
+                            src={{ $lecturer['profile_image_src'] ? $lecturer['profile_image_src'] : asset('images/icons/DefaultPortrait.jpg') }} />
                         <div class="col-span-2 flex flex-col justify-center gap-y-2">
                             <span class="text-xl font-semibold">{{ $lecturer['first_name'] }}
                                 {{ $lecturer['last_name'] }}</span>
@@ -152,11 +192,14 @@
                                     <div class="flex gap-x-3">
                                         <div
                                             class="w-14 h-14 rounded-full bg-[#2D2F31] text-white text-xl font-bold grid place-items-center">
-                                            <span>{{ $review['user']['first_name'][0] }}{{ $review['user']['last_name'][0] }}</span>
+                                            <span>
+                                                <img class="rounded-full aspect-square"
+                                                    src={{ $review['user']['profile_image_src'] ? $review['user']['profile_image_src'] : asset('images/icons/DefaultPortrait.jpg') }} />
+                                            </span>
                                         </div>
                                         <div class="flex flex-col justify-evenly">
-                                            <span class="font-semibold">{{ $review['user']['first_name'][0] }}
-                                                {{ $review['user']['last_name'][0] }}.</span>
+                                            <span class="font-semibold">{{ $review['user']['first_name'] }}
+                                                {{ $review['user']['last_name'] }}.</span>
                                             <div class="flex gap-x-2 items-baseline">
                                                 <div class="flex items-baseline gap-x-1">
                                                     @for ($i = 0; $i < round($review['rating']); $i++)
@@ -168,7 +211,7 @@
                                                             class="w-3 h-3">
                                                     @endfor
                                                 </div>
-                                                <span class="text-xs text-[#DB8383]">
+                                                <span class="text-xs ">
                                                     เมื่อวันที่ {{ date('Y-m-d', $review['updatedAt']) }}
                                                 </span>
                                             </div>
@@ -179,8 +222,6 @@
                                     </div>
                                 </div>
                             @endforeach
-
-
                         </div>
                         <div class="mt-4">
                             {{ $reviews->links() }}

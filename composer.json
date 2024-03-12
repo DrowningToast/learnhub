@@ -31,7 +31,8 @@
         "mallardduck/blade-boxicons": "^2.4",
         "matthewbdaly/laravel-azure-storage": "^2.0",
         "owenvoke/blade-fontawesome": "^2.6",
-        "ryangjchandler/blade-tabler-icons": "^2.2"
+        "ryangjchandler/blade-tabler-icons": "^2.2",
+        "stripe/stripe-php": "^13.13"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

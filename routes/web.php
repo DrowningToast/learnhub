@@ -9,6 +9,7 @@ use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LearnController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\StripeController;
 use App\Http\Controllers\ChapterController;
 use App\Http\Middleware\LecturerRouteGuard;
 use App\Http\Middleware\ModeratorRouteGuard;
@@ -82,6 +83,7 @@ Route::post('/lecturer/withdraw', [WithdrawalController::class, 'store'])->middl
 // Show Learn Dashboard for Learners and Lecturers
 Route::get('/learn', [LearnController::class, 'index'])->middleware(['auth', CheckIsProfileComplete::class]);
 Route::get('/learn/{course}', [LearnController::class, 'show'])->middleware('auth', CheckIsProfileComplete::class);
+Route::post('/learn/{course}/review', [LearnController::class, 'review'])->middleware('auth', CheckIsProfileComplete::class);
 
 // Show Chapter Video
 Route::get('/learn/{course}/{chapId}', [ChapterController::class, 'show']);
@@ -108,3 +110,11 @@ Route::post('/courses/{course}/chapters/{chapter}/quizzes/edit', [QuizController
 // Edit Chapter
 Route::get('/courses/{course}/chapters/{chapter}/edit', [ChapterController::class, 'edit'])->middleware(['auth', ModAndLectRouteGuard::class]);
 Route::put('/courses/{course}/chapters/{chapter}/edit', [ChapterController::class, 'update'])->middleware(['auth', ModAndLectRouteGuard::class]);
+
+// Stripe Payment
+Route::get('/courses/{course}/checkout', [StripeController::class, 'checkout'])->middleware(['auth'])->name('checkout');
+Route::get('/success', [StripeController::class, 'success'])->middleware(['auth'])->name('checkout.success');
+Route::get('/cancel', [StripeController::class, 'cancel'])->middleware(['auth'])->name('checkout.cancel');
+
+// ENROLL BY REDEEM REWARD POINTS
+Route::post('/courses/{course}/enroll', [CourseController::class, 'enroll'])->middleware(['auth', CheckIsProfileComplete::class]);
