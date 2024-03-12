@@ -64,6 +64,14 @@ return [
             'username' => env('SFTP_USERNAME'),
             'password' => env('SFTP_PASSWORD'),
         ],
+        'azure' => [
+            'driver' => 'azure',
+            'name' => env('AZURE_STORAGE_NAME', 'learnhubstorage'),
+            'key' => env('AZURE_STORAGE_KEY', 'iO9bhW/a/5yCKk+ke9qoDVy31gSUZMCIchUclVynN6VBuQeINNVHUzevjdgdEVt0ZqPEILwygbT1+AStfjBP5A=='),
+            'container' => env('AZURE_STORAGE_CONTAINER', 'learnhub'),
+            'url' => env('AZURE_STORAGE_URL'),
+            'prefix' => null,
+        ],
 
     ],
 

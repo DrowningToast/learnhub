@@ -32,9 +32,9 @@
                     @break
                 @endif
                 @foreach ($chapter->files as $file)
-                    @if ($index > count($progress))
+                    @if ($index + 1 > count($progress))
                         <x-chapter-card-white chapter="{{ $index + 1 }}" title="{{ $file->file_name }}"
-                            href="{{ $file0->file_path }}" />
+                            href="{{ $file->file_path }}" />
                     @else
                         <x-chapter-card chapter="{{ $index + 1 }}" title="{{ $file->file_name }}"
                             href="{{ $file->file_path }}" />
@@ -47,17 +47,17 @@
         <h2 class="text-2xl font-semibold">
             บทเรียน
         </h2>
-        <div class="flex flex-col gap-y-4">
+        <div class="flex flex-col gap-y-4 mt-6">
             @foreach ($course->chapters as $index => $chapter)
                 <x-chapter-button chapter="{{ $index + 1 }}" title="{{ $chapter->title }}"
-                    done="{{ !($index > count($progress)) }}"
+                    done="{{ !($index + 1 > count($progress)) }}"
                     durationInMinutes="{{ $chapter->durationInMinutes }}" courseId="{{ $course->id }}"
                     chapterId="{{ $chapter->id }}" />
             @endforeach
         </div>
     </div>
 </div>
-<div>
+<div class="mt-6">
     {{-- review --}}
     <h1>
         คะแนนและรีวิว

@@ -18,6 +18,8 @@ class Chapters extends Model
         'course_id',
         'title',
         'description',
+        'durationInMinutes',
+        'video_src',
     ];
 
     public function course()

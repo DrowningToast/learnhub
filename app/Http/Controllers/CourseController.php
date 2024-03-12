@@ -65,8 +65,8 @@ class CourseController extends Controller
 
         $formFields['lecturer_id'] = auth()->id();
 
-        $formFields['cover_image_src'] = Storage::disk('sftp')->put('courses', $request->cover_image_src);
-        $formFields['cover_image_src'] = 'https://' . env('SFTP_HOST') . '/' . Storage::disk('sftp')->url($formFields['cover_image_src']);
+        $formFields['cover_image_src'] = Storage::disk('azure')->put('courses', $request->file('cover_image_src'));
+        $formFields['cover_image_src'] = Storage::disk('azure')->url($formFields['cover_image_src']);
 
         $formFields['description'] = $request->description;
 

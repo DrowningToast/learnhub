@@ -4,7 +4,7 @@
         <div>{{ $course->title }}</div>
     </div>
 
-    <form action="" method="post">
+    <form method="POST" enctype="multipart/form-data">
         @csrf
         <div class="flex flex-col gap-2 mt-10">
             <label for="title" class="text-[#1C1C1C] font-semibold">ชื่อบทเรียน</label>
@@ -40,13 +40,25 @@
             @enderror
         </div>
 
+        <div class="flex flex-col gap-2 mt-6">
+            <label for="durationInMinutes" class="text-[#1C1C1C] font-semibold">ระยะเวลาของบทเรียน</label>
+            <input type="number" id="durationInMinutes"
+                class="w-full p-3 mt-1 border border-[#E0E3E8] rounded-xl focus:outline-none focus:border-[#000842]"
+                placeholder="ระยะเวลาของบทเรียน (โดยประมาณ เช่น 5 นาที เป็นต้น) กรอกเเค่ตัวเลขหน่วยนาที"
+                name="durationInMinutes" value="{{ old('durationInMinutes') }}" />
+
+            @error('durationInMinutes')
+                <span class="text-red-500">{{ $message }}</span>
+            @enderror
+        </div>
+
         <div class="mt-6">
             <div class="flex flex-row justify-between">
                 <div class="flex flex-col gap-2">
                     <label for="files" class="text-[#1C1C1C] font-semibold">เอกสารประกอบการเรียน</label>
                     <div class="mt-1">
-                        <input type="file" name="files" id="files" multiple
-                            onchange="handleUploadFileChange(event)" value="{{ old('files') }}">
+                        <input type="file" name="attachment[]" id="attachment" multiple
+                            onchange="handleUploadFileChange(event)" value="{{ old('file') }}">
                     </div>
                 </div>
             </div>
@@ -56,7 +68,7 @@
             </div>
 
             <div class="mt-3">
-                @error('files')
+                @error('file')
                     <span class="text-red-500 ">{{ $message }}</span>
                 @enderror
             </div>

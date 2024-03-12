@@ -17,7 +17,7 @@
         <div class="flex items-center gap-x-3 relative">
             @auth
                 <img src="{{ auth()->user()->profile_image_src ? auth()->user()->profile_image_src : asset('images/icons/DefaultPortrait.jpg') }}"
-                    alt="profile image" class="w-10 rounded-full">
+                    alt="profile image" class="w-10 h-10 rounded-full">
                 <p>|</p>
                 <a href="/logout" class="text-[#2A638A] font-medium">ออกจากระบบ</a>
             @else
