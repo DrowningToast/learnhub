@@ -12,7 +12,7 @@
                 <div class="space-y-1">
                     <h1 class="text-4xl font-bold leading-relaxed whitespace-preline">{{ $title }}</h1>
                     <h3 class="text-xl font-bold text-[#D4E4F6]">
-                        {{ strlen($description) >= 750 ? substr($description, 0, 750) . '...' : $description }}
+                        {{ strlen($description) >= 300 ? substr($description, 0, 300) . ' ...' : $description }}
                     </h3>
                 </div>
                 <div class="flex items-baseline gap-x-4">
@@ -42,28 +42,29 @@
                     @else
                         <div class="flex flex-col gap-4">
                             <a href="/courses/{{ $courseId }}/checkout">
-                                <button class="bg-white rounded-2xl text-[#2A638A] font-bold px-24 py-3 text-xl">
+                                <button class="bg-white rounded-2xl text-[#2A638A] font-bold px-24 py-3 text-xl mr-4">
                                     ซื้อเลย
                                 </button>
 
+
                                 @if ($course->buy_price === 0)
-                                    <span>ฟรี</span>
+                                    <span class="font-bold text-lg">ฟรี</span>
                                 @elseif ($course->buy_price > 0 && $course->discount_percent > 0)
-                                    <span>ราคา
+                                    <span class="font-bold text-lg">ราคา
                                         {{ number_format(($course->buy_price * (100 - $course->discount_percent)) / 100, 2) }}
                                         บาท</span> ลด
                                     {{ $course->discount_percent }}%
-                                    <span class="line-through">{{ number_format($course->buy_price, 2) }}</span>
+                                    <span class="line-through text-lg">{{ number_format($course->buy_price, 2) }}</span>
                                     บาท
                                 @else
-                                    <span>ราคา {{ number_format($course->buy_price, 2) }} บาท</span>
+                                    <span class="font-bold">ราคา {{ number_format($course->buy_price, 2) }} บาท</span>
                                 @endif
                             </a>
 
                             @if ($requiredPoints <= $user->points)
                                 <form action="/courses/{{ $course->id }}/enroll" method="post">
                                     @csrf
-                                    <div class="w-full mt-6">
+                                    <div class="w-full mt-6 text-lg">
                                         คุณมีแต้มสะสมทั้งหมด <span class="font-bold">{{ $user->points }}</span> แต้ม
                                         สามารถใช้แต้มสะสมจำนวน <span class="font-bold">
                                             {{ $requiredPoints }}</span> ในการแลกซื้อคอร์สนี้
@@ -73,7 +74,7 @@
                                     </div>
                                 </form>
                             @else
-                                <div class="w-full mt-6">
+                                <div class="w-full mt-6 text-lg">
                                     คุณมีแต้มสะสมทั้งหมด <span class="font-bold">{{ $user->points }}</span> แต้ม
                                     สามารถใช้แต้มสะสมจำนวน <span class="font-bold">
                                         {{ $requiredPoints }}</span> ในการแลกซื้อคอร์สนี้

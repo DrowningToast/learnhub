@@ -23,7 +23,7 @@ class LearnController extends Controller
                     "description" => $course->description,
                     "author" => $course->lecturer->first_name . " " . $course->lecturer->last_name,
                     "cover_image_src" => $course->cover_image_src,
-                    "progress" => $completed / count($course->chapters) * 100,
+                    "progress" => $completed > 0 ? $completed / count($course->chapters) * 100 : 0,
                     "href" => $course->id,
                 ];
             }
@@ -60,13 +60,13 @@ class LearnController extends Controller
                     return intval($course->course['category_id']) == intval(request('categoryId'));
                 }
             );
-        }
 
-        $courses = $courses->map(
-            function ($enrolledCourse) {
-                return $enrolledCourse->course;
-            }
-        );
+            $courses = $courses->map(
+                function ($enrolledCourse) {
+                    return $enrolledCourse->course;
+                }
+            );
+        }
 
         return view('learn.index', [
             'user' => auth()->user(),
