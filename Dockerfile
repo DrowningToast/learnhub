@@ -62,6 +62,7 @@ COPY ./deploy/start-container /usr/local/bin/start-container
 COPY ./deploy/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./deploy/php.ini /etc/php/8.3/cli/conf.d/99-sail.ini
 COPY . /var/www/html
+COPY ./.env.prod /var/www/html/.env
 RUN chmod +x /usr/local/bin/start-container
 
 EXPOSE 8000
