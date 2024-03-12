@@ -25,7 +25,7 @@ class LearnController extends Controller
                     "description" => $course->description,
                     "author" => $course->lecturer->first_name . " " . $course->lecturer->last_name,
                     "cover_image_src" => $course->cover_image_src,
-                    "progress" => $completed / count($course->chapters) * 100,
+                    "progress" => $completed > 0 ? $completed / count($course->chapters) * 100 : 0,
                     "href" => $course->id,
                 ];
             }
@@ -41,17 +41,9 @@ class LearnController extends Controller
 
         // SORT BY ENROLLED OPTIONS
         if (request('time') == 'latest') {
-            $courses = $courses->sortByDesc(
-                function ($course) {
-                    return $course['enrolled'];
-                }
-            );
+            $courses = CourseByUser::latest('enrolled_at')->where('user_id', auth()->id())->get();
         } else if (request('time') == 'oldest') {
-            $courses = $courses->sortBy(
-                function ($course) {
-                    return $course['enrolled'];
-                }
-            );
+            $courses = CourseByUser::oldest('enrolled_at')->where('user_id', auth()->id())->get();
         }
 
         // FILTER BY TITLE
@@ -64,10 +56,16 @@ class LearnController extends Controller
         }
 
         // FILTER BY CATEGORY ID
-        if (request('categoryId')) {
+        if (request('categoryId') && request('categoryId') != 'ALL') {
             $courses = $courses->filter(
                 function ($course) {
-                    return $course['category_id'] == request('categoryId');
+                    return intval($course->course['category_id']) == intval(request('categoryId'));
+                }
+            );
+
+            $courses = $courses->map(
+                function ($enrolledCourse) {
+                    return $enrolledCourse->course;
                 }
             );
         }
@@ -89,6 +87,9 @@ class LearnController extends Controller
         $progress = ProgressByUserByCourse::where('course_id', $course->id)->where('user_id', auth()->id())->get();
 
         $review = Reviews::where('course_id', $course->id)->where('user_id', auth()->id())->first();
+        $review = $review === null ? ['rating' => 0, 'comment' => ""] : $review;
+
+
 
         return view('learn.show', [
             'course' => $course,

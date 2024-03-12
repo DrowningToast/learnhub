@@ -238,7 +238,7 @@ class UserController extends Controller
         // update the profile image src
         if ($request->profile_image_src) {
             $fileUpload = new FileController($request->profile_image_src);
-            $URL = $fileUpload->upload('portrait', $target->id . "-portrait");
+            $URL = $fileUpload->upload('portrait', now());
             $profileInfo['profile_image_src'] = $URL;
         }
 

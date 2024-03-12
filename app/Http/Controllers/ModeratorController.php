@@ -23,8 +23,10 @@ class ModeratorController extends Controller
     {
         if (request('orderBy') === 'latest') {
             $corses = Courses::latest()->filter(request(['title', 'categoryId']))->get();
-        } else {
+        } else if (request('orderBy') === 'oldest') {
             $corses = Courses::oldest()->filter(request(['title', 'categoryId']))->get();
+        } else {
+            $corses = Courses::latest()->get();
         }
 
         return view('moderator.course', [
@@ -69,7 +71,7 @@ class ModeratorController extends Controller
             $transactions = Withdrawals::oldest()->get();
         }
 
-        $transactions = Withdrawals::filter(request(['statusId']))->get();
+        $transactions = Withdrawals::latest()->filter(request(['statusId']))->get();
 
         if (request('name')) {
             $transactions = $transactions->filter(function ($transaction) {
