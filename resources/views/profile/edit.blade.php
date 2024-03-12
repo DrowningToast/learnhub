@@ -125,8 +125,13 @@
         </div> --}}
             <div class="mt-6 space-x-2 w-full">
                 @if (auth()->user()->role->value == "MODERATOR")
+                @if ($user->banned_at)
                 <button class="text-[#FFFFFF] bg-[#DE3730] font-semibold rounded-2xl px-10 py-3"
-                type="submit">ระงับใช้งาน</button>
+                type="submit" name="type" value="unbanned">ยกเลิกระงับใช้งาน</button>
+                @else
+                <button class="text-[#FFFFFF] bg-[#DE3730] font-semibold rounded-2xl px-10 py-3"
+                type="submit" name="type" value="banned">ระงับใช้งาน</button>
+                @endif
                 @endif
                 <a href="{{ url()->previous() }}"><button type="button"
                         class="text-[#2A638] bg-[#E9F2FC] font-semibold rounded-2xl px-10 py-3">ยกเลิก</button></a>
