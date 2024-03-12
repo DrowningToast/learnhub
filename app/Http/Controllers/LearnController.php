@@ -29,7 +29,7 @@ class LearnController extends Controller
             }
         );
 
-        $popularCoursesByIds = CourseByUser::query()->groupBy('course_id')->select('course_id', DB::raw('count(*) as total'))->orderBy('total', 'desc')->limit(5)->get();
+        $popularCoursesByIds = CourseByUser::query()->groupBy('course_id')->select('course_id', DB::raw('count(*) as total'))->orderBy('total', 'desc')->limit(3)->get();
 
         $popularCourses = $popularCoursesByIds->map(
             function ($course) {

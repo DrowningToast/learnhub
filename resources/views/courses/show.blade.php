@@ -2,7 +2,7 @@
     $selected_tab = $_GET['view'] ?? 'description';
 @endphp
 
-<x-whiteNavBarLayout>
+<x-white-navbar-layout>
     <div>
         <section
             class="p-14 py-20 px:24 2xl:px-36 grid grid-cols-2 gap-x-24 from-[#2A638A] to-[#0B1A24] bg-gradient-to-r items-center">
@@ -190,4 +190,4 @@
             </section>
         </div>
     </div>
-</x-whiteNavBarLayout>
+</x-white-navbar-layout>

@@ -53,7 +53,7 @@
             </form>
             <div class="flex flex-col gap-y-8">
                 @foreach ($courses as $course)
-                    <x-MenuCard title="{{ $course['title'] }}" description="{{ $course['description'] }}"
+                    <x-menu-cardtitle="{{ $course['title'] }}" description="{{ $course['description'] }}"
                         author="{{ $course['lecturer']['first_name'] }} {{ $course['lecturer']['last_name'] }}"
                         imgSrc="{{ $course['cover_image_src'] }}" href="/courses/{{ $course['id'] }}/edit"
                         bgColor="{{ $colors[$loop->index % 3] }}" btnColor="{{ $primaryColor[$loop->index % 3] }}"
