@@ -1,4 +1,4 @@
-<x-whiteNavBarLayout>
+<x-white-navbar-layout>
     <div class="w-full min-h-screen font-noto-thai bg-[#F4F8FF]">
         {{-- hero --}}
         <div
@@ -31,23 +31,23 @@
                     <h1 class="text-5xl font-extrabold font-beth text-[#2560B4]">LearnHub</h1>
                 </div>
                 <div class="grid grid-cols-4 gap-x-10">
-                    <x-FeatureCard baseImage="/img/features/book_base.webp" hoverImage="/img/features/book_hover.webp"
+                    <x-feature-card baseImage="/img/features/book_base.webp" hoverImage="/img/features/book_hover.webp"
                         title="เนื้อหาครบครัน" description="คอร์สเรียนออนไลน์หลากหลาย ตอบโจทย์ทุกความต้องการ"
                         containerClass="hover:from-[#368DD2] hover:to-[#368DD2]/20"
                         childrenClass="from-[#368DD2] to-[#368DD2]/20" />
 
-                    <x-FeatureCard baseImage="/img/features/com_base.webp" hoverImage="/img/features/com_hover.webp"
+                    <x-feature-card baseImage="/img/features/com_base.webp" hoverImage="/img/features/com_hover.webp"
                         title="เรียนรู้ได้ทุกที่ทุกเวลา" description="เข้าถึงได้ผ่านอุปกรณ์ต่างๆ สะดวกทุกที่ทุกเวลา"
                         containerClass="hover:from-[#CB3737] hover:to-[#CB3737]/20"
                         childrenClass="from-[#CB3737] to-[#CB3737]/20" />
 
-                    <x-FeatureCard baseImage="/img/features/teacher_base.webp"
+                    <x-feature-card baseImage="/img/features/teacher_base.webp"
                         hoverImage="/img/features/teacher_hover.webp" title="คุณภาพสูง"
                         description="คอร์สเรียนจากผู้เชี่ยวชาญ เนื้อหาเข้มข้น เข้าใจง่าย"
                         containerClass="hover:from-[#F5CC63] hover:to-[#F5CC63]/20"
                         childrenClass="from-[#F5CC63] to-[#F5CC63]/20" />
 
-                    <x-FeatureCard baseImage="/img/features/money_base.webp" hoverImage="/img/features/money_hover.webp"
+                    <x-feature-card baseImage="/img/features/money_base.webp" hoverImage="/img/features/money_hover.webp"
                         title="ราคาประหยัด"
                         description="คุ้มค่า ใช้งานง่าย เหมาะกับทุกคน จ่ายเงินเพียงครั้งเดียว เรียนได้ตลอดชีพ"
                         containerClass="hover:from-[#52B6B4] hover:to-[#52B6B4]/20"
@@ -77,23 +77,23 @@
                     </div>
                     <div
                         class="flex justify-center items-center gap-x-8 bg-[#E2EEFB] px-8 py-5 rounded-lg overflow-x-auto">
-                        <x-CourseButton rvalue="1"
-                            checked="{{ app('request')->input('filter-course') }}">วิทยาศาสตร์</x-CourseButton>
-                        <x-CourseButton rvalue="2"
-                            checked="{{ app('request')->input('filter-course') }}">คณิตศาสตร์</x-CourseButton>
-                        <x-CourseButton rvalue="3"
-                            checked="{{ app('request')->input('filter-course') }}">ภาษาไทย</x-CourseButton>
-                        <x-CourseButton rvalue="4"
-                            checked="{{ app('request')->input('filter-course') }}">สังคมศึกษา</x-CourseButton>
-                        <x-CourseButton rvalue="5"
-                            checked="{{ app('request')->input('filter-course') }}">ภาษาอังกฤษ</x-CourseButton>
-                        <x-CourseButton rvalue="6"
-                            checked="{{ app('request')->input('filter-course') }}">เทคโนโลยีสารสนเทศ</x-CourseButton>
+                        <x-course-button rvalue="1"
+                            checked="{{ app('request')->input('filter-course') }}">วิทยาศาสตร์</x-course-button>
+                        <x-course-button rvalue="2"
+                            checked="{{ app('request')->input('filter-course') }}">คณิตศาสตร์</x-course-button>
+                        <x-course-button rvalue="3"
+                            checked="{{ app('request')->input('filter-course') }}">ภาษาไทย</x-course-button>
+                        <x-course-button rvalue="4"
+                            checked="{{ app('request')->input('filter-course') }}">สังคมศึกษา</x-course-button>
+                        <x-course-button rvalue="5"
+                            checked="{{ app('request')->input('filter-course') }}">ภาษาอังกฤษ</x-course-button>
+                        <x-course-button rvalue="6"
+                            checked="{{ app('request')->input('filter-course') }}">เทคโนโลยีสารสนเทศ</x-course-button>
                     </div>
                 </form>
                 <div class="grid grid-cols-4 gap-x-12 gap-y-12 mt-6">
                     @foreach ($courses as $course)
-                        <x-SellCourseCard banner="{{ $course->cover_image_src }}" courseId="{{ $course->id }}"
+                        <x-sell-course-card banner="{{ $course->cover_image_src }}" courseId="{{ $course->id }}"
                             lecturer="{{ $course->lecturer->first_name . ' ' . $course->lecturer->last_name }}"
                             lecProfile="{{ $course->lecturer->profile_image_src }}"
                             category="{{ $course->category_id }}"
@@ -135,15 +135,15 @@
         class="w-full h-[75svh] bg-gradient-to-b from-white from-30% to-[#7F92B1] flex flex-col justify-center items-center px-14 gap-y-14">
         <h1 class="text-6xl font-bold">รีวิวจากผู้เรียน</h1>
         <div class="flex w-full gap-x-10">
-            <x-CommentCard className="scale-[0.85]" imgSrc="{{ $top_review[1]['user']['profile_image_src'] }}"
+            <x-comment-card className="scale-[0.85]" imgSrc="{{ $top_review[1]['user']['profile_image_src'] }}"
                 name="{{ $top_review[1]['user']['first_name'] }} {{ $top_review[1]['user']['last_name'] }}"
                 courseName="{{ $top_review[1]['course']['title'] }}" comment="{{ $top_review[1]['comment'] }}"
                 rating="{{ $top_review[1]['rating'] }}" />
-            <x-CommentCard className="" imgSrc="{{ $top_review[0]['user']['profile_image_src'] }}"
+            <x-comment-card className="" imgSrc="{{ $top_review[0]['user']['profile_image_src'] }}"
                 name="{{ $top_review[0]['user']['first_name'] }} {{ $top_review[0]['user']['last_name'] }}"
                 courseName="{{ $top_review[0]['course']['title'] }}" comment="{{ $top_review[0]['comment'] }}"
                 rating="{{ $top_review[0]['rating'] }}" />
-            <x-CommentCard className="scale-[0.85]" imgSrc="{{ $top_review[2]['user']['profile_image_src'] }}"
+            <x-comment-card className="scale-[0.85]" imgSrc="{{ $top_review[2]['user']['profile_image_src'] }}"
                 name="{{ $top_review[2]['user']['first_name'] }} {{ $top_review[2]['user']['last_name'] }}"
                 courseName="{{ $top_review[2]['course']['title'] }}" comment="{{ $top_review[2]['comment'] }}"
                 rating="{{ $top_review[2]['rating'] }}" />
@@ -152,4 +152,4 @@
 
     {{-- footer --}}
     <x-Footer className="bg-[#7F92B1]" />
-</x-whiteNavBarLayout>
+</x-white-navbar-layout>

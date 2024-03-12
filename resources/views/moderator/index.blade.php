@@ -2,7 +2,7 @@
     <div class="flex flex-col gap-y-10">
         <h1 class="text-5xl text-[#4369A2] font-bold">ระบบจัดการเว็บไซต์</h1>
     
-        <x-MenuCard 
+        <x-menu-card
             title="จัดการคอร์สเรียน" 
             description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde ut cum ullam ad. Aliquid, quo." 
             imgSrc="/img/moderator/com.webp" 
@@ -12,7 +12,7 @@
             shColor="hover:shadow-[#C1D9F2]"
             href="/moderator/course"
         />
-        <x-MenuCard 
+        <x-menu-card
             title="จัดการผู้เรียน" 
             description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde ut cum ullam ad. Aliquid, quo." 
             imgSrc="/img/moderator/girl.webp" 
@@ -22,7 +22,7 @@
             shColor="hover:shadow-[#CCB9E0]"
             href="/moderator/learner"
         />
-        <x-MenuCard 
+        <x-menu-card
             title="จัดการผู้สอน" 
             description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde ut cum ullam ad. Aliquid, quo." 
             imgSrc="/img/moderator/boy.webp" 
@@ -32,7 +32,7 @@
             shColor="hover:shadow-[#EFC4D0]"
             href="/moderator/lecturer"
         />
-        <x-MenuCard 
+        <x-menu-card
             title="จัดการธุรกรรม" 
             description="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Unde ut cum ullam ad. Aliquid, quo." 
             imgSrc="/img/moderator/Coin.png" 

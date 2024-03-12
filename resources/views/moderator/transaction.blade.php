@@ -81,7 +81,7 @@ $lecturer = [
             </form>
             <div class="flex flex-col gap-y-8">
                 @foreach ($transactions as $l)
-                    <x-TransactionCard pid="{{ $l->id }}"
+                    <x-transaction-card pid="{{ $l->id }}"
                         imgSrc="{{ $l->user->profile_image_src ? $l->user->profile_image_src : asset('images/icons/DefaultPortrait.jpg') }}"
                         name="{{ $l->user->first_name . ' ' . $l->user->last_name }}" money="{{ $l->amount }}"
                         bankName="{{ $l->user->bankName }}" accountNumber="{{ $l->user->accountNumber }}"
