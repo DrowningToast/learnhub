@@ -135,7 +135,7 @@ $profile_src = 'https://avatars.githubusercontent.com/u/58824744?v=4';
             </form>
             <div class="flex flex-col gap-y-8">
                 @foreach ($courses as $course)
-                    <x-CourseCard title="{{ $course['title'] }}" description="{{ $course['description'] }}"
+                    <x-course-card title="{{ $course['title'] }}" description="{{ $course['description'] }}"
                         author="{{ $course['author'] }}" src="{{ $course['src'] }}" progress="{{ $course['progress'] }}"
                         href="{{ $course['href'] }}" color="{{ $colors[$loop->index % 3] }}"
                         primaryColor="{{ $primaryColor[$loop->index % 3] }}"

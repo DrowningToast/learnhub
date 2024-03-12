@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
 
-class courseButton extends Component
+class CourseButton extends Component
 {
     /**
      * Create a new component instance.

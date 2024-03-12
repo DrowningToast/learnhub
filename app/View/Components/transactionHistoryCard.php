@@ -22,7 +22,7 @@ enum TransactionStatus
 ;
 
 
-class transactionHistoryCard extends Component
+class TransactionHistoryCard extends Component
 {
     /**
      * Create a new component instance.

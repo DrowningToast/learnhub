@@ -155,9 +155,9 @@ class UserController extends Controller
         // Validate the information
         $fields = $request->validate([
             'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($request->id)],
-            'first_name' => ['string', "max:255", "nullable"],
-            'last_name' => ['string', "max:255", "nullable"],
-            'phone' => ['string', "digits_between:10,10", "nullable"],
+            'first_name' => ['string', "max:255"],
+            'last_name' => ['string', "max:255"],
+            'phone' => ['string', "digits_between:10,10"],
             'profile_image' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048', "nullable"],
             'year' => ['integer', 'min:1', 'max:8', "nullable"],
             'school' => ['string', "nullable"],

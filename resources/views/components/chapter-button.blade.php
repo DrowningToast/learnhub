@@ -1,4 +1,9 @@
-<div class="relative overflow-hidden flex items-center gap-x-6 px-9 py-5 rounded-3xl {{$done ? "text-white bg-[#6196C0]" : "text-black"}} border-[1px] border-[#DBE3EE]">
+@php
+    $isLearner = Auth::user()->role->value == 'LEARNER';
+@endphp
+
+<div
+    class="relative overflow-hidden flex items-center gap-x-6 px-9 py-5 rounded-3xl {{ $done ? 'text-white bg-[#6196C0]' : 'text-black' }} border-[1px] border-[#DBE3EE]">
     @if ($done)
         <div class="absolute left-7 inset-y-0">
             <div class="absolute w-24 left-12 inset-y-0 bg-[#72A8CF] rotate-45 rounded-xl">
@@ -20,24 +25,32 @@
         <span class="font-semibold">
             Chapter {{ $chapter }} :
         </span>
-        {{
-            $title
-        }}
+        {{ $title }}
     </span>
     <div class="h-12 ml-auto">
         @if ($done)
             <div class="flex justify-center items-center gap-x-4 rounded-xl w-64 h-full bg-[#CBE6FF]/70">
-                <img src="{{asset('/images/icons/blue-check.png')}}" alt="">
+                <img src="{{ asset('/images/icons/blue-check.png') }}" alt="">
                 <span class="text-sm font-bold">คุณเรียนบทนี้เสร็จสิ้นแล้ว!</span>
             </div>
         @else
-           <div class="flex justify-center items-center gap-x-4 px-6 rounded-xl w-64 h-full bg-[#EBEEF3]">
+            <div class="flex justify-center items-center gap-x-4 px-6 rounded-xl w-64 h-full bg-[#EBEEF3]">
                 <x-heroicon-s-clock class="w-7 h-7" />
-                <span class="text-sm font-medium text-nowrap">{{$durationInMinutes}} นาที</span>
-           </div>
+                <span class="text-sm font-medium text-nowrap">{{ $durationInMinutes }} นาที</span>
+            </div>
         @endif
     </div>
-    <a href="{{asset('/learn/' . $courseId . "/" . $chapterId)}}">
-        <x-zondicon-arrow-right  class="w-5 h-5" />
-    </a>
+    <div class="flex flex-row items-center gap-4">
+        @if (!$isLearner)
+            <div class="flex flex-row items-center gap-2 p-3 px-4 border rounded-xl cursor-pointer">
+                <img src="{{ asset('images/icons/edit.png') }}" alt="">
+                <a href="/courses/{{ $courseId }}/chapters/{{ $chapterId }}/edit">
+                    แก้ไขบทเรียน
+                </a>
+            </div>
+        @endif
+        <a href="{{ asset('/learn/' . $courseId . '/' . $chapterId) }}">
+            <x-zondicon-arrow-right class="w-5 h-5" />
+        </a>
+    </div>
 </div>

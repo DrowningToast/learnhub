@@ -14,9 +14,10 @@ class FileController extends Controller
         $this->file = $file;
     }
 
-    public function upload(string $dir, string $fileName) {
-        $result = Storage::disk('sftp')->putFileAs($dir, $this->file, $fileName);
-        $URL = 'https://' . env('SFTP_HOST') . '/' . Storage::disk('sftp')->url($result);    
+    public function upload(string $dir, string $fileName)
+    {
+        $result = Storage::disk('azure')->putFileAs($dir, $this->file, $fileName);
+        $URL = Storage::disk('azure')->url($result);
         return $URL;
     }
 }

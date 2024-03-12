@@ -8,28 +8,19 @@ use Illuminate\Contracts\View\View;
 
 class SellCourseCard extends Component
 {
-    public string $durationString;
-
     public function __construct(
+        public string $courseId,
         public string $banner,
         public string $lecturer,
         public string $lecProfile,
-        public string $category,
+        public int $category,
         public string $description,
-        public int $duration,
+        public string $duration,
         public int $lectures,
         public string $price,
-        public float $rating = 3.8
-    )
-    {
-        if ($duration >= 60) {
-            $durationString = floor($duration/60) . ' ชั่วโมง ' . $duration % 60 . ' นาที';
-            $duration = $duration % 60;
-        } else {
-            $durationString = floor($duration/60) . ' นาที';
-        }
-        $this->durationString = $durationString;
-        $this->price = number_format((float)$price, 2, '.', '');
+        public float $rating = 0.0
+    ) {
+        $this->price = number_format((float) $price, 2, '.', '');
     }
 
     /**
