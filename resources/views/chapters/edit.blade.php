@@ -1,16 +1,17 @@
 <x-left_side_layout>
     <div class="flex flex-row items-center gap-2 text-2xl text-[#2A638A] mt-1">
-        <div class="font-bold">เพิ่มบทเรียน: </div>
+        <div class="font-bold">แก้ไขบทเรียน: </div>
         <div>{{ $course->title }}</div>
     </div>
 
     <form method="POST" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
         <div class="flex flex-col gap-2 mt-10">
             <label for="title" class="text-[#1C1C1C] font-semibold">ชื่อบทเรียน</label>
             <input type="text" id="title"
                 class="w-full p-3 mt-1 border border-[#E0E3E8] rounded-xl focus:outline-none focus:border-[#000842]"
-                placeholder="ใส่ชื่อบทเรียน" name="title" value="{{ old('title') }}" />
+                placeholder="ใส่ชื่อบทเรียน" name="title" value="{{ $chapter->title }}" />
 
             @error('title')
                 <span class="text-red-500">{{ $message }}</span>
@@ -21,7 +22,7 @@
             <label for="description" class="text-[#1C1C1C] font-semibold">รายละเอียดบทเรียน</label>
             <textarea type="text" id="description" rows="8"
                 class="w-full p-3 mt-1 border border-[#E0E3E8] rounded-xl focus:outline-none focus:border-[#000842]"
-                placeholder="รายละเอียดบทเรียน" name="description">{{ old('description') }}</textarea>
+                placeholder="รายละเอียดบทเรียน" name="description">{{ $chapter->description }}</textarea>
 
             @error('description')
                 <span class="text-red-500">{{ $message }}</span>
@@ -33,7 +34,7 @@
             <input type="text" id="video_src"
                 class="w-full p-3 mt-1 border border-[#E0E3E8] rounded-xl focus:outline-none focus:border-[#000842]"
                 placeholder="วิดีโอประกอบการเรียน (ID ของคลิปวิดีโอบท YouTube)" name="video_src"
-                value="{{ old('video_src') }}" />
+                value="{{ $chapter->video_src }}" />
 
             @error('video_src')
                 <span class="text-red-500">{{ $message }}</span>
@@ -45,19 +46,19 @@
             <input type="number" id="durationInMinutes"
                 class="w-full p-3 mt-1 border border-[#E0E3E8] rounded-xl focus:outline-none focus:border-[#000842]"
                 placeholder="ระยะเวลาของบทเรียน (โดยประมาณ เช่น 5 นาที เป็นต้น) กรอกเเค่ตัวเลขหน่วยนาที"
-                name="durationInMinutes" value="{{ old('durationInMinutes') }}" />
+                name="durationInMinutes" value="{{ $chapter->durationInMinutes }}" />
 
             @error('durationInMinutes')
                 <span class="text-red-500">{{ $message }}</span>
             @enderror
         </div>
 
-        <div class="mt-6">
+        {{-- <div class="mt-6">
             <div class="flex flex-row justify-between">
                 <div class="flex flex-col gap-2">
                     <label for="files" class="text-[#1C1C1C] font-semibold">เอกสารประกอบการเรียน</label>
                     <div class="mt-1">
-                        <input type="file" name="attachment[]" id="attachment"
+                        <input type="file" name="attachment[]" id="attachment" multiple
                             onchange="handleUploadFileChange(event)" value="{{ old('file') }}">
                     </div>
                 </div>
@@ -72,16 +73,33 @@
                     <span class="text-red-500 ">{{ $message }}</span>
                 @enderror
             </div>
+        </div> --}}
+
+        <div class="flex flex-row items-center justify-between gap-6 mt-12">
+            <div class="w-full">
+                <input type="submit" value="ลบบทเรียน" name="delete"
+                    class="w-[20%] bg-[#DE3730] text-white rounded-3xl font-bold focus:outline-none py-3 text-lg cursor-pointer">
+            </div>
+
+            <div class="flex flex-row items-center justify-end gap-6 w-full">
+                @if ($chapter->quizz)
+                    <a href="/quizzes/{{ $chapter->quizz->id }}/edit"
+                        class="w-fit underline rounded-3xl font-bold focus:outline-none py-3 text-lg">แก้ไขแบบทดสอบ</a>
+                @else
+                    <a href="/quizzes/create?chapter_id={{ $chapter->id }}"
+                        class="w-fit underline  rounded-3xl font-bold focus:outline-none py-3 text-lg">เพิ่มแบบทดสอบ</a>
+                @endif
+
+                <a class="w-[20%]  bg-[#E9F2FC] text-[#2A638A] rounded-3xl text-center font-bold focus:outline-none py-3 text-lg"
+                    href="/learn/{{ $course->id }}">
+                    ยกเลิก</a>
+
+                <button type="submit"
+                    class="w-[20%] bg-[#2A638A] text-white rounded-3xl font-bold focus:outline-none py-3 text-lg ">บันทึก</button>
+            </div>
         </div>
 
-        <div class="flex flex-row items-center justify-end gap-6">
-            <a class="w-[15%] bg-[#E9F2FC] text-[#2A638A] rounded-3xl text-center font-bold focus:outline-none py-3 text-lg mt-12"
-                href="/learn/{{ $course->id }}">
-                ยกเลิก</a>
 
-            <button type="submit"
-                class="w-[15%] bg-[#2A638A] text-white rounded-3xl font-bold focus:outline-none py-3 text-lg mt-12">เพิ่มบทเรียน</button>
-        </div>
     </form>
 </x-left_side_layout>
 

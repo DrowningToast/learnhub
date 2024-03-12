@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Chapters;
 use App\Models\Courses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -76,7 +77,7 @@ class ChapterController extends Controller
             return back()->with('error', 'เกิดข้อผิดพลาดในการสร้างบทเรียน');
         }
 
-        return redirect('/learn/' . $course->id)->with('success_message', 'บทเรียนถูกสร้างเรียบร้อยแล้ว');
+        return redirect('courses/' . $course->id . '/chapters/' . $chapter->id . '/quizzes/create/')->with('success_message', 'บทเรียนถูกสร้างเรียบร้อยแล้ว คุณสามารถเพิ่มแบบทดสอบได้เลย');
     }
 
     /**
@@ -90,9 +91,17 @@ class ChapterController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request, string $id)
     {
-        //
+        $chapterId = explode('/', $request->fullUrl())[6];
+
+        $chapter = Chapters::find($chapterId);
+        $course = $chapter->course;
+
+        return view('chapters.edit', [
+            'chapter' => $chapter,
+            'course' => $course,
+        ]);
     }
 
     /**
@@ -100,6 +109,31 @@ class ChapterController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
+        $chapterId = explode('/', $request->fullUrl())[6];
+        $chapter = Chapters::find($chapterId);
+
+        if ($request->has('delete')) {
+            $chapter->delete();
+            return redirect('/learn/' . $chapter->course->id)->with('success_message', 'บทเรียนถูกลบเรียบร้อยแล้ว');
+        }
+
+        $formFields = $request->validate([
+            'title' => ['required'],
+            'durationInMinutes' => ['required', 'numeric', 'min:1'],
+        ], [
+            'title.required' => 'โปรดใส่ชื่อบทเรียน',
+            'durationInMinutes.required' => 'โปรดใส่ระยะเวลาของบทเรียน',
+            'durationInMinutes.numeric' => 'โปรดใส่ระยะเวลาของบทเรียนเป็นตัวเลขเท่านั้น',
+            'durationInMinutes.min' => 'โปรดใส่ระยะเวลาของบทเรียนมากกว่า 0',
+        ]);
+
+        $formFields['video_src'] = $request->video_src;
+        $formFields['description'] = $request->description;
+
+        $chapter->update($formFields);
+
+        return redirect('/learn/' . $chapter->course->id)->with('success_message', 'บทเรียนถูกแก้ไขเรียบร้อยแล้ว');
     }
 
     /**

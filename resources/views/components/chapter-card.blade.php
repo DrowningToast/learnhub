@@ -7,11 +7,11 @@
 
     <div class="rounded-lg flex flex-col gap-y-3 w-full h-auto">
 
-        <div class="rounded-full bg-[#8AB7DC] p-5 justify-start w-1/3">
+        <div class="rounded-full bg-[#8AB7DC] p-5 justify-start w-1/4">
             <x-bxs-file class="text-white w-full" />
         </div>
 
-        <div class="flex flex-col gap-y-2 text-xl min-h-32 pr-10">
+        <div class="flex flex-col gap-y-2 text-lg min-h-20 pr-10 mt-2">
             <p class=" font-bold text-white font-noto-thai">บทที่ {{ $chapter }} :</p>
             <p class=" text-white font-noto-thai">{{ $title }}</p>
         </div>

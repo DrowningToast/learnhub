@@ -27,9 +27,9 @@ class Chapters extends Model
         return $this->belongsTo(Courses::class, 'course_id', 'id');
     }
 
-    public function quizzes()
+    public function quizz()
     {
-        return $this->hasMany(Quizzes::class, 'chapter_id', 'id');
+        return $this->hasOne(Quizzes::class, 'chapter_id', 'id');
     }
 
     public function files()
