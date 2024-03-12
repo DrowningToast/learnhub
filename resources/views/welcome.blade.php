@@ -1,4 +1,4 @@
-<x-whiteNavBarLayout>
+<x-white-navbar-layout>
     <div class="w-full min-h-screen font-noto-thai bg-[#F4F8FF]">
         {{-- hero --}}
         <div
@@ -152,4 +152,4 @@
 
     {{-- footer --}}
     <x-Footer className="bg-[#7F92B1]" />
-</x-whiteNavBarLayout>
+</x-white-navbar-layout>

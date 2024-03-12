@@ -6,7 +6,9 @@
         "build": "vite build",
         "compose:dev": "docker-compose -f docker-compose.dev.yml up -d --build",
         "compose:prod": "pnpm i && dotenv -e .env.prod -- docker-compose -f docker-compose.prod.yml up -d --build",
-        "setup": "composer install && composer update && npm install -g pnpm && pnpm install && pnpm run compose:dev"
+        "setup": "composer install && composer update && npm install -g pnpm && pnpm install && pnpm run compose:dev",
+        "migrate:dev": "php artisan migrate:refresh --seed",
+        "migrate:prod": "docker exec -it learnhub_laravel php artisan migrate:refresh --seed"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.18",

@@ -21,6 +21,7 @@ services:
       - application-network
 
   laravel:
+    container_name: learnhub_laravel
     build:
       # context: ./vendor/laravel/sail/runtimes/8.3
       dockerfile: Dockerfile
