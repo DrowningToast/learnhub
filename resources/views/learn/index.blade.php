@@ -90,22 +90,23 @@ $avg_progress =
             <div class="flex flex-col gap-y-8">
                 @if ($isLecturer)
                     @foreach ($managedCourses as $course)
-                        <x-course-card title="{{ $course['title'] }}" description="{{ $course->description }}"
+                        <x-course-card id="{{ $course->id }}" title="{{ $course['title'] }}"
+                            description="{{ $course->description }}"
                             author="{{ $course->lecturer->first_name . ' ' . $course->lecturer->last_name }}"
                             progress="{{ 0.0 }}" src="{{ $course['cover_image_src'] }}"
                             href="{{ $course['href'] }}" color="{{ $colors[$loop->index % 3] }}"
                             primaryColor="{{ $primaryColor[$loop->index % 3] }}"
-                            shadowColor="{{ $shadowColor[$loop->index % 3] }}" id="{{ $course->id }}" />
+                            shadowColor="{{ $shadowColor[$loop->index % 3] }}" />
                     @endforeach
                 @else
                     <div class="flex flex-col gap-y-8">
                         @foreach ($enrolledCourses as $course)
-                            <x-course-card title="{{ $course['title'] }}" description="{{ $course['description'] }}"
-                                author="{{ $course['author'] }}" src="{{ $course['cover_image_src'] }}"
-                                progress="{{ $course['progress'] / 100 }}" href="{{ $course['href'] }}"
-                                color="{{ $colors[$loop->index % 3] }}"
+                            <x-course-card id="{{ $course['id'] }}" title="{{ $course['title'] }}"
+                                description="{{ $course['description'] }}" author="{{ $course['author'] }}"
+                                src="{{ $course['cover_image_src'] }}" progress="{{ $course['progress'] / 100 }}"
+                                href="{{ $course['href'] }}" color="{{ $colors[$loop->index % 3] }}"
                                 primaryColor="{{ $primaryColor[$loop->index % 3] }}"
-                                shadowColor="{{ $shadowColor[$loop->index % 3] }}" id="{{ $course->id }}" />
+                                shadowColor="{{ $shadowColor[$loop->index % 3] }}" />
                         @endforeach
                     </div>
                 @endif

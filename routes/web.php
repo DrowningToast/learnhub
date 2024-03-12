@@ -9,6 +9,7 @@ use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LearnController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\StripeController;
 use App\Http\Controllers\ChapterController;
 use App\Http\Middleware\LecturerRouteGuard;
 use App\Http\Middleware\ModeratorRouteGuard;
@@ -106,3 +107,8 @@ Route::post('/courses/{course}/chapters/{chapter}/quizzes/edit', [QuizController
 // Edit Chapter
 Route::get('/courses/{course}/chapters/{chapter}/edit', [ChapterController::class, 'edit'])->middleware(['auth', ModAndLectRouteGuard::class]);
 Route::put('/courses/{course}/chapters/{chapter}/edit', [ChapterController::class, 'update'])->middleware(['auth', ModAndLectRouteGuard::class]);
+
+// Stripe Payment
+Route::get('/courses/{course}/checkout', [StripeController::class, 'checkout'])->middleware(['auth'])->name('checkout');
+Route::get('/success', [StripeController::class, 'success'])->middleware(['auth'])->name('checkout.success');
+Route::get('/cancel', [StripeController::class, 'cancel'])->middleware(['auth'])->name('checkout.cancel');

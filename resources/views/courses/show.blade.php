@@ -38,7 +38,7 @@
                             </a>
                         </div>
                     @else
-                        <a href="#">
+                        <a href="/courses/{{ $courseId }}/checkout">
                             <button class="bg-white rounded-2xl text-[#2A638A] font-bold px-24 py-3 text-xl">
                                 ซื้อเลย
                             </button>

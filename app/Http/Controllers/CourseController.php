@@ -102,6 +102,7 @@ class CourseController extends Controller
         $suggestions = Courses::where('id', '!=', $course->id)->inRandomOrder()->take(3)->get();
 
         return view('courses.show', [
+            'courseId' => $course->id,
             'title' => $course->title,
             'description' => $course->description,
             "cover_image_src" => $course->cover_image_src,

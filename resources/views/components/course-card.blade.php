@@ -8,7 +8,7 @@
                 {{ $title }}
             </h1>
             <p class="font-semibold text-sm text-[#A8ACAC]">
-                {{ $description }}
+                {{ strlen($description) > 750 ? substr($description, 0, 750) . '...' : $description }}
             </p>
             <span class="font-bold text-sm text-[#A8ACAC]">
                 สอนโดย {{ $author }}
