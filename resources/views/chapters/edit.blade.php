@@ -83,10 +83,10 @@
 
             <div class="flex flex-row items-center justify-end gap-6 w-full">
                 @if ($chapter->quizz)
-                    <a href="/quizzes/{{ $chapter->quizz->id }}/edit"
+                    <a href="/courses/21/chapters/207/quizzes/edit"
                         class="w-fit underline rounded-3xl font-bold focus:outline-none py-3 text-lg">แก้ไขแบบทดสอบ</a>
                 @else
-                    <a href="/quizzes/create?chapter_id={{ $chapter->id }}"
+                    <a href="/courses/21/chapters/207/quizzes/create"
                         class="w-fit underline  rounded-3xl font-bold focus:outline-none py-3 text-lg">เพิ่มแบบทดสอบ</a>
                 @endif
 
