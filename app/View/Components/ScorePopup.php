@@ -6,15 +6,12 @@ use Closure;
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
 
-class QuizPopup extends Component
+class ScorePopup extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(
-        public string $courseid,
-        public string $chapterid,
-    )
+    public function __construct()
     {
         //
     }
@@ -24,6 +21,6 @@ class QuizPopup extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.quiz-popup');
+        return view('components.score-popup');
     }
 }

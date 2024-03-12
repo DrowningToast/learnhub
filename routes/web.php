@@ -120,12 +120,9 @@ Route::get('/learn/{course}/{vdoId}', function (int $course, string $vdoId) {
 });
 
 // Check answer quiz
-Route::post('/learn/{course}/quiz/{chapter}', function () {
-    dd(request()->all());
-    return response()->json([
-        'status' => 'success',
-        'message' => 'Correct Answer'
-    ]);
+Route::post('/learn/{course}/quiz/{chapter}', function (string $course, string $chapter) {
+    $score = 3;
+    return redirect(sprintf('/learn/%s/%s?score=%u', $course, $chapter, $score));
 });
 
 // Edit (Self) Profile

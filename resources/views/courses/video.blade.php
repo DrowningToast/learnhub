@@ -11,7 +11,6 @@
 </head>
 
 <body>
-
     <div class="flex p-10 bg-gradient-to-b from-[#2A638A] to-black w-full min-h-screen">
         <div class="flex bg-white rounded-2xl w-full pb-10">
             <div class="flex gap-y-10">
@@ -42,7 +41,9 @@
 
                 <div class="flex flex-col w-[560px] p-5 pt-[7%] gap-5">
                     {{-- do quiz button --}}
-                    <x-quiz-popup />
+                    <x-quiz-popup courseid="{{ $courseid }}" chapterid="{{ $ytid }}" />
+                    {{-- score popup --}}
+                    <x-score-popup />
                     <div class="overflow-y-auto ">
                         <div class="rounded-3xl pb-4">
                             <a href=""><x-chapter-next-up chapter=1 title="ออกแบบเว็บด้วย HTML"
