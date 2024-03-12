@@ -111,7 +111,11 @@ class UserController extends Controller
             return back()->with('error_message', 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
         }
 
+
         $user = Users::where('credential_id', $credentials->id)->first();
+        if (isset($user->banned_at)) {
+            return back()->with('error_message', 'บัญชีผู้ใช้งานถูกระงับการใช้งาน');
+        }
         auth()->login($user, $isUserSaveSession);
 
         if (auth()->user()->role === RoleEnum::Lecturer || auth()->user()->role === RoleEnum::Learner) {
@@ -152,6 +156,23 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
+        $baned = $request->input('type');
+        if ((isset($baned)) && (auth()->user()->role === RoleEnum::Moderator)) {
+            if ($baned == 'banned') {
+                $target = Users::find($request->id);
+                $target->banned_at = \now();
+                $target->save();
+                return back()->with('success_message', 'ระงับบัญชีผู้ใช้งานสำเร็จ');
+            } else if ($baned == 'unbanned') {
+                $target = Users::find($request->id);
+                $target->banned_at = NULL;
+                $target->save();
+                return back()->with('success_message', 'ยกเลิกระงับบัญชีผู้ใช้งานสำเร็จ');
+            }
+        } else if ((isset($baned)) && (auth()->user()->role !== RoleEnum::Lecturer)) {
+            return back()->with('error_message', 'คุณไม่มีสิทธิ์ในการระงับบัญชีผู้ใช้งาน');
+        }
+
         // Validate the information
         $fields = $request->validate([
             'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($request->id)],
