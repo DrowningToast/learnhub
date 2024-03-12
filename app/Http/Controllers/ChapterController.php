@@ -88,12 +88,12 @@ class ChapterController extends Controller
      */
     public function show(int $course, string $chapId)
     {
-        // if (request()->input('doquiz') === "true") {
-        //     $chap = Chapters::find($chapId);
-        //     if (QuizScoreByUser::where('quiz_id', $chap['quizz']['id'])->where('user_id', auth()->user()->id)->first()) {
-        //         return redirect(url()->current())->with('error_message', 'คุณได้ทำแบบทดสอบนี้ไปแล้ว');
-        //     }
-        // }
+        if (request()->input('doquiz') === "true") {
+            $chap = Chapters::find($chapId);
+            if (QuizScoreByUser::where('quiz_id', $chap['quizz']['id'])->where('user_id', auth()->user()->id)->first()) {
+                return redirect(url()->current())->with('error_message', 'คุณได้ทำแบบทดสอบนี้ไปแล้ว');
+            }
+        }
         $course = Courses::find($course);
         $chapter = Chapters::find($chapId);
         // dd($chapter)
