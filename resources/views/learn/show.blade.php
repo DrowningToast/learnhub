@@ -24,8 +24,17 @@
                     @if ($chapter->files->count() <= 0)
                         @break
                     @endif
+                    @foreach ($chapter->files as $file)
+                        @if ($index + 1 > count($progress))
+                            <x-chapter-card-white chapter="{{ $index + 1 }}" title="{{ $file->file_name }}"
+                                href="{{ $file->file_path }}" />
+                        @else
+                            <x-chapter-card chapter="{{ $index + 1 }}" title="{{ $file->file_name }}"
+                                href="{{ $file->file_path }}" />
+                        @endif
+                    @endforeach
                 @endforeach
-            @endforeach
+            {{-- @endforeach --}}
         </div>
     </div>
     <div class="mt-8">

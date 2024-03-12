@@ -46,6 +46,14 @@
                             <p class="font-[#20px] text-white font-bold">Do Quiz</p>
                         </a>
                     </div>
+                    @else
+                    <div class="w-full">
+                        <a href="{{ url()->current() }}/?type=markasdone"
+                            class="flex rounded-2xl bg-[#024B71] w-full font-noto-thai items-center gap-x-3 justify-center py-3">
+                            <x-tabler-bulb-filled class="text-white w-[32px] h-[32px]" />
+                            <p class="font-[#20px] text-white font-bold">Mark as done</p>
+                        </a>
+                    </div>
                     @endif
                     @if (app('request')->input('doquiz') == 'true')
                         @php
@@ -81,7 +89,7 @@
                                 $ytid = $childMatch[1];
                             @endphp
                             <div class="rounded-3xl pb-4">
-                                <a href=""><x-chapter-next-up chapter="{{ $chap['chapId'] }}"
+                                <a href="/learn/{{ $chap['course_id'] }}/{{ $chap['id'] }}"><x-chapter-next-up chapter="{{ $chap['chapId'] }}"
                                         title="{{ $chap['title'] }}" img="{{ $ytid }}" /></a>
                             </div>
                         @endforeach
