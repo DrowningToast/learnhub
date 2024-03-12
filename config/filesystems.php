@@ -66,9 +66,9 @@ return [
         ],
         'azure' => [
             'driver' => 'azure',
-            'name' => env('AZURE_STORAGE_NAME', 'learnhubstorage'),
-            'key' => env('AZURE_STORAGE_KEY', 'iO9bhW/a/5yCKk+ke9qoDVy31gSUZMCIchUclVynN6VBuQeINNVHUzevjdgdEVt0ZqPEILwygbT1+AStfjBP5A=='),
-            'container' => env('AZURE_STORAGE_CONTAINER', 'learnhub'),
+            'name' => env('AZURE_STORAGE_NAME'),
+            'key' => env('AZURE_STORAGE_KEY'),
+            'container' => env('AZURE_STORAGE_CONTAINER'),
             'url' => env('AZURE_STORAGE_URL'),
             'prefix' => null,
         ],
