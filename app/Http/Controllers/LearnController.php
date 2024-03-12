@@ -87,6 +87,9 @@ class LearnController extends Controller
         $progress = ProgressByUserByCourse::where('course_id', $course->id)->where('user_id', auth()->id())->get();
 
         $review = Reviews::where('course_id', $course->id)->where('user_id', auth()->id())->first();
+        $review = $review === null ? ['rating' => 0, 'comment' => ""] : $review;
+
+
 
         return view('learn.show', [
             'course' => $course,
