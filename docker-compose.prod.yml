@@ -27,6 +27,7 @@ services:
       dockerfile: Dockerfile
       args:
         WWWGROUP: "${WWWGROUP}"
+        COMPOSER_ALLOW_SUPERUSER: 1
     image: sail-8.3/app
     env_file:
       - ./.env.prod

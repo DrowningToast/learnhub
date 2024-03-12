@@ -57,6 +57,7 @@ RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.3
 RUN groupadd --force -g 1000 sail
 RUN useradd -ms /bin/bash --no-user-group -g 1000 -u 1337 sail
 RUN chown -R sail:sail /var/www/
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
 COPY ./deploy/start-container /usr/local/bin/start-container
 COPY ./deploy/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
@@ -67,8 +68,8 @@ RUN chmod +x /usr/local/bin/start-container
 
 EXPOSE 8000
 
-RUN composer install
 RUN composer update 
+RUN composer install
 RUN pnpm install
 RUN chmod -R 777 storage bootstrap/cache public
 
