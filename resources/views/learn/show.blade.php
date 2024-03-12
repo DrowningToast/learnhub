@@ -22,16 +22,7 @@
             <div class="flex overflow-y-hidden overflow-x-auto w-auto gap-8 pb-4">
                 @foreach ($course->chapters as $index => $chapter)
                     @if ($chapter->files->count() <= 0)
-                        <p class="text-[#C6CBD3] text-center">ไม่พบเอกสาร</p>
-                    @break
-                @endif
-                @foreach ($chapter->files as $file)
-                    @if ($index + 1 > count($progress))
-                        <x-chapter-card-white chapter="{{ $index + 1 }}" title="{{ $file->file_name }}"
-                            href="{{ $file->file_path }}" />
-                    @else
-                        <x-chapter-card chapter="{{ $index + 1 }}" title="{{ $file->file_name }}"
-                            href="{{ $file->file_path }}" />
+                        @break
                     @endif
                 @endforeach
             @endforeach

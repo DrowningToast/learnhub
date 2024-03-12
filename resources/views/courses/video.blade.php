@@ -23,7 +23,8 @@
     <div class="flex p-10 bg-gradient-to-b from-[#2A638A] to-black w-full min-h-screen font-noto-thai">
         <x-toast />
         <div class="flex bg-white rounded-2xl w-full pb-10">
-            <div class="grid grid-cols-4 gap-y-10">
+            <div class="grid grid-cols-4 gap-y-5">
+
                 <div class="flex flex-col px-5 col-span-3">
                     <div
                         class=" flex font-noto-thai text-[40px] text-[#2A638A] gap-x-5 gap-y-5 pt-10 pb-5 items-center">
@@ -34,26 +35,18 @@
                     <div class="font-noto-thai text-[14px] text-[#A8ACAC] pl-10 pb-7">
                         <p class="indent-10 font-bold">{{ $chapter['description'] }}</p>
                     </div>
-                    <div class="pl-2 pb-12 h-full">
-                        <iframe src="https://www.youtube.com/embed/{{ $youtube_id }}" title="YouTube video player"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen width="100%" class="aspect-video w-full"></iframe>
-                    </div>
-                    <div class="flex items-center flex-col w-full ">
-                        <p class="font-bold text-[16px] font-noto-thai text-[#0D1D29]">Chapter 2 : ออกแบบเว็บด้วย HTML
-                        </p>
-                        <a href=""><x-ri-arrow-down-s-line class="w-10 flex justify-center" /></a>
-                    </div>
                 </div>
 
-                <div class="flex flex-col p-5 pt-[7%] gap-5 col-span-1">
-                    {{-- do quiz button --}}
-                    <a href="{{ url()->current() }}/?doquiz=true&no=1"
-                        class="flex rounded-2xl bg-[#024B71] w-full font-noto-thai items-center gap-x-3 justify-center py-3">
-                        <x-tabler-bulb-filled class="text-white w-[32px] h-[32px]" />
-                        <p class="font-[#20px] text-white font-bold">Do Quiz</p>
-                    </a>
+                <div class="px-5 flex w-full items-end">
+                    @if ($chapter['quizz'])
+                    <div class="w-full">
+                        <a href="{{ url()->current() }}/?doquiz=true&no=1"
+                            class="flex rounded-2xl bg-[#024B71] w-full font-noto-thai items-center gap-x-3 justify-center py-3">
+                            <x-tabler-bulb-filled class="text-white w-[32px] h-[32px]" />
+                            <p class="font-[#20px] text-white font-bold">Do Quiz</p>
+                        </a>
+                    </div>
+                    @endif
                     @if (app('request')->input('doquiz') == 'true')
                         @php
                             $no = 'q' . app('request')->input('no');
@@ -65,6 +58,18 @@
                     @endif
                     {{-- score popup --}}
                     <x-score-popup courseId="{{ $course['id'] }}" />
+                </div>
+
+                <div class="flex flex-col px-5 col-span-3">
+                    <div class="pl-2 pb-12 h-full">
+                        <iframe src="https://www.youtube.com/embed/{{ $youtube_id }}" title="YouTube video player"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen width="100%" class="aspect-video w-full"></iframe>
+                    </div>
+                </div>
+
+                <div class="flex flex-col px-5 gap-5 col-span-1">
                     <div class="overflow-y-auto ">
                         @foreach ($allChaps as $chap)
                             @php
