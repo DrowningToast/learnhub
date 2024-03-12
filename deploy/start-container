@@ -10,7 +10,11 @@ fi
 
 chmod -R ugo+rw /.composer
 
+composer install
+composer update 
+pnpm install
 php artisan migrate:refresh --seed
+chmod -R 777 storage bootstrap/cache public
 
 if [ $# -gt 0 ]; then
     exec gosu $WWWUSER "$@"
