@@ -2,6 +2,8 @@
     $selected_tab = $_GET['view'] ?? 'description';
 
     $requiredPoints = intval($course->buy_price / 10);
+
+    $isLearner = auth()->user()->role->value === 'LEARNER';
 @endphp
 
 <x-white-navbar-layout>
@@ -29,61 +31,67 @@
                         ({{ $enrolled_count }} คนกำลังเรียนอยู่!)
                     </span>
                 </div>
-                <div class="mt-6">
-                    @if ($already_owned)
-                        <div class="flex flex-col gap-y-2">
-                            <span class="text-white/60">คุณเป็นเจ้าของคอร์สนี้แล้ว</span>
-                            <a href="#">
-                                <button class="bg-green-600 rounded-2xl text-white font-bold px-24 py-3 text-xl">
-                                    เข้าสู่คลาสเรียน
-                                </button>
-                            </a>
-                        </div>
-                    @else
-                        <div class="flex flex-col gap-4">
-                            <a href="/courses/{{ $courseId }}/checkout">
-                                <button class="bg-white rounded-2xl text-[#2A638A] font-bold px-24 py-3 text-xl mr-4">
-                                    ซื้อเลย
-                                </button>
+                @if ($isLearner)
+                    <div class="mt-6">
+                        @if ($already_owned)
+                            <div class="flex flex-col gap-y-2">
+                                <span class="text-white/60">คุณเป็นเจ้าของคอร์สนี้แล้ว</span>
+                                <a href="#">
+                                    <button class="bg-green-600 rounded-2xl text-white font-bold px-24 py-3 text-xl">
+                                        เข้าสู่คลาสเรียน
+                                    </button>
+                                </a>
+                            </div>
+                        @else
+                            <div class="flex flex-col gap-4">
+                                <a href="/courses/{{ $courseId }}/checkout">
+                                    <button
+                                        class="bg-white rounded-2xl text-[#2A638A] font-bold px-24 py-3 text-xl mr-4">
+                                        ซื้อเลย
+                                    </button>
 
 
-                                @if ($course->buy_price === 0)
-                                    <span class="font-bold text-lg">ฟรี</span>
-                                @elseif ($course->buy_price > 0 && $course->discount_percent > 0)
-                                    <span class="font-bold text-lg">ราคา
-                                        {{ number_format(($course->buy_price * (100 - $course->discount_percent)) / 100, 2) }}
-                                        บาท</span> ลด
-                                    {{ $course->discount_percent }}%
-                                    <span class="line-through text-lg">{{ number_format($course->buy_price, 2) }}</span>
-                                    บาท
+                                    @if ($course->buy_price === 0)
+                                        <span class="font-bold text-lg">ฟรี</span>
+                                    @elseif ($course->buy_price > 0 && $course->discount_percent > 0)
+                                        <span class="font-bold text-lg">ราคา
+                                            {{ number_format(($course->buy_price * (100 - $course->discount_percent)) / 100, 2) }}
+                                            บาท</span> ลด
+                                        {{ $course->discount_percent }}%
+                                        <span
+                                            class="line-through text-lg">{{ number_format($course->buy_price, 2) }}</span>
+                                        บาท
+                                    @else
+                                        <span class="font-bold">ราคา {{ number_format($course->buy_price, 2) }}
+                                            บาท</span>
+                                    @endif
+                                </a>
+
+                                @if ($requiredPoints <= $user->points)
+                                    <form action="/courses/{{ $course->id }}/enroll" method="post">
+                                        @csrf
+                                        <div class="w-full mt-6 text-lg">
+                                            คุณมีแต้มสะสมทั้งหมด <span class="font-bold">{{ $user->points }}</span>
+                                            แต้ม
+                                            สามารถใช้แต้มสะสมจำนวน <span class="font-bold">
+                                                {{ $requiredPoints }}</span> ในการแลกซื้อคอร์สนี้
+                                            <button type="submit" class="underline font-semibold">
+                                                แลกซื้อด้วยแต้มสะสม
+                                            </button>
+                                        </div>
+                                    </form>
                                 @else
-                                    <span class="font-bold">ราคา {{ number_format($course->buy_price, 2) }} บาท</span>
-                                @endif
-                            </a>
-
-                            @if ($requiredPoints <= $user->points)
-                                <form action="/courses/{{ $course->id }}/enroll" method="post">
-                                    @csrf
                                     <div class="w-full mt-6 text-lg">
                                         คุณมีแต้มสะสมทั้งหมด <span class="font-bold">{{ $user->points }}</span> แต้ม
                                         สามารถใช้แต้มสะสมจำนวน <span class="font-bold">
                                             {{ $requiredPoints }}</span> ในการแลกซื้อคอร์สนี้
-                                        <button type="submit" class="underline font-semibold">
-                                            แลกซื้อด้วยแต้มสะสม
-                                        </button>
+                                        <a>ไม่สามารถแลกซื้อได้ เนื่องจากแต้มไม่เพียงพอ</a>
                                     </div>
-                                </form>
-                            @else
-                                <div class="w-full mt-6 text-lg">
-                                    คุณมีแต้มสะสมทั้งหมด <span class="font-bold">{{ $user->points }}</span> แต้ม
-                                    สามารถใช้แต้มสะสมจำนวน <span class="font-bold">
-                                        {{ $requiredPoints }}</span> ในการแลกซื้อคอร์สนี้
-                                    <a>ไม่สามารถแลกซื้อได้ เนื่องจากแต้มไม่เพียงพอ</a>
-                                </div>
-                            @endif
-                        </div>
-                    @endif
-                </div>
+                                @endif
+                            </div>
+                        @endif
+                    </div>
+                @endif
             </div>
             <div class="grid place-items-end"><img title="course preview" class="w-[70%] h-auto object-cover rounded-xl"
                     src="{{ $cover_image_src }}"></div>
