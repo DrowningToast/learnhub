@@ -22,7 +22,7 @@
                     @csrf
                     <div>
                         <p class=" text-3xl font-bold mb-4">เข้าสู่ระบบ</p>
-                        <p>ยังไม่มีบัญชีผู้ใช้ ? 
+                        <p>ยังไม่มีบัญชีผู้ใช้ ?
                             <a class="text-[#4C5F7C] underline" href="/register?role=LEARNER">สมัครสมาชิก</a>
                         </p>
                     </div>
@@ -78,16 +78,6 @@
                             class="w-full bg-[#2A638A] text-white rounded-3xl font-bold focus:outline-none py-5 text-lg">เข้าสู่ระบบ</button>
                     </div>
                 </form>
-
-                <div class="mt-12 flex flex-col items-center">
-                    <p class="text-[#B5B5B5] font-medium">หรือดำเนินการต่อด้วย</p>
-
-                    <div class="flex flex-row items-center gap-4 mt-6">
-                        <img src="{{ asset('images/icons/Facebook.png') }}" class="">
-                        <img src="{{ asset('images/icons/apple.png') }}" class="">
-                        <img src="{{ asset('images/icons/google.png') }}" class="">
-                    </div>
-                </div>
             </div>
         </div>
 
