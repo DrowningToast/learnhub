@@ -36,7 +36,7 @@ class ReviewsFactory extends Factory
             //
             "user_id" => $this->user_id,
             "course_id" => $this->course_id,
-            "rating" => $this->faker->numberBetween(0, 5),
+            "rating" => $this->faker->numberBetween(1, 5),
             "comment" => rand(0, 10) > 5 ? $this->faker->paragraph() : null,
         ];
     }
