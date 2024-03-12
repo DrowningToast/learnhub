@@ -36,4 +36,8 @@ class Chapters extends Model
     {
         return $this->hasMany(Files::class, 'chapter_id', 'id');
     }
+
+    public function userProgress() {
+        return $this->hasMany(ProgressByUserByCourse::class, 'user_id', 'id');
+    }
 }

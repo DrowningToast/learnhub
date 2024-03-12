@@ -20,7 +20,8 @@
         );
         $youtube_id = $match[1];
     @endphp
-    <div class="flex p-10 bg-gradient-to-b from-[#2A638A] to-black w-full min-h-screen">
+    <div class="flex p-10 bg-gradient-to-b from-[#2A638A] to-black w-full min-h-screen font-noto-thai">
+        <x-toast />
         <div class="flex bg-white rounded-2xl w-full pb-10">
             <div class="grid grid-cols-4 gap-y-10">
                 <div class="flex flex-col px-5 col-span-3">

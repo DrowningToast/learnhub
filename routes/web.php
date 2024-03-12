@@ -84,37 +84,10 @@ Route::get('/learn', [LearnController::class, 'index'])->middleware(['auth', Che
 Route::get('/learn/{course}', [LearnController::class, 'show'])->middleware('auth', CheckIsProfileComplete::class);
 
 // Show Chapter Video
-Route::get('/learn/{course}/{chapId}', function (int $course, string $chapId) {
-    $course = Courses::find($course);
-    $chapter = Chapters::find($chapId);
-    $newArr = array_map(function ($v, $k) {
-        $v['chapId'] = $k+1;
-        return $v;
-    }, $course['chapters']->toArray(), array_keys($course['chapters']->toArray()));
-    // dd($newArr);
-    return view('courses.video', [
-        'allChaps' => $newArr,
-        'course' => $course,
-        'chapter' => $chapter
-    ]);
-});
+Route::get('/learn/{course}/{chapId}', [ChapterController::class, 'show']);
 
 // Check answer quiz
-Route::post('/learn/{course}/quiz/{chapter}', function (string $course, string $chapter) {
-    $score = 0;
-    $quiz = Quizzes::where('chapter_id', $chapter)->first();
-    $quiz_data = json_decode($quiz['quiz_data']);
-    $answers = request()->all();
-    $counter = 1;
-    foreach ($quiz_data as $question) {
-        // dd($question);
-        if ($question->answer == $answers['q' . $counter]) {
-            $score++;
-        }
-        $counter++;
-    }
-    return redirect(sprintf('/learn/%s/%s?score=%u', $course, $chapter, $score));
-});
+Route::post('/learn/{course}/quiz/{chapter}', [ChapterController::class, 'quiz']);
 
 // Edit (Self) Profile
 Route::get('/profile', [UserController::class, 'edit'])->middleware('auth');
