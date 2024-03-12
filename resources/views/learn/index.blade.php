@@ -141,7 +141,7 @@ $avg_progress =
                             </li>
                         @endforeach
                     </ul>
-                    <div class="px-8 py-6 space-y-6">
+                    <div class="px-8 py-6 space-y-6 ">
                         <div class="flex flex-col items-center gap-y-1">
                             <h3 class="font-semibold text-[#2A638A]">
                                 โปรไฟล์
@@ -158,10 +158,14 @@ $avg_progress =
                             <span class="text-[#B8C8D9] text-xs text-center">
                                 {{ $user->academicInfo->school }}
                             </span>
+
+                            <span class="text-[#B8C8D9] text-xs font-semibold text-center mt-2">
+                                แต้มสะสม: {{ number_format($user->points) }} แต้ม
+                            </span>
                         </div>
 
                         @if (!$isLecturer)
-                            <div class="w-full ">
+                            <div class="w-full">
                                 <span class="text-[#B8C8D9] text-xs">
                                     ความคืบหน้า
                                 </span>

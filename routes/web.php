@@ -112,3 +112,6 @@ Route::put('/courses/{course}/chapters/{chapter}/edit', [ChapterController::clas
 Route::get('/courses/{course}/checkout', [StripeController::class, 'checkout'])->middleware(['auth'])->name('checkout');
 Route::get('/success', [StripeController::class, 'success'])->middleware(['auth'])->name('checkout.success');
 Route::get('/cancel', [StripeController::class, 'cancel'])->middleware(['auth'])->name('checkout.cancel');
+
+// ENROLL BY REDEEM REWARD POINTS
+Route::post('/courses/{course}/enroll', [CourseController::class, 'enroll'])->middleware(['auth', CheckIsProfileComplete::class]);

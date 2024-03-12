@@ -81,7 +81,7 @@ class StripeController extends Controller
             return back()->with('error', 'เกิดข้อผิดพลาดในการเพิ่มคะแนนสะสม');
         }
 
-        return redirect('/learn/' . $courseId)->with('success_message', 'คุณได้สมัครเรียนเรียบร้อยแล้ว เริ่มเรียนเลย!');
+        return redirect('/learn/' . $courseId)->with('success_message', 'คุณได้สมัครเรียนเรียบร้อยแล้ว เริ่มเรียนเลย! (ได้รับแต้มสะสม ' . $rewardPoints . ' แต้ม)');
     }
 
     public function cancel()

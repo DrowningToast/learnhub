@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CourseByUser;
+use App\Models\Users;
 use App\Models\Courses;
 use App\Models\Reviews;
+use App\Models\CourseByUser;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
@@ -115,7 +117,39 @@ class CourseController extends Controller
             'lecturer' => $lecturer,
             'chapters' => $course->chapters,
             'suggestions' => $suggestions,
+            'course' => $course,
+            'user' => auth()->user()
         ]);
+    }
+
+    public function enroll(string $id)
+    {
+        $course = Courses::find($id);
+        $user = Users::find(auth()->id());
+
+        if (CourseByUser::where('course_id', $id)->where('user_id', auth()->id())->exists()) {
+            return back()->with('error_message', 'คุณได้สมัครคอร์สเรียนนี้ไปแล้ว');
+        }
+
+        DB::beginTransaction();
+
+        try {
+            CourseByUser::create([
+                'course_id' => $course->id,
+                'user_id' => auth()->id(),
+                'enrolled_at' => now(),
+            ]);
+
+            $deductedPoint = $user->points - floor($course->buy_price / 10);
+            $user->update(['points' => $deductedPoint]);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error_message', 'เกิดข้อผิดพลาดในการสมัครคอร์สเรียน');
+        }
+
+        return redirect("/learn/" . $course->id)->with('success_message', 'สมัครคอร์สเรียนสำเร็จ!');
     }
 
     /**

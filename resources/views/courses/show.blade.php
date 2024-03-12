@@ -1,5 +1,7 @@
 @php
     $selected_tab = $_GET['view'] ?? 'description';
+
+    $requiredPoints = intval($course->buy_price / 10);
 @endphp
 
 <x-white-navbar-layout>
@@ -38,11 +40,34 @@
                             </a>
                         </div>
                     @else
-                        <a href="/courses/{{ $courseId }}/checkout">
-                            <button class="bg-white rounded-2xl text-[#2A638A] font-bold px-24 py-3 text-xl">
-                                ซื้อเลย
-                            </button>
-                        </a>
+                        <div class="flex flex-col gap-4">
+                            <a href="/courses/{{ $courseId }}/checkout">
+                                <button class="bg-white rounded-2xl text-[#2A638A] font-bold px-24 py-3 text-xl">
+                                    ซื้อเลย
+                                </button>
+                            </a>
+
+                            @if ($requiredPoints <= $user->points)
+                                <form action="/courses/{{ $course->id }}/enroll" method="post">
+                                    @csrf
+                                    <div class="w-full mt-6">
+                                        คุณมีแต้มสะสมทั้งหมด <span class="font-bold">{{ $user->points }}</span> แต้ม
+                                        สามารถใช้แต้มสะสมจำนวน <span class="font-bold">
+                                            {{ $requiredPoints }}</span> ในการแลกซื้อคอร์สนี้
+                                        <button type="submit" class="underline font-semibold">
+                                            แลกซื้อด้วยแต้มสะสม
+                                        </button>
+                                    </div>
+                                </form>
+                            @else
+                                <div class="w-full mt-6">
+                                    คุณมีแต้มสะสมทั้งหมด <span class="font-bold">{{ $user->points }}</span> แต้ม
+                                    สามารถใช้แต้มสะสมจำนวน <span class="font-bold">
+                                        {{ $requiredPoints }}</span> ในการแลกซื้อคอร์สนี้
+                                    <a>ไม่สามารถแลกซื้อได้ เนื่องจากแต้มไม่เพียงพอ</a>
+                                </div>
+                            @endif
+                        </div>
                     @endif
                 </div>
             </div>
