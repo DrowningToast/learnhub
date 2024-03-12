@@ -45,6 +45,19 @@
                                 <button class="bg-white rounded-2xl text-[#2A638A] font-bold px-24 py-3 text-xl">
                                     ซื้อเลย
                                 </button>
+
+                                @if ($course->buy_price === 0)
+                                    <span>ฟรี</span>
+                                @elseif ($course->buy_price > 0 && $course->discount_percent > 0)
+                                    <span>ราคา
+                                        {{ number_format(($course->buy_price * (100 - $course->discount_percent)) / 100, 2) }}
+                                        บาท</span> ลด
+                                    {{ $course->discount_percent }}%
+                                    <span class="line-through">{{ number_format($course->buy_price, 2) }}</span>
+                                    บาท
+                                @else
+                                    <span>ราคา {{ number_format($course->buy_price, 2) }} บาท</span>
+                                @endif
                             </a>
 
                             @if ($requiredPoints <= $user->points)

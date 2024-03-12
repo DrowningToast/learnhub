@@ -18,6 +18,12 @@ class StripeController extends Controller
 
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
 
+        if ($course->discount_percent > 0) {
+            $price = ($course->buy_price * (100 - $course->discount_percent) / 100);
+        } else {
+            $price = ($course->buy_price);
+        }
+
         $item = [
             'price_data' => [
                 'currency' => 'thb',
@@ -25,7 +31,7 @@ class StripeController extends Controller
                     'name' => $course->title,
                     'description' => $course->description,
                 ],
-                'unit_amount' => $course->buy_price * 100,
+                'unit_amount' => $price * 100,
             ],
             'quantity' => 1,
         ];
