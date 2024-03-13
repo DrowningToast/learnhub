@@ -97,7 +97,7 @@
                             lecturer="{{ $course->lecturer->first_name . ' ' . $course->lecturer->last_name }}"
                             lecProfile="{{ $course->lecturer->profile_image_src }}"
                             category="{{ $course->category_id }}"
-                            description="{{ strlen($course->title) >= 50 ? substr($course->title, 0, 50) . '...' : $course->title }}"
+                            description="{{ strlen($course->title) >= 350 ? substr($course->title, 0, 350) . '...' : $course->title }}"
                             duration="{{ $course->duration }}" lectures="{{ count($course->chapters) }}"
                             price="{{ $course->buy_price }}" rating="{{ floatval($course->rating) }}" />
                     @endforeach

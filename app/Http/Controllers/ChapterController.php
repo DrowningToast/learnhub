@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Chapters;
+use App\Models\Files;
 use App\Models\Courses;
+use App\Models\Quizzes;
+use App\Models\Chapters;
 use Illuminate\Http\Request;
+use App\Models\QuizScoreByUser;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\ProgressByUserByCourse;
-use App\Models\QuizScoreByUser;
-use App\Models\Quizzes;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -66,7 +67,7 @@ class ChapterController extends Controller
                 foreach ($files as $file) {
                     $uploadedFile = Storage::disk('azure')->put('files', $file);
                     $path = Storage::disk('azure')->url($uploadedFile);
-                    $chapter->files()->create([
+                    Files::create([
                         'file_path' => $path,
                         'file_name' => $file->getClientOriginalName(),
                         'chatper_id' => $chapter->id,

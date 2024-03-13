@@ -36,7 +36,7 @@
                         @if ($already_owned)
                             <div class="flex flex-col gap-y-2">
                                 <span class="text-white/60">คุณเป็นเจ้าของคอร์สนี้แล้ว</span>
-                                <a href="#">
+                                <a href="/learn/{{ $courseId }}">
                                     <button class="bg-green-600 rounded-2xl text-white font-bold px-24 py-3 text-xl">
                                         เข้าสู่คลาสเรียน
                                     </button>
