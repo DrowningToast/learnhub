@@ -5,7 +5,7 @@
         "dev": "vite & php artisan serve --port=3000",
         "build": "vite build",
         "compose:dev": "docker-compose -f docker-compose.dev.yml up -d --build",
-        "compose:prod": "npm install -g pnpm && pnpm install && dotenv -e .env.prod -- docker-compose -f docker-compose.prod.yml up -d --build",
+        "compose:prod": "pnpm install && dotenv -e .env.prod -- docker-compose -f docker-compose.prod.yml up -d --build",
         "setup": "composer install && composer update && npm install -g pnpm && pnpm install && pnpm run compose:dev",
         "migrate:dev": "php artisan migrate:refresh --seed",
         "migrate:prod": "docker exec -it learnhub_laravel php artisan migrate:refresh --seed"
