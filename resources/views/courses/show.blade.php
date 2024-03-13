@@ -3,7 +3,7 @@
 
     $requiredPoints = intval($course->buy_price / 10);
 
-    $isLearner = auth()->user()->role->value === 'LEARNER';
+    $isLearner = auth()->user() ? auth()->user()->role->value === 'LEARNER' : false;
 @endphp
 
 <x-white-navbar-layout>
