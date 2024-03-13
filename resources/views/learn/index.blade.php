@@ -159,13 +159,14 @@
                                 </span>
                                 <div class="flex items-center gap-x-4">
                                     <div class="flex w-4/5 h-3 bg-[#C7D3EB] rounded-full overflow-hidden"
-                                        role="progressbar" aria-valuenow="{{ $avg_progress * 100 }}" aria-valuemin="0"
-                                        aria-valuemax="100">
+                                        role="progressbar"
+                                        aria-valuenow="{{ isset($avg_progress) ? $avg_progress : 0 }}"
+                                        aria-valuemin="0" aria-valuemax="100">
                                         <div class="flex flex-col justify-center rounded-full overflow-hidden bg-[#47B2FF] text-xs text-white text-center whitespace-nowrap transition duration-500"
-                                            style="width: {{ $avg_progress * 100 }}%"></div>
+                                            style="width: {{ isset($avg_progress) ? $avg_progress : 0 }}%"></div>
                                     </div>
                                     <span class="text-[#A8ACAC]">
-                                        {{ $avg_progress * 100 }}%
+                                        {{ isset($avg_progress) ? $avg_progress : 0 }}%
                                     </span>
                                 </div>
                             </div>

@@ -16,12 +16,12 @@
 
             <div class="flex items-center gap-x-4">
                 <div class="flex w-4/5 h-3 bg-[#C7D3EB] rounded-full overflow-hidden" role="progressbar"
-                    aria-valuenow="{{ $progress * 100 }}" aria-valuemin="0" aria-valuemax="100">
+                    aria-valuenow="{{ intval($progress * 100) }}" aria-valuemin="0" aria-valuemax="100">
                     <div class="flex flex-col justify-center rounded-full overflow-hidden {{ $primaryColor }} text-xs text-white text-center whitespace-nowrap transition duration-500"
-                        style="width: {{ $progress * 100 }}%"></div>
+                        style="width: {{ intval($progress * 100) }}%"></div>
                 </div>
                 <span class="text-[#A8ACAC]">
-                    {{ $progress * 100 }}%
+                    {{ intval($progress * 100) }}%
                 </span>
 
                 <div class="{{ $primaryColor }} p-3 rounded-full flex items-center justify-center m-0">

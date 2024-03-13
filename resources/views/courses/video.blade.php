@@ -22,7 +22,7 @@
     @endphp
     <div class="flex p-10 bg-gradient-to-b from-[#2A638A] to-black w-full min-h-screen font-noto-thai">
         <x-toast />
-        <div class="flex bg-white rounded-2xl w-full pb-10">
+        <div class=" bg-white rounded-2xl w-full pb-10">
             <div class="grid grid-cols-4 gap-y-5">
 
                 <div class="flex flex-col px-5 col-span-3">
@@ -39,21 +39,21 @@
 
                 <div class="px-5 flex w-full items-end">
                     @if ($chapter['quizz'])
-                    <div class="w-full">
-                        <a href="{{ url()->current() }}/?doquiz=true&no=1"
-                            class="flex rounded-2xl bg-[#024B71] w-full font-noto-thai items-center gap-x-3 justify-center py-3">
-                            <x-tabler-bulb-filled class="text-white w-[32px] h-[32px]" />
-                            <p class="font-[#20px] text-white font-bold">Do Quiz</p>
-                        </a>
-                    </div>
+                        <div class="w-full">
+                            <a href="{{ url()->current() }}/?doquiz=true&no=1"
+                                class="flex rounded-2xl bg-[#024B71] w-full font-noto-thai items-center gap-x-3 justify-center py-3">
+                                <x-tabler-bulb-filled class="text-white w-[32px] h-[32px]" />
+                                <p class="font-[#20px] text-white font-bold">Do Quiz</p>
+                            </a>
+                        </div>
                     @else
-                    <div class="w-full">
-                        <a href="{{ url()->current() }}/?type=markasdone"
-                            class="flex rounded-2xl bg-[#024B71] w-full font-noto-thai items-center gap-x-3 justify-center py-3">
-                            <x-tabler-bulb-filled class="text-white w-[32px] h-[32px]" />
-                            <p class="font-[#20px] text-white font-bold">Mark as done</p>
-                        </a>
-                    </div>
+                        <div class="w-full">
+                            <a href="{{ url()->current() }}/?type=markasdone"
+                                class="flex rounded-2xl bg-[#024B71] w-full font-noto-thai items-center gap-x-3 justify-center py-3">
+                                <x-tabler-bulb-filled class="text-white w-[32px] h-[32px]" />
+                                <p class="font-[#20px] text-white font-bold">Mark as done</p>
+                            </a>
+                        </div>
                     @endif
                     @if (app('request')->input('doquiz') == 'true')
                         @php
@@ -89,8 +89,9 @@
                                 $ytid = $childMatch[1];
                             @endphp
                             <div class="rounded-3xl pb-4">
-                                <a href="/learn/{{ $chap['course_id'] }}/{{ $chap['id'] }}"><x-chapter-next-up chapter="{{ $chap['chapId'] }}"
-                                        title="{{ $chap['title'] }}" img="{{ $ytid }}" /></a>
+                                <a href="/learn/{{ $chap['course_id'] }}/{{ $chap['id'] }}"><x-chapter-next-up
+                                        chapter="{{ $chap['chapId'] }}" title="{{ $chap['title'] }}"
+                                        img="{{ $ytid }}" /></a>
                             </div>
                         @endforeach
                     </div>

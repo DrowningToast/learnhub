@@ -27,9 +27,15 @@ class LearnController extends Controller
                     "cover_image_src" => $course->cover_image_src,
                     "progress" => $completed > 0 ? $completed / count($course->chapters) * 100 : 0,
                     "href" => $course->id,
+                    'totalChapters' => count($course->chapters),
+                    'completedChapters' => $completed
                 ];
             }
         );
+
+        $avg_progress = $courses->avg('progress');
+
+        // dd($avg_progress);
 
         $popularCoursesByIds = CourseByUser::query()->groupBy('course_id')->select('course_id', DB::raw('count(*) as total'))->orderBy('total', 'desc')->limit(3)->get();
 
@@ -69,7 +75,8 @@ class LearnController extends Controller
             // 'popularCourses' => Courses::withCount('enrolledUsers')->orderBy('enrolled_users_count', 'desc')->limit(5)->get(),
             'isLecturer' => auth()->user()->role->value == RoleEnum::Lecturer->value,
             'managedCourses' => Courses::where('lecturer_id', auth()->id())->latest()->get(),
-            'oldInputValue' => request('title')
+            'oldInputValue' => request('title'),
+            'avg_progress' => intval($avg_progress)
         ]);
     }
 
