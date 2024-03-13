@@ -1,15 +1,3 @@
-<?php
-$username = 'Supratouch Suwatno';
-$affiliation = 'โรงเรียนอนุบาลหมีน้อย';
-
-$avg_progress =
-    count($enrolledCourses) <= 0
-        ? 0
-        : $enrolledCourses->reduce(function ($carry, $item) {
-                return $carry + $item['progress'] / 100;
-            }) / count($enrolledCourses);
-?>
-
 @php
     $colors = ['bg-[#E2EEFB]', 'bg-[#F2E6FF]', 'bg-[#FFEAF0]'];
     $primaryColor = ['bg-[#4369A2]', 'bg-[#8B68B1]', 'bg-[#C97D93]'];
@@ -30,14 +18,14 @@ $avg_progress =
                 </h1>
             @endif
 
-            <form class="space-y-4">
-                <div class="w-auto h-auto relative overflow-hidden rounded-2xl">
-                    <input class="w-full rounded-2xl px-4 py-3 border-2 border-gray-200" type="text"
-                        placeholder="ค้นหา..." name="title" value="{{ $oldInputValue }}">
-                    <buton>
+            <form class="space-y-6">
+                <div class=" max-h-16 relative overflow-hidden rounded-2xl w-full focus-within:shadow-lg duration-200">
+                    <input class="w-full rounded-2xl px-4 py-3 border-2 border-gray-200 h-16 outline-none text-lg"
+                        type="text" placeholder="ค้นหา..." name="title" value="{{ $oldInputValue }}">
+                    <button>
                         <img src={{ asset('images/icons/magnify.png') }}
                             class="absolute top-1/2 right-4 transform -translate-y-1/2 w-6 h-6 z-10" alt="">
-                    </buton>
+                    </button>
                     <div
                         class="w-20 from-[#00476C] to-[#235B9C] bg-gradient-to-b absolute -inset-y-24 -right-5 transform -rotate-45">
                     </div>
@@ -171,13 +159,14 @@ $avg_progress =
                                 </span>
                                 <div class="flex items-center gap-x-4">
                                     <div class="flex w-4/5 h-3 bg-[#C7D3EB] rounded-full overflow-hidden"
-                                        role="progressbar" aria-valuenow="{{ $avg_progress * 100 }}" aria-valuemin="0"
-                                        aria-valuemax="100">
+                                        role="progressbar"
+                                        aria-valuenow="{{ isset($avg_progress) ? $avg_progress : 0 }}"
+                                        aria-valuemin="0" aria-valuemax="100">
                                         <div class="flex flex-col justify-center rounded-full overflow-hidden bg-[#47B2FF] text-xs text-white text-center whitespace-nowrap transition duration-500"
-                                            style="width: {{ $avg_progress * 100 }}%"></div>
+                                            style="width: {{ isset($avg_progress) ? $avg_progress : 0 }}%"></div>
                                     </div>
                                     <span class="text-[#A8ACAC]">
-                                        {{ $avg_progress * 100 }}%
+                                        {{ isset($avg_progress) ? $avg_progress : 0 }}%
                                     </span>
                                 </div>
                             </div>
