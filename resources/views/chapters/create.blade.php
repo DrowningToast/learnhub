@@ -32,7 +32,7 @@
             <label for="video_src" class="text-[#1C1C1C] font-semibold">วิดีโอประกอบการเรียน</label>
             <input type="text" id="video_src"
                 class="w-full p-3 mt-1 border border-[#E0E3E8] rounded-xl focus:outline-none focus:border-[#000842]"
-                placeholder="วิดีโอประกอบการเรียน (URL ของคลิปวิดีโอบท YouTube)" name="video_src"
+                placeholder="วิดีโอประกอบการเรียน (URL ของคลิปวิดีโอบน YouTube)" name="video_src"
                 value="{{ old('video_src') }}" />
             @error('video_src')
                 <span class="text-red-500">{{ $message }}</span>
