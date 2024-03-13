@@ -12,13 +12,13 @@
                 จัดการคอร์สเรียน
             </h1>
             <form class="space-y-4 w-full">
-                <div class=" h-auto relative overflow-hidden rounded-2xl w-full">
+                <div class=" max-h-16 relative overflow-hidden rounded-2xl w-full focus-within:shadow-lg duration-200">
                     <input class="w-full rounded-2xl px-4 py-3 border-2 border-gray-200 h-16 outline-none text-lg"
                         type="text" placeholder="ค้นหาโดยใช้ชื่อคอร์ส..." name="title" value="{{ $oldInputValue }}">
-                    <buton>
+                    <button>
                         <img src={{ asset('images/icons/magnify.png') }}
                             class="absolute top-1/2 right-4 transform -translate-y-1/2 w-6 h-6 z-10" alt="">
-                    </buton>
+                    </button>
                     <div
                         class="w-20 from-[#00476C] to-[#235B9C] bg-gradient-to-b absolute -inset-y-24 -right-5 transform -rotate-45">
                     </div>

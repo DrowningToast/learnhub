@@ -93,10 +93,19 @@ class ChapterController extends Controller
             if (QuizScoreByUser::where('quiz_id', $chap['quizz']['id'])->where('user_id', auth()->user()->id)->first()) {
                 return redirect(url()->current())->with('error_message', 'คุณได้ทำแบบทดสอบนี้ไปแล้ว');
             }
-            // if (Quizzes::where('chapter_id', $chapId)->) {
-            //     return redirect('/learn/' . $course . '/' . $chapId . '/quizzes/create');
-            // }
         }
+        if (request()->input('type') === "markasdone") {
+            if (ProgressByUserByCourse::where('course_id', $course)->where('chapter_id', $chapId)->where('user_id', auth()->user()->id)->first()) {
+                return redirect(url()->current())->with('error_message', 'คุณได้ทำบทเรียนนี้ไปแล้ว');
+            }
+            ProgressByUserByCourse::create([
+                "user_id" => auth()->user()->id,
+                "course_id" => $course,
+                "chapter_id" => $chapId
+            ]);
+            return redirect('/learn/' . $course)->with('success_message', 'บทเรียนถูกทำเครื่องหมายว่าเสร็จแล้ว');
+        }
+
         $course = Courses::find($course);
         $chapter = Chapters::find($chapId);
         // dd($chapter)

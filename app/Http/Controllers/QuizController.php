@@ -37,6 +37,7 @@ class QuizController extends Controller
     public function store(Request $request)
     {
         $chapterId = explode('/', $request->path())[3];
+        $chapter = Chapters::find($chapterId);
 
         $formFields = $request->validate([
             'q1_question' => ['required', 'string'],
@@ -108,7 +109,7 @@ class QuizController extends Controller
             'quiz_data' => $quizJson,
         ]);
 
-        return redirect('/learn/' . $request->course_id)->with('success_message', 'แบบทดสอบถูกสร้างเรียบร้อยแล้ว');
+        return redirect('/learn/' . $chapter->course->id)->with('success_message', 'แบบทดสอบถูกสร้างเรียบร้อยแล้ว');
     }
 
     /**

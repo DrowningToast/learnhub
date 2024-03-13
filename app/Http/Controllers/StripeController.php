@@ -17,7 +17,7 @@ class StripeController extends Controller
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
 
         if ($course->discount_percent > 0) {
-            $price = $course->buy_price * (100 - $course->discount_percent) / 100;
+            $price = floor($course->buy_price * (100 - $course->discount_percent) / 100);
         } else {
             $price = $course->buy_price;
         }
