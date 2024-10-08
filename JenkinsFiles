@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_COMPOSE_FILE = 'docker-compose.prod.yml'
+        GIT_URL = 'https://github.com/FewPz/learnhub.git'
+        GIT_BRANCH = 'main'
+    }
+
+    stages {
+        stage('Checkout') {
+            // Checkout code from git
+            script {
+                checkout scmGit(branches: [[name: '*/$GIT_BRANCH']], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: '$GIT_URL']])
+            }
+        }
+
+        stage('Build Services') {
+            steps {
+                script {
+                    sh 'docker-compose -f $DOCKER_COMPOSE_FILE --env-file $ENV_FILE build' // Build services
+                }
+            }
+        }
+
+        stage('Start Services') {
+            steps {
+                script {
+                    sh 'docker-compose -f $DOCKER_COMPOSE_FILE --env-file $ENV_FILE up -d' // Start services
+                }
+            }
+        }
+
+        stage('Run Artisan Tests') {
+            steps {
+                script {
+                    sh 'docker-compose -f $DOCKER_COMPOSE_FILE exec laravel php artisan test' // Run artisan tests
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            sh 'docker system prune -f' // Cleanup docker system
+        }
+    }
+}
