@@ -43,11 +43,6 @@ pipeline {
                         sh """
                             ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "cd /home/sila_pakdeewong/devtools && docker-compose --env-file .env.prod -f ${DOCKER_COMPOSE_FILE} up -d"
                         """
-
-                        // Clear and cache Laravel configuration
-                        sh """
-                            ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "cd /home/sila_pakdeewong/devtools && docker-compose exec laravel php artisan config:clear && docker-compose exec laravel php artisan config:cache"
-                        """
                     }
                 }
             }
