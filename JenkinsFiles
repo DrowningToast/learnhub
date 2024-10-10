@@ -14,6 +14,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
+                    // Checkout code from Git repository
                     checkout scmGit(branches: [[name: "*/${GIT_BRANCH}"]], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: "${GIT_URL}"]])
                 }
             }
@@ -28,14 +29,14 @@ pipeline {
                             scp -o StrictHostKeyChecking=no -r ./* ${REMOTE_HOST}:/home/sila_pakdeewong/devtools
                         """
 
-                        // SSH into the remote server to build services
+                        // SSH into the remote server to build services using Docker Compose
                         sh """
-                            ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "cd /home/sila_pakdeewong/devtools && docker-compose -f ${DOCKER_COMPOSE_FILE} build"
+                            ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "cd /home/sila_pakdeewong/devtools && docker-compose --env-file .env.prod -f ${DOCKER_COMPOSE_FILE} build"
                         """
 
                         // SSH into the remote server to start services
                         sh """
-                            ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "cd /home/sila_pakdeewong/devtools && docker-compose -f ${DOCKER_COMPOSE_FILE} up -d"
+                            ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "cd /home/sila_pakdeewong/devtools && docker-compose --env-file .env.prod -f ${DOCKER_COMPOSE_FILE} up -d"
                         """
                     }
                 }
@@ -48,7 +49,7 @@ pipeline {
                     sshagent([SSH_CREDENTIALS]) {
                         // SSH into the remote server to run Artisan tests
                         sh """
-                            ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "cd /home/sila_pakdeewong/devtools && docker-compose -f ${DOCKER_COMPOSE_FILE} exec laravel php artisan test"
+                            ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "cd /home/sila_pakdeewong/devtools && docker-compose --env-file .env.prod -f ${DOCKER_COMPOSE_FILE} exec laravel php artisan test"
                         """
                     }
                 }
@@ -59,12 +60,12 @@ pipeline {
     post {
         always {
             sshagent([SSH_CREDENTIALS]) {
-                // SSH into the remote server to cleanup Docker
+                // SSH into the remote server to clean up Docker resources
                 sh """
                     ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "docker system prune -f"
                 """
             }
-            // Clean up the workspace
+            // Clean up the Jenkins workspace
             cleanWs()
         }
     }
