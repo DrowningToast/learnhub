@@ -3,30 +3,41 @@ pipeline {
 
     environment {
         DOCKER_COMPOSE_FILE = 'docker-compose.prod.yml'
-        GIT_URL = 'https://github.com/FewPz/learnhub.git'
-        GIT_BRANCH = 'main'
+        GIT_URL             = 'https://github.com/FewPz/learnhub.git'
+        GIT_BRANCH          = 'feat/jenkins'
+
+        REMOTE_HOST         = 'sila_pakdeewong@34.143.197.151'
+        SSH_CREDENTIALS     = 'devtools-production'
+        ENV_FILE            = '.env.production' // Make sure this is defined
     }
 
     stages {
         stage('Checkout') {
-            // Checkout code from git
-            script {
-                checkout scmGit(branches: [[name: '*/$GIT_BRANCH']], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: '$GIT_URL']])
-            }
-        }
-
-        stage('Build Services') {
             steps {
                 script {
-                    sh 'docker-compose -f $DOCKER_COMPOSE_FILE --env-file $ENV_FILE build' // Build services
+                    checkout scmGit(branches: [[name: '*/$GIT_BRANCH']], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: "$GIT_URL"]])
                 }
             }
         }
 
-        stage('Start Services') {
+        stage('Build and Deploy') {
             steps {
                 script {
-                    sh 'docker-compose -f $DOCKER_COMPOSE_FILE --env-file $ENV_FILE up -d' // Start services
+                    sshagent([SSH_CREDENTIALS]) {
+                        // Copy files to the remote server
+                        sh """
+                            scp -o StrictHostKeyChecking=no -r ./* $REMOTE_HOST:/devtools
+                        """
+
+                        // SSH into the remote server to build and start services
+                        sh """
+                            ssh -o StrictHostKeyChecking=no $REMOTE_HOST << EOF
+                                cd /devtools
+                                docker-compose -f $DOCKER_COMPOSE_FILE --env-file $ENV_FILE build
+                                docker-compose -f $DOCKER_COMPOSE_FILE --env-file $ENV_FILE up -d
+                            EOF
+                        """
+                    }
                 }
             }
         }
@@ -34,7 +45,15 @@ pipeline {
         stage('Run Artisan Tests') {
             steps {
                 script {
-                    sh 'docker-compose -f $DOCKER_COMPOSE_FILE exec laravel php artisan test' // Run artisan tests
+                    sshagent([SSH_CREDENTIALS]) {
+                        // SSH into the remote server to run Artisan tests
+                        sh """
+                            ssh -o StrictHostKeyChecking=no $REMOTE_HOST << EOF
+                                cd /devtools
+                                docker-compose -f $DOCKER_COMPOSE_FILE exec laravel php artisan test
+                            EOF
+                        """
+                    }
                 }
             }
         }
@@ -42,7 +61,14 @@ pipeline {
 
     post {
         always {
-            sh 'docker system prune -f' // Cleanup docker system
+            sshagent([SSH_CREDENTIALS]) {
+                // SSH into the remote server to cleanup Docker
+                sh """
+                    ssh -o StrictHostKeyChecking=no $REMOTE_HOST << EOF
+                        docker system prune -f
+                    EOF
+                """
+            }
         }
     }
 }
