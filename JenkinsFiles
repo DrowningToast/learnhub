@@ -29,6 +29,11 @@ pipeline {
                             scp -o StrictHostKeyChecking=no -r ./* ${REMOTE_HOST}:/home/sila_pakdeewong/devtools
                         """
 
+                        // SSH into the remote server to bring down existing services
+                        sh """
+                            ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "cd /home/sila_pakdeewong/devtools && docker-compose --env-file .env.prod -f ${DOCKER_COMPOSE_FILE} down"
+                        """
+
                         // SSH into the remote server to build services using Docker Compose
                         sh """
                             ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "cd /home/sila_pakdeewong/devtools && docker-compose --env-file .env.prod -f ${DOCKER_COMPOSE_FILE} build"
