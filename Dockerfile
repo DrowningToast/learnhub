@@ -71,7 +71,11 @@ RUN composer install
 RUN composer update
 RUN pnpm install
 RUN chmod -R 777 storage bootstrap/cache public
-RUN php artisan key:generate
+
+COPY ./.env.prod /var/www/html/.env
+
+# Generate the application key
+RUN php artisan key:generate --force
 RUN php artisan config:cache
 RUN php artisan route:cache
 RUN php artisan view:cache
