@@ -64,6 +64,8 @@ pipeline {
                     ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "docker system prune -f"
                 """
             }
+            // Clean up the workspace
+            cleanWs()
         }
     }
 }
