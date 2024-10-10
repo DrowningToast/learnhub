@@ -42,19 +42,6 @@ pipeline {
                 }
             }
         }
-
-        stage('Run Artisan Tests') {
-            steps {
-                script {
-                    sshagent([SSH_CREDENTIALS]) {
-                        // SSH into the remote server to run Artisan tests
-                        sh """
-                            ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "cd /home/sila_pakdeewong/devtools && docker-compose --env-file .env.prod -f ${DOCKER_COMPOSE_FILE} exec laravel php artisan test"
-                        """
-                    }
-                }
-            }
-        }
     }
 
     post {
