@@ -68,8 +68,12 @@ RUN chmod +x /usr/local/bin/start-container
 EXPOSE 8000
 
 RUN composer install
-RUN composer update 
+RUN composer update
 RUN pnpm install
 RUN chmod -R 777 storage bootstrap/cache public
+RUN php artisan key:generate
+RUN php artisan config:cache
+RUN php artisan route:cache
+RUN php artisan view:cache
 
 ENTRYPOINT ["start-container"]
