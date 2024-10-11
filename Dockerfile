@@ -51,9 +51,6 @@ RUN apt-get update \
 
 RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.3
 
-# RUN groupadd --force -g $WWWGROUP sail
-# RUN useradd -ms /bin/bash --no-user-group -g $WWWGROUP -u 1337 sail
-
 RUN groupadd --force -g 1000 sail
 RUN useradd -ms /bin/bash --no-user-group -g 1000 -u 1337 sail
 RUN chown -R sail:sail /var/www/
@@ -67,8 +64,8 @@ RUN chmod +x /usr/local/bin/start-container
 
 EXPOSE 8000
 
-RUN composer install
-RUN composer update
+# Install dependencies and set permissions
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 RUN pnpm install
 RUN chmod -R 777 storage bootstrap/cache public
 

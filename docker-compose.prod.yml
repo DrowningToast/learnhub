@@ -10,13 +10,8 @@ services:
       POSTGRES_DB: "${DB_DATABASE}"
     volumes:
       - learnhub-db:/var/lib/postgresql/data/
-    env_file:
-      - ./.env.prod
-    expose:
-      - ${DB_PORT}
     ports:
-      - ${DB_PORT}:${DB_PORT}
-    command: -p ${DB_PORT}
+      - "5432:5432"
     networks:
       - application-network
     healthcheck:
@@ -48,7 +43,7 @@ services:
       IGNITION_LOCAL_SITES_PATH: "${PWD}"
     volumes:
       - "learnhub-service:/var/www/html"
-      - "./.env.prod:/var/www/html/.env" # Added volume mapping
+      - "./.env.prod:/var/www/html/.env"
     networks:
       - application-network
     depends_on:
