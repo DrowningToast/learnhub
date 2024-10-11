@@ -9,12 +9,11 @@ export default defineConfig({
         }),
     ],
     server: {
-        host: '0.0.0.0', // Allow external access from any network
+        host: '0.0.0.0', // Allow external access
         port: 5173,
         hmr: {
             host: '34.143.197.151', // Your server's public IP address
-            port: 5173,
-            protocol: 'ws', // WebSocket protocol for HMR
-        },
-    },
+            port: 5173
+        }
+    }
 });

@@ -8,13 +8,12 @@ ARG POSTGRES_VERSION=15
 
 WORKDIR /var/www/html
 
-ENV DEBIAN_FRONTEND=noninteractive
+ENV DEBIAN_FRONTEND noninteractive
 ENV TZ=UTC
 ENV SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan serve --host=0.0.0.0 --port=80"
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# Install system dependencies and Node.js
 RUN apt-get update \
     && mkdir -p /etc/apt/keyrings \
     && apt-get install -y gnupg gosu curl ca-certificates zip unzip git supervisor sqlite3 libcap2-bin libpng-dev python2 dnsutils librsvg2-bin fswatch ffmpeg \
@@ -52,33 +51,26 @@ RUN apt-get update \
 
 RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.3
 
-# Create the user and set permissions
-RUN groupadd --force -g 1000 sail \
-    && useradd -ms /bin/bash --no-user-group -g 1000 -u 1337 sail \
-    && chown -R sail:sail /var/www/
+RUN groupadd --force -g 1000 sail
+RUN useradd -ms /bin/bash --no-user-group -g 1000 -u 1337 sail
+RUN chown -R sail:sail /var/www/
 
-# Copy configuration files and source code
 COPY ./deploy/start-container /usr/local/bin/start-container
 COPY ./deploy/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./deploy/php.ini /etc/php/8.3/cli/conf.d/99-sail.ini
 COPY . /var/www/html
 COPY ./.env.prod /var/www/html/.env
-
-# Make the start-container script executable
 RUN chmod +x /usr/local/bin/start-container
 
-# Switch to the project directory
-WORKDIR /var/www/html
-
-# Install PHP and Node.js dependencies
-RUN composer install --no-interaction --prefer-dist --optimize-autoloader \
-    && pnpm install \
-    && pnpm run build \
-    && pnpm ru compose:prod \
-    && chmod -R 777 storage bootstrap/cache public
-
-# Expose the application port
 EXPOSE 8000
 
-# Start the application
+# Install dependencies and set permissions
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+RUN php artisan config:cache
+RUN php artisan route:clear
+RUN php artisan view:clear
+
+RUN pnpm install
+RUN chmod -R 777 storage bootstrap/cache public
+
 ENTRYPOINT ["start-container"]
