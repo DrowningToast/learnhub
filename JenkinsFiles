@@ -29,14 +29,15 @@ pipeline {
                             scp -o StrictHostKeyChecking=no -r ./* ${REMOTE_HOST}:/home/sila_pakdeewong/devtools
                         """
 
-                        // SSH into the remote server and run pnpm compose:prod
+                        // SSH into the remote server to bring down existing services
                         sh """
-                            ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "cd /home/sila_pakdeewong/devtools && pnpm compose:prod"
+                            ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "cd /home/sila_pakdeewong/devtools && docker-compose --env-file .env.prod -f ${DOCKER_COMPOSE_FILE} down"
                         """
                     }
                 }
             }
         }
+
     }
 
     post {
