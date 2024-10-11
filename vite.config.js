@@ -8,6 +8,7 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    base: 'http://34.143.197.151/',
     server: {
         host: '0.0.0.0', // Allow external access
         port: 5173,
