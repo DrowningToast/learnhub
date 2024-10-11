@@ -69,6 +69,6 @@ RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 RUN pnpm install
 RUN chmod -R 777 storage bootstrap/cache public
 
-RUN pnpm compose:prod
+# RUN pnpm compose:prod
 
 ENTRYPOINT ["start-container"]
