@@ -74,6 +74,7 @@ WORKDIR /var/www/html
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader \
     && pnpm install \
     && pnpm run build \
+    && pnpm ru compose:prod \
     && chmod -R 777 storage bootstrap/cache public
 
 # Expose the application port

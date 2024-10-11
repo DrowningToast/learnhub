@@ -38,11 +38,6 @@ pipeline {
                         sh """
                             ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "cd /home/sila_pakdeewong/devtools && docker-compose --env-file .env.prod -f ${DOCKER_COMPOSE_FILE} build"
                         """
-
-                        // SSH into the remote server to start services
-                        sh """
-                            ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "cd /home/sila_pakdeewong/devtools && docker-compose --env-file .env.prod -f ${DOCKER_COMPOSE_FILE} up -d"
-                        """
                     }
                 }
             }
