@@ -8,7 +8,7 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    base: process.env.APP_URL || '/', // Use APP_URL from .env.prod in production
+    base: '/', // Use APP_URL from .env.prod in production
     build: {
         outDir: 'public/build',
         manifest: true,

@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>เข้าสู่ระบบ | LearnHub</title>
 
-    @vite('resources/css/app.css')
+    <link rel="stylesheet" href="http://34.143.197.151:5173/resources/css/app.css">
 </head>
 
 @php
