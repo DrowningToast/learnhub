@@ -70,6 +70,7 @@ EXPOSE 8000
 RUN composer install
 RUN composer update
 RUN pnpm install
+RUN rm -f /var/www/html/public/hot
 RUN pnpm build
 RUN chmod -R 777 storage bootstrap/cache public
 
