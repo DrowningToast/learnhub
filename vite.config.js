@@ -8,13 +8,18 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    base: 'http://34.143.197.151/',
+    build: {
+        manifest: true,
+        outDir: 'public/build',
+        rollupOptions: {
+            output: {
+                manualChunks: undefined,
+            },
+        },
+    },
     server: {
-        host: '0.0.0.0', // Allow external access
+        host: '0.0.0.0',
         port: 5173,
-        hmr: {
-            host: '34.143.197.151', // Your server's public IP address
-            port: 5173
-        }
-    }
+        strictPort: true,
+    },
 });

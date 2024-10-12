@@ -8,12 +8,12 @@ ARG POSTGRES_VERSION=15
 
 WORKDIR /var/www/html
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=UTC
-ENV SUPERVISOR_PHP_COMMAND="/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan serve --host=0.0.0.0 --port=80"
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
+# Install dependencies and PHP extensions
 RUN apt-get update \
     && mkdir -p /etc/apt/keyrings \
     && apt-get install -y gnupg gosu curl ca-certificates zip unzip git supervisor sqlite3 libcap2-bin libpng-dev python2 dnsutils librsvg2-bin fswatch ffmpeg \
@@ -22,11 +22,9 @@ RUN apt-get update \
     && apt-get update \
     && apt-get install -y php8.3-cli php8.3-dev \
        php8.3-pgsql php8.3-sqlite3 php8.3-gd \
-       php8.3-curl \
-       php8.3-imap php8.3-mysql php8.3-mbstring \
+       php8.3-curl php8.3-imap php8.3-mysql php8.3-mbstring \
        php8.3-xml php8.3-zip php8.3-bcmath php8.3-soap \
-       php8.3-intl php8.3-readline \
-       php8.3-ldap \
+       php8.3-intl php8.3-readline php8.3-ldap \
        php8.3-msgpack php8.3-igbinary php8.3-redis php8.3-swoole \
        php8.3-memcached php8.3-pcov php8.3-imagick php8.3-xdebug \
     && curl -sLS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer \
@@ -42,35 +40,45 @@ RUN apt-get update \
     && curl -sS https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /etc/apt/keyrings/pgdg.gpg >/dev/null \
     && echo "deb [signed-by=/etc/apt/keyrings/pgdg.gpg] http://apt.postgresql.org/pub/repos/apt jammy-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
     && apt-get update \
-    && apt-get install -y yarn \
-    && apt-get install -y mysql-client \
-    && apt-get install -y postgresql-client-$POSTGRES_VERSION \
+    && apt-get install -y yarn mysql-client postgresql-client-$POSTGRES_VERSION \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.3
 
+# Set up user and group
 RUN groupadd --force -g 1000 sail
 RUN useradd -ms /bin/bash --no-user-group -g 1000 -u 1337 sail
 RUN chown -R sail:sail /var/www/
 
+# Copy configuration and application files
 COPY ./deploy/start-container /usr/local/bin/start-container
 COPY ./deploy/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./deploy/php.ini /etc/php/8.3/cli/conf.d/99-sail.ini
 COPY . /var/www/html
 COPY ./.env.prod /var/www/html/.env
+
+# Make start script executable
 RUN chmod +x /usr/local/bin/start-container
 
-EXPOSE 8000
+# Set permissions
+RUN chown -R sail:sail /var/www/html \
+    && chmod -R 777 storage bootstrap/cache
 
-# Install dependencies and set permissions
+# Install dependencies
+USER sail
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
-RUN php artisan config:cache
-RUN php artisan route:clear
-RUN php artisan view:clear
+RUN pnpm install --frozen-lockfile
 
-RUN pnpm install
-RUN chmod -R 777 storage bootstrap/cache public
+# Build Vite assets for production
+RUN pnpm build
+
+# Cache configuration, routes, and views
+RUN php artisan config:cache
+RUN php artisan route:cache
+RUN php artisan view:cache
+
+EXPOSE 8000
 
 ENTRYPOINT ["start-container"]
