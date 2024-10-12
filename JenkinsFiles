@@ -15,7 +15,11 @@ pipeline {
             steps {
                 script {
                     // Checkout code from Git repository
-                    checkout scmGit(branches: [[name: "*/${GIT_BRANCH}"]], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: "${GIT_URL}"]])
+                    checkout([$class: 'GitSCM',
+                              branches: [[name: "*/${GIT_BRANCH}"]],
+                              doGenerateSubmoduleConfigurations: false,
+                              extensions: [],
+                              userRemoteConfigs: [[credentialsId: 'github', url: "${GIT_URL}"]]])
                 }
             }
         }
@@ -29,20 +33,19 @@ pipeline {
                             scp -o StrictHostKeyChecking=no -r ./* ${REMOTE_HOST}:/home/sila_pakdeewong/devtools
                         """
 
-                        // SSH into the remote server to build services using Docker Compose
+                        // SSH into the remote server to stop existing services
                         sh """
-                            ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "cd /home/sila_pakdeewong/devtools && dotenv -e .env.prod -- docker-compose -f docker-compose.prod.yml down"
+                            ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "cd /home/sila_pakdeewong/devtools && docker-compose -f ${DOCKER_COMPOSE_FILE} down"
                         """
 
-                        // SSH into the remote server to build services using Docker Compose
+                        // SSH into the remote server to build and start services
                         sh """
-                            ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "cd /home/sila_pakdeewong/devtools && dotenv -e .env.prod -- docker-compose -f docker-compose.prod.yml up -d --build"
+                            ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "cd /home/sila_pakdeewong/devtools && docker-compose -f ${DOCKER_COMPOSE_FILE} up -d --build"
                         """
                     }
                 }
             }
         }
-
     }
 
     post {
