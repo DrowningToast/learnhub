@@ -19,13 +19,10 @@ export default defineConfig({
         },
     },
     server: {
-        host: '0.0.0.0', // Allow external access
-        port: parseInt(process.env.VITE_PORT || '5173'),
-        strictPort: true, // Ensure Vite uses this port only
+        host: '0.0.0.0',  // Allow external access by using '0.0.0.0'
+        port: 5173,       // You can change the port if necessary
         hmr: {
-            host: process.env.VITE_PUSHER_HOST || 'localhost', // Use public IP in production
-            port: parseInt(process.env.VITE_PUSHER_PORT || '5173'),
-            protocol: 'ws', // WebSocket protocol for HMR
+            host: '34.143.197.151',  // Replace with your actual public IP address
         },
     },
 });
