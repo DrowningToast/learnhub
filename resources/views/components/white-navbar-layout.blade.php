@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>LearnHub</title>
 
-    <link rel="stylesheet" href="http://34.143.197.151:5173/resources/css/app.css">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="w-full min-h-screen font-noto-thai">
