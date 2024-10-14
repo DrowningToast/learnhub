@@ -12,6 +12,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Log;
 
 class UserController extends Controller
 {
@@ -37,8 +38,10 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-        echo "store";
-        echo $request;
+        Log::debug('store');
+        Log::debug($request);
+
+
 
         $formFields = $request->validate(
             [
@@ -61,7 +64,7 @@ class UserController extends Controller
             ]
         );
 
-        echo $formFields;
+        Log::debug($formFields);
 
         $formFields['password'] = bcrypt($formFields['password']);
 
