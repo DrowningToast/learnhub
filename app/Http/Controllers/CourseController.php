@@ -70,6 +70,9 @@ class CourseController extends Controller
         $formFields['cover_image_src'] = Storage::disk('azure')->put('courses', $request->file('cover_image_src'));
         $formFields['cover_image_src'] = Storage::disk('azure')->url($formFields['cover_image_src']);
 
+        echo $formFields['cover_image_src'];
+
+
         $formFields['description'] = $request->description;
 
         $course = Courses::create($formFields);
@@ -86,7 +89,7 @@ class CourseController extends Controller
         $course = Courses::findOrFail($id);
         $rating = Reviews::where('course_id', $id)->avg('rating');
 
-        // NEED PAGINATION  
+        // NEED PAGINATION
         $reviews = Reviews::where('course_id', $id)->inRandomOrder()->paginate(6)->fragment('reviews');
 
         $enrolled_count = CourseByUser::where('course_id', $id)->count();
@@ -178,7 +181,7 @@ class CourseController extends Controller
 
         if ($request->has('back') && auth()->user()->role->value === 'MODERATOR') {
             return redirect('/moderator/course');
-        } else if ($request->has('back')) {
+        } elseif ($request->has('back')) {
             return redirect('/learn');
         }
 
