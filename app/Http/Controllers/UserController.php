@@ -197,10 +197,6 @@ class UserController extends Controller
             'profile_image.image' => 'โปรดอัพโหลดไฟล์รูปภาพ',
             'profile_image.mimes' => 'โปรดอัพโหลดไฟล์รูปภาพที่ถูกต้อง',
             'profile_image.max' => 'ไฟล์รูปภาพต้องมีขนาดไม่เกิน 2MB',
-            'year.integer' => 'โปรดกรอกระดับชั้นปีที่ถูกต้อง',
-            'school.string' => 'โปรดกรอกชื่อโรงเรียนที่ถูกต้อง',
-            'institute.string' => 'โปรดกรอกชื่อสถาบันที่ถูกต้อง',
-            'campus.string' => 'โปรดกรอกชื่อวิทยาเขตที่ถูกต้อง',
         ]);
 
         $profileInfo = [
