@@ -75,18 +75,12 @@ services:
       database:
         condition: service_healthy
 
-  nginx-loadbalancer:
-    container_name: learnhub_nginx
-    image: nginx:alpine
+  elb:
+    image: haproxy
     ports:
-      - "80:80"
+      - "80:8100"
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-    networks:
-      - application-network
-    depends_on:
-      - laravel_1
-      - laravel_2
+      - ./haproxy:/usr/local/etc/haproxy
 
 volumes:
   learnhub-service:
