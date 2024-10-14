@@ -21,8 +21,8 @@ services:
       timeout: 10s
       retries: 5
 
-  laravel_1:
-    container_name: learnhub_laravel_1
+  laravel:
+    container_name: learnhub_laravel
     build:
       context: .
       dockerfile: Dockerfile
@@ -47,44 +47,6 @@ services:
     depends_on:
       database:
         condition: service_healthy
-
-  laravel_2:
-    container_name: learnhub_laravel_2
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        WWWGROUP: "${WWWGROUP}"
-    image: learnhub_laravel:latest
-    env_file:
-      - ./.env.prod
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    ports:
-      - "8002:80"
-      - "5174:5173"
-    environment:
-      WWWUSER: "${WWWUSER}"
-      LARAVEL_SAIL: 1
-      XDEBUG_MODE: "${SAIL_XDEBUG_MODE:-off}"
-      XDEBUG_CONFIG: "${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}"
-      IGNITION_LOCAL_SITES_PATH: "${PWD}"
-    networks:
-      - application-network
-    depends_on:
-      database:
-        condition: service_healthy
-
-  elb:
-    container_name: proxy
-    image: haproxy
-    ports:
-      - "80:8100"
-    volumes:
-      - ./haproxy:/usr/local/etc/haproxy
-    depends_on:
-      - laravel_1
-      - laravel_2
 
 volumes:
   learnhub-service:
