@@ -4,23 +4,24 @@ export default {
         "./resources/**/*.blade.php",
         "./resources/**/*.js",
         "./resources/**/*.vue",
-        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+        "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
     ],
     theme: {
         extend: {
             fontFamily: {
-                'beth': ['Beth Ellen', 'cursive'],
-                'noto-thai': ['Noto Sans Thai', 'sans-serif'],
-                'poppins': ['Poppins', 'sans-serif'],
+                beth: ["Beth Ellen", "cursive"],
+                "noto-thai": ["Noto Sans Thai", "sans-serif"],
+                poppins: ["Poppins", "sans-serif"],
             },
             backgroundColor: {
-                'radial-gradient': 'radial-gradient(#e66465, #9198e5)',
+                "radial-gradient": "radial-gradient(#e66465, #9198e5)",
+                test: "lol",
             },
         },
     },
     plugins: [
-        require('tailwindcss'),
-        require('autoprefixer'),
-        require("daisyui")
+        require("tailwindcss"),
+        require("autoprefixer"),
+        require("daisyui"),
     ],
 };
