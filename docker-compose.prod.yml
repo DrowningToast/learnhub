@@ -76,11 +76,15 @@ services:
         condition: service_healthy
 
   elb:
+    container_name: proxy
     image: haproxy
     ports:
       - "80:8100"
     volumes:
       - ./haproxy:/usr/local/etc/haproxy
+    depends_on:
+      - laravel_1
+      - laravel_2
 
 volumes:
   learnhub-service:
