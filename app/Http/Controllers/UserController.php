@@ -36,6 +36,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
+        echo "store";
+        echo $request;
+
         $formFields = $request->validate(
             [
                 'role' => ['required'],
@@ -56,6 +60,8 @@ class UserController extends Controller
                 'email.unique' => 'อีเมลนี้ถูกใช้ไปแล้ว',
             ]
         );
+
+        echo $formFields;
 
         $formFields['password'] = bcrypt($formFields['password']);
 
@@ -118,7 +124,7 @@ class UserController extends Controller
 
         if (auth()->user()->role === RoleEnum::Lecturer || auth()->user()->role === RoleEnum::Learner) {
             return redirect('/learn')->with('success_message', 'เข้าสู่ระบบสำเร็จ');
-        } else if (auth()->user()->role === RoleEnum::Moderator) {
+        } elseif (auth()->user()->role === RoleEnum::Moderator) {
             return redirect('/moderator')->with('success_message', 'เข้าสู่ระบบสำเร็จ');
         } else {
             return redirect('/')->with('error_message', 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ');
@@ -136,9 +142,9 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id = NULL)
+    public function edit(string $id = null)
     {
-        if ($id === NULL) {
+        if ($id === null) {
             $id = auth()->user()->id;
         }
 
@@ -161,13 +167,13 @@ class UserController extends Controller
                 $target->banned_at = \now();
                 $target->save();
                 return back()->with('success_message', 'ระงับบัญชีผู้ใช้งานสำเร็จ');
-            } else if ($baned == 'unbanned') {
+            } elseif ($baned == 'unbanned') {
                 $target = Users::find($request->id);
-                $target->banned_at = NULL;
+                $target->banned_at = null;
                 $target->save();
                 return back()->with('success_message', 'ยกเลิกระงับบัญชีผู้ใช้งานสำเร็จ');
             }
-        } else if ((isset($baned)) && (auth()->user()->role !== RoleEnum::Lecturer)) {
+        } elseif ((isset($baned)) && (auth()->user()->role !== RoleEnum::Lecturer)) {
             return back()->with('error_message', 'คุณไม่มีสิทธิ์ในการระงับบัญชีผู้ใช้งาน');
         }
 
@@ -210,7 +216,7 @@ class UserController extends Controller
         // Validate the role
         if (auth()->user()->role === RoleEnum::Moderator) {
 
-        } else if ($target->id != auth()->user()->id) {
+        } elseif ($target->id != auth()->user()->id) {
             return back()->with('error_message', 'คุณไม่มีสิทธิ์แก้ไขข้อมูลของผู้ใช้อื่น');
         }
 
@@ -231,7 +237,7 @@ class UserController extends Controller
 
         if ($target->id != auth()->user()->id && $target->role->value === RoleEnum::Learner->value) {
             return redirect('/moderator/user/edit/' . $target->id)->with('success_message', 'อัพเดทข้อมูลสำเร็จ');
-        } else if ($target->id != auth()->user()->id && $target->role->value === RoleEnum::Lecturer->value) {
+        } elseif ($target->id != auth()->user()->id && $target->role->value === RoleEnum::Lecturer->value) {
             return redirect('/moderator/lecturer/edit/' . $target->id)->with('success_message', 'อัพเดทข้อมูลสำเร็จ');
         } else {
             return $this->edit($target->id)->with('success_message', 'อัพเดทข้อมูลสำเร็จ');
