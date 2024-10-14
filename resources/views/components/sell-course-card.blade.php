@@ -1,16 +1,18 @@
 @php
     if ($category === 1) {
-        $category = 'วิทยาศาสตร์';
+    $category = 'สุขภาพและการดูแลตนเอง';
     } elseif ($category === 2) {
-        $category = 'คณิตศาสตร์';
+        $category = 'ทักษะการใช้เทคโนโลยีพื้นฐาน';
     } elseif ($category === 3) {
-        $category = 'ภาษาไทย';
+        $category = 'การจัดการทางการเงิน';
     } elseif ($category === 4) {
-        $category = 'สังคมศึกษา';
+        $category = 'งานอดิเรกและงานฝีมือ';
     } elseif ($category === 5) {
-        $category = 'ภาษาอังกฤษ';
+        $category = 'การสร้างความสัมพันธ์ทางสังคม';
     } elseif ($category === 6) {
-        $category = 'เทคโนโลยีสารสนเทศ';
+        $category = 'สุขภาพจิตและความเป็นอยู่ที่ดี';
+    } elseif ($category === 7) {
+        $category = 'โภชนาการและการกินที่ถูกต้อง';
     }
 @endphp
 

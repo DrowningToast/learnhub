@@ -8,10 +8,11 @@ enum CourseCategoryEnum: string
 {
     use InteractWithEnum;
 
-    case SCIENCE = '1';
-    case MATH = '2';
-    case THAI = '3';
-    case SOCIAL = '4';
-    case ENGLISH = '5';
-    case IT = '6';
+    case HEALTH_WELLNESS = '1';     // สุขภาพและการดูแลตนเอง
+    case DIGITAL_LITERACY = '2';    // ทักษะการใช้เทคโนโลยีพื้นฐาน
+    case FINANCIAL_LITERACY = '3';  // การจัดการทางการเงิน
+    case HOBBIES_CRAFTS = '4';      // งานอดิเรกและงานฝีมือ
+    case SOCIAL_CONNECTIONS = '5';  // การสร้างความสัมพันธ์ทางสังคม
+    case MENTAL_WELLBEING = '6';    // สุขภาพจิตและความเป็นอยู่ที่ดี
+    case NUTRITION = '7';           // โภชนาการและการกินที่ถูกต้อง
 }
