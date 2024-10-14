@@ -220,10 +220,10 @@ class UserController extends Controller
         ];
 
         $academicInfo = [
-            'year' => $fields['year'],
-            'school' => $fields['school'],
-            'institute' => $fields['institute'],
-            'campus' => $fields['campus'],
+            'year' => 1,
+            'school' => "AAAA",
+            'institute' => "BBBB",
+            'campus' => "CCCC",
         ];
 
         // Find target of edit using email
