@@ -85,8 +85,8 @@ services:
     networks:
       - application-network
     depends_on:
-      - laravel-1
-      - laravel-2
+      - laravel_1
+      - laravel_2
 
 volumes:
   learnhub-service:
