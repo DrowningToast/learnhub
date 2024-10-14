@@ -73,6 +73,8 @@ RUN pnpm install
 RUN pnpm build
 RUN php artisan config:cache
 RUN php artisan route:cache
+RUN php artisan config:clear
+RUN php artisan cache:clear
 RUN chmod -R 777 storage bootstrap/cache public
 
 ENTRYPOINT ["start-container"]

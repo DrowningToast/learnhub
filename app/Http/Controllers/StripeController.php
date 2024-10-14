@@ -18,7 +18,7 @@ class StripeController extends Controller
 
         $api_key = env('STRIPE_SECRET');
         // \Stripe\Stripe::setApiKey($api_key);
-        $stripe = new \Stripe\StripeClient(env($api_key));
+        $stripe = new \Stripe\StripeClient($api_key);
 
         if ($course->discount_percent > 0) {
             $price = floor($course->buy_price * (100 - $course->discount_percent) / 100);
