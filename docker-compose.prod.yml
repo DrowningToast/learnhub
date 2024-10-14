@@ -61,7 +61,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     ports:
-      - "80012:80"
+      - "8002:80"
       - "${VITE_PORT:-5173}:${VITE_PORT:-5173}"
     environment:
       WWWUSER: "${WWWUSER}"
