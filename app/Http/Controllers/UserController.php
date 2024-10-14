@@ -62,7 +62,6 @@ class UserController extends Controller
         DB::beginTransaction();
 
         try {
-            $academicInfos = AcademicInfos::create();
 
             $credentials = Credentials::create([
                 'username' => $formFields['username'],
@@ -73,7 +72,6 @@ class UserController extends Controller
                 'role' => $formFields['role'],
                 'email' => $formFields['email'],
                 'credential_id' => $credentials->id,
-                'academic_id' => $academicInfos->id,
             ]);
 
             DB::commit();
@@ -206,13 +204,6 @@ class UserController extends Controller
             'phone' => $fields['phone'],
         ];
 
-        $academicInfo = [
-            'year' => $fields['year'],
-            'school' => $fields['school'],
-            'institute' => $fields['institute'],
-            'campus' => $fields['campus'],
-        ];
-
         // Find target of edit using email
         $target = Users::where('email', $fields['email'])->first();
 
@@ -221,14 +212,6 @@ class UserController extends Controller
 
         } else if ($target->id != auth()->user()->id) {
             return back()->with('error_message', 'คุณไม่มีสิทธิ์แก้ไขข้อมูลของผู้ใช้อื่น');
-        }
-
-        // update the academic information
-        if ($target->academicInfo->exists()) {
-            $target->academicInfo->update($academicInfo);
-        } else {
-            $academicInfoResult = $target->academicInfo()->create($academicInfo);
-            $profileInfo['academic_id'] = $academicInfoResult->id;
         }
 
         // update the profile image src
