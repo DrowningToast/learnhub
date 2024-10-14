@@ -80,12 +80,13 @@
             <select name="category_id" id="category_id"
                 class=" border p-3 rounded-xl focus:outline-none focus:border-[#000842] block w-full mt-1">
                 <option selected>โปรดเลือกหมวดหมู่ของคอร์สเรียน</option>
-                <option value="1">วิทยาศาสตร์</option>
-                <option value="2">คณิตศาสตร์</option>
-                <option value="3">ภาษาไทย</option>
-                <option value="4">สังคมศึกษา</option>
-                <option value="5">ภาษาอังกฤษ</option>
-                <option value="6">เทคโนโลยีสารสนเทศ</option>
+                <option value="1">สุขภาพและการดูแลตนเอง</option>
+                <option value="2">ทักษะการใช้เทคโนโลยีพื้นฐาน</option>
+                <option value="3">การจัดการทางการเงิน</option>
+                <option value="4">งานอดิเรกและงานฝีมือ</option>
+                <option value="5">การสร้างความสัมพันธ์ทางสังคม</option>
+                <option value="6">สุขภาพจิตและความเป็นอยู่ที่ดี</option>
+                <option value="7">โภชนาการและการกินที่ถูกต้อง</option>
             </select>
 
             @error('category_id')

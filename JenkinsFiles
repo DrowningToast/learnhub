@@ -1,0 +1,63 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_COMPOSE_FILE = 'docker-compose.prod.yml'
+        GIT_URL             = 'https://github.com/DrowningToast/learnhub.git'
+        GIT_BRANCH          = 'prod'
+
+        REMOTE_HOST         = 'sila_pakdeewong@34.143.197.151'
+        SSH_CREDENTIALS     = 'devtools-production'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    // Checkout code from Git repository
+                    checkout([$class: 'GitSCM',
+                              branches: [[name: "*/${GIT_BRANCH}"]],
+                              doGenerateSubmoduleConfigurations: false,
+                              extensions: [],
+                              userRemoteConfigs: [[credentialsId: 'github', url: "${GIT_URL}"]]])
+                }
+            }
+        }
+
+        stage('Build and Deploy') {
+            steps {
+                script {
+                    sshagent([SSH_CREDENTIALS]) {
+                        // Copy files to the remote server
+                        sh """
+                            scp -o StrictHostKeyChecking=no -r ./* ${REMOTE_HOST}:/home/sila_pakdeewong/devtools
+                        """
+
+                        // SSH into the remote server to stop existing services
+                        sh """
+                            ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "cd /home/sila_pakdeewong/devtools && docker-compose -f ${DOCKER_COMPOSE_FILE} down"
+                        """
+
+                        // SSH into the remote server to build and start services
+                        sh """
+                            ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "cd /home/sila_pakdeewong/devtools && sudo pnpm compose:prod"
+                        """
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            sshagent([SSH_CREDENTIALS]) {
+                // SSH into the remote server to clean up Docker resources
+                sh """
+                    ssh -o StrictHostKeyChecking=no ${REMOTE_HOST} "docker system prune -f"
+                """
+            }
+            // Clean up the Jenkins workspace
+            cleanWs()
+        }
+    }
+}

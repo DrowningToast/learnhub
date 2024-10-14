@@ -82,12 +82,13 @@
             <select name="category_id" id="category_id"
                 class=" border p-3 rounded-xl focus:outline-none focus:border-[#000842] block w-full mt-1">
                 <option>โปรดเลือกหมวดหมู่ของคอร์สเรียน</option>
-                <option value="1" {{ $course->category_id == '1' ? 'selected' : '' }}>วิทยาศาสตร์</option>
-                <option value="2" {{ $course->category_id == '2' ? 'selected' : '' }}>คณิตศาสตร์</option>
-                <option value="3" {{ $course->category_id == '3' ? 'selected' : '' }}>ภาษาไทย</option>
-                <option value="4" {{ $course->category_id == '4' ? 'selected' : '' }}>สังคมศึกษา</option>
-                <option value="5" {{ $course->category_id == '5' ? 'selected' : '' }}>ภาษาอังกฤษ</option>
-                <option value="6" {{ $course->category_id == '6' ? 'selected' : '' }}>เทคโนโลยีสารสนเทศ</option>
+                <option value="1" {{ $course->category_id == '1' ? 'selected' : '' }}>สุขภาพและการดูแลตนเอง</option>
+                <option value="2" {{ $course->category_id == '2' ? 'selected' : '' }}>ทักษะการใช้เทคโนโลยีพื้นฐาน</option>
+                <option value="3" {{ $course->category_id == '3' ? 'selected' : '' }}>การจัดการทางการเงิน</option>
+                <option value="4" {{ $course->category_id == '4' ? 'selected' : '' }}>งานอดิเรกและงานฝีมือ</option>
+                <option value="5" {{ $course->category_id == '5' ? 'selected' : '' }}>การสร้างความสัมพันธ์ทางสังคม</option>
+                <option value="6" {{ $course->category_id == '6' ? 'selected' : '' }}>สุขภาพจิตและความเป็นอยู่ที่ดี</option>
+                <option value="7" {{ $course->category_id == '7' ? 'selected' : '' }}>โภชนาการและการกินที่ถูกต้อง</option>
             </select>
 
             @error('category_id')

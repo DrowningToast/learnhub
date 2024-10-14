@@ -1,33 +1,34 @@
-version: "3"
+version: "3.8"
+
 services:
   database:
     container_name: learnhub_database
     restart: always
-    image: postgres:13-alpine # use latest official postgres version
+    image: postgres:13-alpine
     environment:
-      POSTGRES_USER: ${DB_USERNAME} # configure postgres
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: "${DB_USERNAME}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+      POSTGRES_DB: "${DB_DATABASE}"
     volumes:
-      - learnhub-db:/var/lib/postgresql/data/ # persist data even if container shuts down
-    env_file:
-      - ./.env.prod
-    expose:
-      - ${DB_PORT}
+      - learnhub-db:/var/lib/postgresql/data/
     ports:
-      - ${DB_PORT}:${DB_PORT}
-    command: -p ${DB_PORT}
+      - "5432:5432"
     networks:
       - application-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   laravel:
     container_name: learnhub_laravel
     build:
-      # context: ./vendor/laravel/sail/runtimes/8.3
+      context: .
       dockerfile: Dockerfile
       args:
         WWWGROUP: "${WWWGROUP}"
-    image: sail-8.3/app
+    image: learnhub_laravel:latest
     env_file:
       - ./.env.prod
     extra_hosts:
@@ -43,15 +44,17 @@ services:
       IGNITION_LOCAL_SITES_PATH: "${PWD}"
     volumes:
       - "learnhub-service:/var/www/html"
+      - "./.env.prod:/var/www/html/.env"
     networks:
       - application-network
     depends_on:
-      - database
+      database:
+        condition: service_healthy
 
 volumes:
   learnhub-service:
     driver: local
-  learnhub-db: # named volumes can be managed easier using docker-compose
+  learnhub-db:
     driver: local
 
 networks:

@@ -110,11 +110,13 @@ $profile_src = 'https://avatars.githubusercontent.com/u/58824744?v=4';
                         <select class="rounded-full bg-[#E2EEFB] text-[#7F92B1] px-4 py-2 border-r-8 border-transparent"
                             name="genere">
                             <option value="all">ทั้งหมด</option>
-                            <option value="fundamental">คณิตศาสตร์</option>
-                            <option value="design">ภาษาไทย</option>
-                            <option value="programming">สังคมศึกษา</option>
-                            <option value="applied">ภาษาอังกฤษ</option>
-                            <option value="applied">เทคโนโลยีสารสนเทศ</option>
+                            <option value="health">สุขภาพและการดูแลตนเอง</option>
+                            <option value="technology">ทักษะการใช้เทคโนโลยีพื้นฐาน</option>
+                            <option value="finance">การจัดการทางการเงิน</option>
+                            <option value="hobbies">งานอดิเรกและงานฝีมือ</option>
+                            <option value="social">การสร้างความสัมพันธ์ทางสังคม</option>
+                            <option value="mental">สุขภาพจิตและความเป็นอยู่ที่ดี</option>
+                            <option value="nutrition">โภชนาการและการกินที่ถูกต้อง</option>
                         </select>
                         <select class="rounded-full bg-[#E2EEFB] text-[#7F92B1] px-4 py-2 border-r-8 border-transparent"
                             name="time">

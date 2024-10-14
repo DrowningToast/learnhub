@@ -74,38 +74,6 @@
                     @enderror
                 </div>
             @endif
-            <div class="flex flex-col gap-y-1">
-                <label class="font-semibold text-2xl text-[#1C1C1C]"for="year">ชั้นปี/ระดับการศึกษา</label>
-                <input class="rounded-2xl border-2 p-3" type="number" name="year" placeholder="ชั้นปีที่ 1"
-                    value={{ old('year') ?? $user->academicInfo->year }}>
-                @error('year')
-                    <span class="text-red-500">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="flex flex-col gap-y-1">
-                <label class="font-semibold text-2xl text-[#1C1C1C]"for="institute">สถาบัน/มหาวิทยาลัย</label>
-                <input class="rounded-2xl border-2 p-3" type="text" name="institute"
-                    value="{{ old('institute') ?? $user->academicInfo->institute }}">
-                @error('institute')
-                    <span class="text-red-500">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="flex flex-col gap-y-1">
-                <label class="font-semibold text-2xl text-[#1C1C1C]"for="campus">วิทยาเขต</label>
-                <input class="rounded-2xl border-2 p-3" type="text" name="campus"
-                    value={{ old('campus') ?? $user->academicInfo->campus }}>
-                @error('campus')
-                    <span class="text-red-500">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="flex flex-col gap-y-1">
-                <label class="font-semibold text-2xl text-[#1C1C1C]"for="school">คณะ/ภาควิชา</label>
-                <input class="rounded-2xl border-2 p-3" type="text" name="school"
-                    value={{ old('school') ?? $user->academicInfo->school }}>
-                @error('school')
-                    <span class="text-red-500">{{ $message }}</span>
-                @enderror
-            </div>
             {{-- <div class="flex flex-col gap-y-1 col-span-2">
                 <label class="font-semibold text-2xl text-[#1C1C1C]"for="password">รหัสผ่าน</label>
                 <input class="rounded-2xl border-2 p-3" type="password" name="password">
@@ -117,7 +85,7 @@
                         class="text-[#2A638] bg-[#E9F2FC] font-semibold rounded-2xl px-10 py-2">ยกเลิก</button></a>
                 <button class="text-[#FFFFFF] bg-[#2A638A] font-semibold rounded-2xl px-10 py-2"
                     type="submit">บันทึก</button>
-                
+
             </div>
         </form>
     </main>
