@@ -14,7 +14,10 @@ class StripeController extends Controller
 {
     public function checkout(Courses $course)
     {
-        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+
+
+        // $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
         if ($course->discount_percent > 0) {
             $price = floor($course->buy_price * (100 - $course->discount_percent) / 100);
@@ -34,7 +37,7 @@ class StripeController extends Controller
             'quantity' => 1,
         ];
 
-        $checkout_session = $stripe->checkout->sessions->create([
+        $checkout_session = \Stripe\Checkout\Session::create([
             'line_items' => [
                 $item
             ],
@@ -42,6 +45,14 @@ class StripeController extends Controller
             'success_url' => route('checkout.success', [], true) . '?session_id={CHECKOUT_SESSION_ID}&course_id=' . $course->id . '&user_id=' . auth()->id(),
             'cancel_url' => route('checkout.cancel', [], true) . '?course_id=' . $course->id,
         ]);
+        // $checkout_session = $stripe->checkout->sessions->create([
+        //     'line_items' => [
+        //         $item
+        //     ],
+        //     'mode' => 'payment',
+        //     'success_url' => route('checkout.success', [], true) . '?session_id={CHECKOUT_SESSION_ID}&course_id=' . $course->id . '&user_id=' . auth()->id(),
+        //     'cancel_url' => route('checkout.cancel', [], true) . '?course_id=' . $course->id,
+        // ]);
 
         return redirect($checkout_session->url);
     }
