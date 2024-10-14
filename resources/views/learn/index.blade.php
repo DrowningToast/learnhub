@@ -42,17 +42,19 @@
                                 {{ app('request')->input('categoryId') === 'ALL' ? 'selected' : '' }}>หมวดหมู่ทั้งหมด
                             </option>
                             <option value="1" {{ app('request')->input('categoryId') === '1' ? 'selected' : '' }}>
-                                วิทยาศาสตร์</option>
+                                สุขภาพและการดูแลตนเอง</option>
                             <option value="2" {{ app('request')->input('categoryId') === '2' ? 'selected' : '' }}>
-                                คณิตศาสตร์</option>
+                                ทักษะการใช้เทคโนโลยีพื้นฐาน</option>
                             <option value="3" {{ app('request')->input('categoryId') === '3' ? 'selected' : '' }}>
-                                ภาษาไทย</option>
+                                การจัดการทางการเงิน</option>
                             <option value="4" {{ app('request')->input('categoryId') === '4' ? 'selected' : '' }}>
-                                สังคมศึกษา</option>
+                                งานอดิเรกและงานฝีมือ</option>
                             <option value="5" {{ app('request')->input('categoryId') === '5' ? 'selected' : '' }}>
-                                ภาษาอังกฤษ</option>
+                                การสร้างความสัมพันธ์ทางสังคม</option>
                             <option value="6" {{ app('request')->input('categoryId') === '6' ? 'selected' : '' }}>
-                                เทคโนโลยีสารสนเทศ</option>
+                                สุขภาพจิตและความเป็นอยู่ที่ดี</option>
+                            <option value="7" {{ app('request')->input('categoryId') === '7' ? 'selected' : '' }}>
+                                โภชนาการและการกินที่ถูกต้อง</option>
                         </select>
                         <select class="rounded-full bg-[#E2EEFB] text-[#7F92B1] px-4 py-2 border-r-8 border-transparent"
                             name="time">

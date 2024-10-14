@@ -78,17 +78,19 @@
                     <div
                         class="flex justify-center items-center gap-x-8 bg-[#E2EEFB] px-8 py-5 rounded-lg overflow-x-auto">
                         <x-course-button rvalue="1"
-                            checked="{{ app('request')->input('filter-course') }}">วิทยาศาสตร์</x-course-button>
+                            checked="{{ app('request')->input('filter-course') }}">สุขภาพและการดูแลตนเอง</x-course-button>
                         <x-course-button rvalue="2"
-                            checked="{{ app('request')->input('filter-course') }}">คณิตศาสตร์</x-course-button>
+                            checked="{{ app('request')->input('filter-course') }}">ทักษะการใช้เทคโนโลยีพื้นฐาน</x-course-button>
                         <x-course-button rvalue="3"
-                            checked="{{ app('request')->input('filter-course') }}">ภาษาไทย</x-course-button>
+                            checked="{{ app('request')->input('filter-course') }}">การจัดการทางการเงิน</x-course-button>
                         <x-course-button rvalue="4"
-                            checked="{{ app('request')->input('filter-course') }}">สังคมศึกษา</x-course-button>
+                            checked="{{ app('request')->input('filter-course') }}">งานอดิเรกและงานฝีมือ</x-course-button>
                         <x-course-button rvalue="5"
-                            checked="{{ app('request')->input('filter-course') }}">ภาษาอังกฤษ</x-course-button>
+                            checked="{{ app('request')->input('filter-course') }}">การสร้างความสัมพันธ์ทางสังคม</x-course-button>
                         <x-course-button rvalue="6"
-                            checked="{{ app('request')->input('filter-course') }}">เทคโนโลยีสารสนเทศ</x-course-button>
+                            checked="{{ app('request')->input('filter-course') }}">สุขภาพจิตและความเป็นอยู่ที่ดี</x-course-button>
+                        <x-course-button rvalue="7"
+                            checked="{{ app('request')->input('filter-course') }}">โภชนาการและการกินที่ถูกต้อง</x-course-button>
                     </div>
                 </form>
                 <div class="grid grid-cols-4 gap-x-12 gap-y-12 mt-6">
