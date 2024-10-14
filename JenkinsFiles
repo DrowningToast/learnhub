@@ -3,8 +3,8 @@ pipeline {
 
     environment {
         DOCKER_COMPOSE_FILE = 'docker-compose.prod.yml'
-        GIT_URL             = 'https://github.com/FewPz/learnhub.git'
-        GIT_BRANCH          = 'feat/jenkins'
+        GIT_URL             = 'https://github.com/DrowningToast/learnhub.git'
+        GIT_BRANCH          = 'prod'
 
         REMOTE_HOST         = 'sila_pakdeewong@34.143.197.151'
         SSH_CREDENTIALS     = 'devtools-production'
