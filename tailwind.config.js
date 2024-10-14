@@ -15,7 +15,6 @@ export default {
             },
             backgroundColor: {
                 "radial-gradient": "radial-gradient(#e66465, #9198e5)",
-                test: "lol",
             },
         },
     },
