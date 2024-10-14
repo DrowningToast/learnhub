@@ -15,6 +15,7 @@ export default {
             },
             backgroundColor: {
                 "radial-gradient": "radial-gradient(#e66465, #9198e5)",
+                ga: "rgba(0, 0, 0, 0.5)",
             },
         },
     },
